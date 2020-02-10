@@ -921,4 +921,8 @@ class Page extends ContentBase
 
         return $iterator($pageTree);
     }
+
+    public function getGutenbergData() {
+        return json_decode($this->viewBag['content'] ?? '[]');
+    }
 }

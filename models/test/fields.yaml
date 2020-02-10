@@ -1,0 +1,9 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    content:
+        tab: aaaa
+        type: zgutenberg
+        stretch: true

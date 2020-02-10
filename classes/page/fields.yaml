@@ -61,6 +61,4 @@ secondaryTabs:
     fields:
         markup:
             tab: rainlab.pages::lang.editor.content
-            type: richeditor
-            stretch: true
-            size: huge
+            type: zgutenberg

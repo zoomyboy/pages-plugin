@@ -1,0 +1,11 @@
+<?php if ($this->previewMode): ?>
+
+    <div class="form-control">
+        <?= $value ?>
+    </div>
+
+<?php else: ?>
+
+<div data-zgutenberg><app name="<?= $name ?>" handler="<?= $this->getEventHandler('onLoadValue') ?>"></app></div>
+
+<?php endif ?>

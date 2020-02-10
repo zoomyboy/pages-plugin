@@ -1,0 +1,26 @@
+.fa-btn {
+    @apply zg-w-10 zg-h-10 zg-flex zg-justify-center zg-items-center zg-rounded-full;
+    span.fa {
+        @apply zg-text-gray-600;
+    }
+    &:focus, &:hover {
+        @apply zg-no-underline;
+    }
+    &:hover {
+        @apply zg-border-2 zg-border-blue-500;
+        span.fa {
+            @apply zg-text-blue-500;
+        }
+    }
+    &.btn-switch {
+        @apply .rounded-lg;    
+        &.enabled {
+            @apply zg-bg-blue-500;
+            span.fa {
+                @apply zg-text-white;
+            }
+        }
+    }
+}
+
+

@@ -10,6 +10,7 @@ use RainLab\Pages\Classes\SnippetManager;
 use Cms\Classes\Theme;
 use Cms\Classes\Controller as CmsController;
 use System\Classes\PluginBase;
+use RainLab\Pages\FormWidgets\Zgutenberg;
 
 class Plugin extends PluginBase
 {
@@ -214,6 +215,12 @@ class Plugin extends PluginBase
             'filters' => [
                 'staticPage' => ['RainLab\Pages\Classes\Page', 'url']
             ]
+        ];
+    }
+
+    public function registerFormWidgets() {
+        return [
+            Zgutenberg::class => 'zgutenberg'
         ];
     }
 

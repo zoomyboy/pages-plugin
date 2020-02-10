@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Test
+
+# Model Form Field configuration
+form: $/rainlab/pages/models/test/fields.yaml
+
+# Model Class name
+modelClass: Rainlab\Pages\Models\Test
+
+# Default redirect location
+defaultRedirect: rainlab/pages/test
+
+# Create page
+create:
+    title: Create Test
+    redirect: rainlab/pages/test/update/:id
+    redirectClose: rainlab/pages/test
+
+# Update page
+update:
+    title: Edit Test
+    redirect: rainlab/pages/test
+    redirectClose: rainlab/pages/test
+
+# Preview page
+preview:
+    title: Preview Test
