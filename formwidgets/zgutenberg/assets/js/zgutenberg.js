@@ -2150,7 +2150,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       this.$nextTick(function () {
-        console.log(self.$el.children.length);
         self.$el.children[index + 1].focus();
       });
     },

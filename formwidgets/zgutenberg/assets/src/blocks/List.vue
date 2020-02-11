@@ -34,7 +34,6 @@ export default {
             });
 
             this.$nextTick(function() {
-                console.log(self.$el.children.length);
                 self.$el.children[index+1].focus();
             });
         },
