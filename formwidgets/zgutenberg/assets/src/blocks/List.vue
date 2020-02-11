@@ -82,7 +82,7 @@ export default {
         }
     },
     created() {
-        this.innerContent = this.content;
+        this.innerContent = JSON.parse(JSON.stringify(this.content));
     }
 };
 
