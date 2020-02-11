@@ -2131,33 +2131,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
   computed: {
-    params: {
-      set: function set(v) {},
-      get: function get() {
-        return this.$store.getters.block(this.$vnode.key).params;
-      }
+    params: function params() {
+      return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? {} : this.$store.getters.block(this.$vnode.key).params;
     },
-    innerContent: {
-      set: function set(v) {},
-      get: function get() {
-        return this.$store.getters.block(this.$vnode.key).content;
-      }
+    innerContent: function innerContent() {
+      return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? [] : this.$store.getters.block(this.$vnode.key).content;
     }
   },
   mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
   methods: {
     addElement: function addElement(index, event) {
       var self = this;
-      event.preventDefault();
-      this.$nextTick(function () {
-        self.$el.children[index + 1].focus();
-      });
       this.$store.commit('addBlockIndex', {
         id: this.$vnode.key,
         index: index + 1,
         value: {
           content: ''
         }
+      });
+      this.$nextTick(function () {
+        console.log(self.$el.children.length);
+        self.$el.children[index + 1].focus();
       });
     },
     onFocus: function onFocus() {

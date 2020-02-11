@@ -13,13 +13,11 @@ export default {
     props: {},
 
     computed: {
-        params: {
-            set(v) {},
-            get() { return this.$store.getters.block(this.$vnode.key).params; }
+        params() {
+            return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? {} : this.$store.getters.block(this.$vnode.key).params;
         },
-        innerContent: {
-            set(v) {},
-            get() { return this.$store.getters.block(this.$vnode.key).content; }
+        innerContent() {
+            return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? [] : this.$store.getters.block(this.$vnode.key).content;
         }
     },
 
@@ -28,16 +26,16 @@ export default {
     methods: {
         addElement(index, event) {
             var self = this;
-            event.preventDefault();
-
-            this.$nextTick(function() {
-                self.$el.children[index+1].focus();
-            });
 
             this.$store.commit('addBlockIndex', {
                 id: this.$vnode.key,
                 index: index+1,
                 value: {content: ''}
+            });
+
+            this.$nextTick(function() {
+                console.log(self.$el.children.length);
+                self.$el.children[index+1].focus();
             });
         },
         onFocus() {
