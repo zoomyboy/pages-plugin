@@ -9,6 +9,7 @@ Vue.use(Vuex);
 Vue.use(installer);
 
 const store = new Vuex.Store({
+    strict: true,
     state: {
         blocks: state,
         renderedBlocks: [],
