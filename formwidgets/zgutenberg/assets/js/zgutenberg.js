@@ -34615,7 +34615,7 @@ var component = {
             });
           }
         },
-        input: Object(lodash__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (e) {
+        blur: Object(lodash__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (e) {
           self.$store.commit('updateBlock', {
             id: self.$vnode.key,
             params: self.params,
@@ -34760,20 +34760,16 @@ __webpack_require__.r(__webpack_exports__);
 var component = {
   mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
   computed: {
-    params: {
-      set: function set(v) {},
-      get: function get() {
-        return this.$store.state.renderedBlocks[this.$vnode.key].params;
-      }
+    params: function params() {
+      return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? {} : this.$store.getters.block(this.$vnode.key).params;
     },
-    content: {
-      set: function set(v) {},
-      get: function get() {
-        return this.$store.state.renderedBlocks[this.$vnode.key].content;
-      }
+    content: function content() {
+      return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? '' : this.$store.getters.block(this.$vnode.key).content;
     }
   },
   render: function render(createElement) {
+    var _this = this;
+
     var self = this;
     return createElement('p', {
       attrs: {
@@ -34792,6 +34788,14 @@ var component = {
               },
               content: ''
             });
+            return;
+          } // Delete paragraph if backspace is pressed
+
+
+          if (event.target.innerHTML == '' && e.keyCode == 8) {
+            _this.$store.commit('destroyBlock', _this.$vnode.key);
+
+            return;
           }
         },
         input: Object(lodash__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (e) {

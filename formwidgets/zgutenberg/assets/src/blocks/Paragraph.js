@@ -5,13 +5,11 @@ const component = {
     mixins: [ BlockMixin ],
 
     computed: {
-        params: {
-            set(v) {},
-            get() { return this.$store.state.renderedBlocks[this.$vnode.key].params; }
+        params() {
+            return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? {} : this.$store.getters.block(this.$vnode.key).params;
         },
-        content: {
-            set(v) {},
-            get() { return this.$store.state.renderedBlocks[this.$vnode.key].content; }
+        content() {
+            return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? '' : this.$store.getters.block(this.$vnode.key).content;
         }
     },
 
@@ -30,6 +28,14 @@ const component = {
                             params: {tag: 'p'},
                             content: ''
                         });
+
+                        return;
+                    }
+                    
+                    // Delete paragraph if backspace is pressed
+                    if (event.target.innerHTML == '' && e.keyCode == 8) {
+                        this.$store.commit('destroyBlock', this.$vnode.key);
+                        return;
                     }
                 },
                 input: debounce(e => {

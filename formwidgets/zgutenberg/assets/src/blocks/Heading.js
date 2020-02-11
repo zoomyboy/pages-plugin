@@ -20,7 +20,7 @@ const component = {
                         });
                     }
                 },
-                input: debounce(e => {
+                blur: debounce(e => {
                     self.$store.commit('updateBlock', {
                         id: self.$vnode.key,
                         params: self.params,
