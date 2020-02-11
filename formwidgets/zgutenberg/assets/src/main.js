@@ -19,6 +19,9 @@ const store = new Vuex.Store({
     getters: {
         asString: (state) => () => {
             return JSON.stringify(state.renderedBlocks);
+        },
+        block: (state) => (k) => {
+            return state.renderedBlocks[k];
         }
     },
     mutations: {
@@ -37,12 +40,22 @@ const store = new Vuex.Store({
         },
         updateBlock(state, data) {
             if (!state.renderedBlocks[data.id]) { return; }
-            state.renderedBlocks[data.id].params = data.params;
-            state.renderedBlocks[data.id].content = data.content;
+            state.renderedBlocks.splice(data.id, 1, { ...state.renderedBlocks[data.id], 'params': data.params, 'content': data.content });
         },
         updateBlockIndex(state, data) {
-            console.log(data);
-            state.renderedBlocks[data.id].content[data.index] = data.value;
+            var block = state.renderedBlocks[data.id];
+            block.content[data.index] = data.value;
+            state.renderedBlocks.splice(data.id, 1, block);
+        },
+        addBlockIndex(state, data) {
+            var block = state.renderedBlocks[data.id];
+            block.content.splice(data.index, 0, data.value);
+            state.renderedBlocks.splice(data.id, 1, block);
+        },
+        destroyBlockIndex(state, data) {
+            var block = state.renderedBlocks[data.id];
+            block.content.splice(data.index, 1);
+            state.renderedBlocks.splice(data.id, 1, block);
         },
         destroyBlock(state, id) {
             state.renderedBlocks.splice(id, 1);

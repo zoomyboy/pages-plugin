@@ -2,11 +2,19 @@ import { debounce } from 'lodash';
 import BlockMixin from '../block.mixin.js';
 
 const component = {
-    props: {
-        params: {},
-        content: {}
-    },
     mixins: [ BlockMixin ],
+
+    computed: {
+        params: {
+            set(v) {},
+            get() { return this.$store.state.renderedBlocks[this.$vnode.key].params; }
+        },
+        content: {
+            set(v) {},
+            get() { return this.$store.state.renderedBlocks[this.$vnode.key].content; }
+        }
+    },
+
     render(createElement) {
         var self = this;
         return createElement('p', {

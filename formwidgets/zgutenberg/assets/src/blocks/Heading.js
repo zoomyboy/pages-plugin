@@ -2,10 +2,6 @@ import { debounce } from 'lodash';
 import BlockMixin from '../block.mixin.js';
 
 const component = {
-    props: {
-        params: {},
-        content: {}
-    },
     mixins: [BlockMixin],
     render(createElement) {
         var self = this;
@@ -42,7 +38,18 @@ const component = {
         onFocus() {
             this.$refs.input.focus();
         }
-    }
+    },
+
+    computed: {
+        params: {
+            set(v) {},
+            get() { return this.$store.state.renderedBlocks[this.$vnode.key].params; }
+        },
+        content: {
+            set(v) {},
+            get() { return this.$store.state.renderedBlocks[this.$vnode.key].content; }
+        }
+    },
 };
 
 const render = function(createElement) {

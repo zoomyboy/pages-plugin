@@ -1978,9 +1978,6 @@ __webpack_require__.r(__webpack_exports__);
         self.$store.commit('init', data);
       }
     });
-    window.jQuery(this.$el).closest('form').on('ajaxPromise', function (e) {
-      console.log(self.$store.getters.asString());
-    });
   }
 });
 
@@ -2132,30 +2129,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      innerContent: []
-    };
-  },
-  props: {
-    params: {},
-    content: {}
+  props: {},
+  computed: {
+    params: {
+      set: function set(v) {},
+      get: function get() {
+        return this.$store.getters.block(this.$vnode.key).params;
+      }
+    },
+    innerContent: {
+      set: function set(v) {},
+      get: function get() {
+        return this.$store.getters.block(this.$vnode.key).content;
+      }
+    }
   },
   mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
   methods: {
     addElement: function addElement(index, event) {
       var self = this;
       event.preventDefault();
-      this.innerContent.splice(index + 1, 0, {
-        content: ''
-      });
       this.$nextTick(function () {
         self.$el.children[index + 1].focus();
       });
-      this.$store.commit('updateBlock', {
+      this.$store.commit('addBlockIndex', {
         id: this.$vnode.key,
-        params: this.params,
-        content: this.innerContent
+        index: index + 1,
+        value: {
+          content: ''
+        }
       });
     },
     onFocus: function onFocus() {
@@ -2166,17 +2168,17 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       }
 
-      this.innerContent[key].content = event.target.innerHTML;
-      this.$store.commit('updateBlock', {
+      this.$store.commit('updateBlockIndex', {
         id: this.$vnode.key,
-        params: this.params,
-        content: this.innerContent
+        index: key,
+        value: {
+          'content': event.target.innerHTML
+        }
       });
     },
     onDeleteChar: function onDeleteChar(event, index) {
       if (event.target.innerHTML == '') {
         event.preventDefault();
-        console.log(event.target.innerHTML);
         var self = this;
 
         if (index == this.innerContent.length - 1) {
@@ -2191,20 +2193,15 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
 
-        this.innerContent.splice(index, 1);
         this.$nextTick(function () {
           self.$el.children[nextFocus].focus();
         });
-        this.$store.commit('updateBlock', {
+        this.$store.commit('destroyBlockIndex', {
           id: this.$vnode.key,
-          params: this.params,
-          content: this.innerContent
+          index: index
         });
       }
     }
-  },
-  created: function created() {
-    this.innerContent = this.content;
   }
 });
 
@@ -20755,11 +20752,7 @@ var render = function() {
     "div",
     { staticClass: "zg-content" },
     _vm._l(_vm.$store.state.renderedBlocks, function(block, c) {
-      return _c(block.component, {
-        key: c,
-        tag: "component",
-        attrs: { params: block.params, content: block.content }
-      })
+      return _c(block.component, { key: c, tag: "component" })
     }),
     1
   )
@@ -34608,10 +34601,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var component = {
-  props: {
-    params: {},
-    content: {}
-  },
   mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
   render: function render(createElement) {
     var self = this;
@@ -34649,6 +34638,20 @@ var component = {
     onFocus: function onFocus() {
       this.$refs.input.focus();
     }
+  },
+  computed: {
+    params: {
+      set: function set(v) {},
+      get: function get() {
+        return this.$store.state.renderedBlocks[this.$vnode.key].params;
+      }
+    },
+    content: {
+      set: function set(v) {},
+      get: function get() {
+        return this.$store.state.renderedBlocks[this.$vnode.key].content;
+      }
+    }
   }
 };
 
@@ -34670,14 +34673,17 @@ var params = {
 /*!*****************************!*\
   !*** ./src/blocks/List.vue ***!
   \*****************************/
-/*! no static exports found */
+/*! exports provided: render, params, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _List_vue_vue_type_template_id_069b0e44___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./List.vue?vue&type=template&id=069b0e44& */ "./src/blocks/List.vue?vue&type=template&id=069b0e44&");
 /* harmony import */ var _List_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./List.vue?vue&type=script&lang=js& */ "./src/blocks/List.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _List_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _List_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _List_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "params", function() { return _List_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["params"]; });
+
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -34708,7 +34714,7 @@ component.options.__file = "src/blocks/List.vue"
 /*!******************************************************!*\
   !*** ./src/blocks/List.vue?vue&type=script&lang=js& ***!
   \******************************************************/
-/*! no static exports found */
+/*! exports provided: default, render, params */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34758,11 +34764,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var component = {
-  props: {
-    params: {},
-    content: {}
-  },
   mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  computed: {
+    params: {
+      set: function set(v) {},
+      get: function get() {
+        return this.$store.state.renderedBlocks[this.$vnode.key].params;
+      }
+    },
+    content: {
+      set: function set(v) {},
+      get: function get() {
+        return this.$store.state.renderedBlocks[this.$vnode.key].content;
+      }
+    }
+  },
   render: function render(createElement) {
     var self = this;
     return createElement('p', {
@@ -34833,6 +34849,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks.js */ "./src/blocks.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -34842,6 +34864,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_blocks_js__WEBPACK_IMPORTED_MODULE_4__["installer"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
+  strict: true,
   state: {
     blocks: _blocks_js__WEBPACK_IMPORTED_MODULE_4__["state"],
     renderedBlocks: [],
@@ -34852,6 +34875,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     asString: function asString(state) {
       return function () {
         return JSON.stringify(state.renderedBlocks);
+      };
+    },
+    block: function block(state) {
+      return function (k) {
+        return state.renderedBlocks[k];
       };
     }
   },
@@ -34874,12 +34902,25 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         return;
       }
 
-      state.renderedBlocks[data.id].params = data.params;
-      state.renderedBlocks[data.id].content = data.content;
+      state.renderedBlocks.splice(data.id, 1, _objectSpread({}, state.renderedBlocks[data.id], {
+        'params': data.params,
+        'content': data.content
+      }));
     },
     updateBlockIndex: function updateBlockIndex(state, data) {
-      console.log(data);
-      state.renderedBlocks[data.id].content[data.index] = data.value;
+      var block = state.renderedBlocks[data.id];
+      block.content[data.index] = data.value;
+      state.renderedBlocks.splice(data.id, 1, block);
+    },
+    addBlockIndex: function addBlockIndex(state, data) {
+      var block = state.renderedBlocks[data.id];
+      block.content.splice(data.index, 0, data.value);
+      state.renderedBlocks.splice(data.id, 1, block);
+    },
+    destroyBlockIndex: function destroyBlockIndex(state, data) {
+      var block = state.renderedBlocks[data.id];
+      block.content.splice(data.index, 1);
+      state.renderedBlocks.splice(data.id, 1, block);
     },
     destroyBlock: function destroyBlock(state, id) {
       state.renderedBlocks.splice(id, 1);

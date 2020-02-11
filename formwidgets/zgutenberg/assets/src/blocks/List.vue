@@ -9,15 +9,18 @@ import { debounce } from 'lodash';
 import BlockMixin from '../block.mixin.js';
 
 export default {
-    data: function() {
-        return {
-            innerContent: []
-        };
-    },
 
-    props: {
-        params: {},
-        content: {}
+    props: {},
+
+    computed: {
+        params: {
+            set(v) {},
+            get() { return this.$store.getters.block(this.$vnode.key).params; }
+        },
+        innerContent: {
+            set(v) {},
+            get() { return this.$store.getters.block(this.$vnode.key).content; }
+        }
     },
 
     mixins: [BlockMixin],
@@ -27,15 +30,14 @@ export default {
             var self = this;
             event.preventDefault();
 
-            this.innerContent.splice(index+1, 0, {content: ''});
             this.$nextTick(function() {
                 self.$el.children[index+1].focus();
             });
 
-            this.$store.commit('updateBlock', {
+            this.$store.commit('addBlockIndex', {
                 id: this.$vnode.key,
-                params: this.params,
-                content: this.innerContent
+                index: index+1,
+                value: {content: ''}
             });
         },
         onFocus() {
@@ -43,17 +45,15 @@ export default {
         },
         updateContent(key, event) {
             if (typeof this.innerContent[key] == 'undefined') { return false; }
-            this.innerContent[key].content = event.target.innerHTML;
-            this.$store.commit('updateBlock', {
+            this.$store.commit('updateBlockIndex', {
                 id: this.$vnode.key,
-                params: this.params,
-                content: this.innerContent
+                index: key,
+                value: {'content': event.target.innerHTML}
             });
         },
         onDeleteChar(event, index) {
             if (event.target.innerHTML == '') {
                 event.preventDefault();
-                console.log(event.target.innerHTML);
                 var self = this;
 
                 if (index == this.innerContent.length - 1) {
@@ -68,21 +68,16 @@ export default {
                     return;
                 }
 
-                this.innerContent.splice(index, 1);
                 this.$nextTick(function() {
                     self.$el.children[nextFocus].focus();
                 });
 
-                this.$store.commit('updateBlock', {
+                this.$store.commit('destroyBlockIndex', {
                     id: this.$vnode.key,
-                    params: this.params,
-                    content: this.innerContent
+                    index: index
                 });
             }
         }
-    },
-    created() {
-        this.innerContent = JSON.parse(JSON.stringify(this.content));
     }
 };
 
