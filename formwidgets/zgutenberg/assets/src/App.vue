@@ -39,9 +39,6 @@ export default {
                 self.$store.commit('init', data);
             }
         });
-        window.jQuery(this.$el).closest('form').on('ajaxPromise', function(e) {
-            console.log(self.$store.getters.asString());
-        });
     }
 };
 </script>
