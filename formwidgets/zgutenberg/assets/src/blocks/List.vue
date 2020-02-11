@@ -26,6 +26,7 @@ export default {
     methods: {
         addElement(index, event) {
             var self = this;
+            event.preventDefault();
 
             this.$store.commit('addBlockIndex', {
                 id: this.$vnode.key,
@@ -65,13 +66,13 @@ export default {
                     return;
                 }
 
-                this.$nextTick(function() {
-                    self.$el.children[nextFocus].focus();
-                });
-
                 this.$store.commit('destroyBlockIndex', {
                     id: this.$vnode.key,
                     index: index
+                });
+
+                this.$nextTick(function() {
+                    self.$el.children[nextFocus].focus();
                 });
             }
         }

@@ -2142,6 +2142,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addElement: function addElement(index, event) {
       var self = this;
+      event.preventDefault();
       this.$store.commit('addBlockIndex', {
         id: this.$vnode.key,
         index: index + 1,
@@ -2186,12 +2187,12 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
 
-        this.$nextTick(function () {
-          self.$el.children[nextFocus].focus();
-        });
         this.$store.commit('destroyBlockIndex', {
           id: this.$vnode.key,
           index: index
+        });
+        this.$nextTick(function () {
+          self.$el.children[nextFocus].focus();
         });
       }
     }
