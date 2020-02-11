@@ -1,12 +1,13 @@
 <template>
     <ul ref="input" class="c">
-        <li :key="key" v-on:keydown.enter="addElement(key, $event)" v-for="(point, key) in innerContent" contenteditable="true" v-html="point.content" @blur="updateContent(key, $event)" @keydown.backspace="onDeleteChar($event, key)"></li>
+        <li :key="key" v-on:keydown.enter="addElement(key, $event)" v-for="(point, key) in innerContent" contenteditable="true" v-html="point.content" @blur="updateContent(key, $event)" @keydown.backspace="onDeleteChar($event, key)" @paste="onPaste($event, key)"></li>
     </ul>
 </template>
 
 <script>
 import { debounce } from 'lodash';
 import BlockMixin from '../block.mixin.js';
+import StripMixin from '../strip.mixin.js';
 
 export default {
 
@@ -21,7 +22,7 @@ export default {
         }
     },
 
-    mixins: [BlockMixin],
+    mixins: [BlockMixin, StripMixin],
 
     methods: {
         addElement(index, event) {
@@ -38,11 +39,16 @@ export default {
                 self.$el.children[index+1].focus();
             });
         },
+        onPaste(e, key) {
+            var self = this;
+            document.activeElement.blur();
+            e.target.innerHTML = this.s(e.clipboardData.getData('text'));
+        },
         onFocus() {
             this.$refs.input.firstChild.focus();
         },
         updateContent(key, event) {
-            if (typeof this.innerContent[key] == 'undefined') { return false; }
+            console.log('FFF');
             this.$store.commit('updateBlockIndex', {
                 id: this.$vnode.key,
                 index: key,

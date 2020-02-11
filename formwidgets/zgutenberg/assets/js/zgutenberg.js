@@ -2120,12 +2120,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _block_mixin_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../block.mixin.js */ "./src/block.mixin.js");
+/* harmony import */ var _strip_mixin_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../strip.mixin.js */ "./src/strip.mixin.js");
 //
 //
 //
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2138,7 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
       return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? [] : this.$store.getters.block(this.$vnode.key).content;
     }
   },
-  mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"], _strip_mixin_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
   methods: {
     addElement: function addElement(index, event) {
       var self = this;
@@ -2154,14 +2156,16 @@ __webpack_require__.r(__webpack_exports__);
         self.$el.children[index + 1].focus();
       });
     },
+    onPaste: function onPaste(e, key) {
+      var self = this;
+      document.activeElement.blur();
+      e.target.innerHTML = this.s(e.clipboardData.getData('text'));
+    },
     onFocus: function onFocus() {
       this.$refs.input.firstChild.focus();
     },
     updateContent: function updateContent(key, event) {
-      if (typeof this.innerContent[key] == 'undefined') {
-        return false;
-      }
-
+      console.log('FFF');
       this.$store.commit('updateBlockIndex', {
         id: this.$vnode.key,
         index: key,
@@ -19828,6 +19832,246 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/striptags/src/striptags.js":
+/*!*************************************************!*\
+  !*** ./node_modules/striptags/src/striptags.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_RESULT__;
+
+(function (global) {
+
+    // minimal symbol polyfill for IE11 and others
+    if (typeof Symbol !== 'function') {
+        var Symbol = function(name) {
+            return name;
+        }
+
+        Symbol.nonNative = true;
+    }
+
+    const STATE_PLAINTEXT = Symbol('plaintext');
+    const STATE_HTML      = Symbol('html');
+    const STATE_COMMENT   = Symbol('comment');
+
+    const ALLOWED_TAGS_REGEX  = /<(\w*)>/g;
+    const NORMALIZE_TAG_REGEX = /<\/?([^\s\/>]+)/;
+
+    function striptags(html, allowable_tags, tag_replacement) {
+        html            = html || '';
+        allowable_tags  = allowable_tags || [];
+        tag_replacement = tag_replacement || '';
+
+        let context = init_context(allowable_tags, tag_replacement);
+
+        return striptags_internal(html, context);
+    }
+
+    function init_striptags_stream(allowable_tags, tag_replacement) {
+        allowable_tags  = allowable_tags || [];
+        tag_replacement = tag_replacement || '';
+
+        let context = init_context(allowable_tags, tag_replacement);
+
+        return function striptags_stream(html) {
+            return striptags_internal(html || '', context);
+        };
+    }
+
+    striptags.init_streaming_mode = init_striptags_stream;
+
+    function init_context(allowable_tags, tag_replacement) {
+        allowable_tags = parse_allowable_tags(allowable_tags);
+
+        return {
+            allowable_tags : allowable_tags,
+            tag_replacement: tag_replacement,
+
+            state         : STATE_PLAINTEXT,
+            tag_buffer    : '',
+            depth         : 0,
+            in_quote_char : ''
+        };
+    }
+
+    function striptags_internal(html, context) {
+        let allowable_tags  = context.allowable_tags;
+        let tag_replacement = context.tag_replacement;
+
+        let state         = context.state;
+        let tag_buffer    = context.tag_buffer;
+        let depth         = context.depth;
+        let in_quote_char = context.in_quote_char;
+        let output        = '';
+
+        for (let idx = 0, length = html.length; idx < length; idx++) {
+            let char = html[idx];
+
+            if (state === STATE_PLAINTEXT) {
+                switch (char) {
+                    case '<':
+                        state       = STATE_HTML;
+                        tag_buffer += char;
+                        break;
+
+                    default:
+                        output += char;
+                        break;
+                }
+            }
+
+            else if (state === STATE_HTML) {
+                switch (char) {
+                    case '<':
+                        // ignore '<' if inside a quote
+                        if (in_quote_char) {
+                            break;
+                        }
+
+                        // we're seeing a nested '<'
+                        depth++;
+                        break;
+
+                    case '>':
+                        // ignore '>' if inside a quote
+                        if (in_quote_char) {
+                            break;
+                        }
+
+                        // something like this is happening: '<<>>'
+                        if (depth) {
+                            depth--;
+
+                            break;
+                        }
+
+                        // this is closing the tag in tag_buffer
+                        in_quote_char = '';
+                        state         = STATE_PLAINTEXT;
+                        tag_buffer   += '>';
+
+                        if (allowable_tags.has(normalize_tag(tag_buffer))) {
+                            output += tag_buffer;
+                        } else {
+                            output += tag_replacement;
+                        }
+
+                        tag_buffer = '';
+                        break;
+
+                    case '"':
+                    case '\'':
+                        // catch both single and double quotes
+
+                        if (char === in_quote_char) {
+                            in_quote_char = '';
+                        } else {
+                            in_quote_char = in_quote_char || char;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    case '-':
+                        if (tag_buffer === '<!-') {
+                            state = STATE_COMMENT;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    case ' ':
+                    case '\n':
+                        if (tag_buffer === '<') {
+                            state      = STATE_PLAINTEXT;
+                            output    += '< ';
+                            tag_buffer = '';
+
+                            break;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    default:
+                        tag_buffer += char;
+                        break;
+                }
+            }
+
+            else if (state === STATE_COMMENT) {
+                switch (char) {
+                    case '>':
+                        if (tag_buffer.slice(-2) == '--') {
+                            // close the comment
+                            state = STATE_PLAINTEXT;
+                        }
+
+                        tag_buffer = '';
+                        break;
+
+                    default:
+                        tag_buffer += char;
+                        break;
+                }
+            }
+        }
+
+        // save the context for future iterations
+        context.state         = state;
+        context.tag_buffer    = tag_buffer;
+        context.depth         = depth;
+        context.in_quote_char = in_quote_char;
+
+        return output;
+    }
+
+    function parse_allowable_tags(allowable_tags) {
+        let tag_set = new Set();
+
+        if (typeof allowable_tags === 'string') {
+            let match;
+
+            while ((match = ALLOWED_TAGS_REGEX.exec(allowable_tags))) {
+                tag_set.add(match[1]);
+            }
+        }
+
+        else if (!Symbol.nonNative &&
+                 typeof allowable_tags[Symbol.iterator] === 'function') {
+
+            tag_set = new Set(allowable_tags);
+        }
+
+        else if (typeof allowable_tags.forEach === 'function') {
+            // IE11 compatible
+            allowable_tags.forEach(tag_set.add, tag_set);
+        }
+
+        return tag_set;
+    }
+
+    function normalize_tag(tag_buffer) {
+        let match = NORMALIZE_TAG_REGEX.exec(tag_buffer);
+
+        return match ? match[1].toLowerCase() : null;
+    }
+
+    if (true) {
+        // AMD
+        !(__WEBPACK_AMD_DEFINE_RESULT__ = (function module_factory() { return striptags; }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    }
+
+    else {}
+}(this));
+
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./src/CreateBlock.vue?vue&type=style&index=0&id=04aac108&scoped=true&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./src/CreateBlock.vue?vue&type=style&index=0&id=04aac108&scoped=true&lang=css& ***!
@@ -20810,6 +21054,9 @@ var render = function() {
           ],
           blur: function($event) {
             return _vm.updateContent(key, $event)
+          },
+          paste: function($event) {
+            return _vm.onPaste($event, key)
           }
         }
       })
@@ -34936,6 +35183,28 @@ jQuery(document).ready(function () {
       }
     });
   });
+});
+
+/***/ }),
+
+/***/ "./src/strip.mixin.js":
+/*!****************************!*\
+  !*** ./src/strip.mixin.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var striptags__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! striptags */ "./node_modules/striptags/src/striptags.js");
+/* harmony import */ var striptags__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(striptags__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    s: function s(_s) {
+      return striptags__WEBPACK_IMPORTED_MODULE_0___default()(_s);
+    }
+  }
 });
 
 /***/ }),
