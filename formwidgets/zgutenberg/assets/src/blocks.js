@@ -22,15 +22,15 @@ const installer = {
     }
 };
 
-var state = {};
+var blocks = {};
 
 requireBlocks.keys().forEach((file) => {
     let componentName = file.substr(2).replace('.js', '');
-    state[kebabCase(componentName)] = requireBlocks(file).params;
+    blocks[kebabCase(componentName)] = requireBlocks(file).params;
 });
 requireBlocksVue.keys().forEach((file) => {
     let componentName = file.substr(2).replace('.vue', '');
-    state[kebabCase(componentName)] = requireBlocksVue(file).params;
+    blocks[kebabCase(componentName)] = requireBlocksVue(file).params;
 });
 
-export { installer, state };
+export { installer, blocks };

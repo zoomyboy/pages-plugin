@@ -1987,15 +1987,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var self = this;
-    var $form = window.jQuery(this.$el).closest('form');
-    var formId = Math.random().toString(36).substring(7) + Math.random().toString(36).substring(7);
-    $form.attr('id', formId);
-    $form.request(this.handlers.init, {
+    this.$store.getters.formObj.request(this.handlers.init, {
       success: function success(data) {
         self.$store.commit('init', {
           data: data,
-          handlers: _this.handlers,
-          form: formId
+          handlers: _this.handlers
         });
       }
     });
@@ -35619,13 +35615,13 @@ webpackContext.id = "./src/blocks sync ^\\.\\/.*\\.vue$";
 /*!***********************!*\
   !*** ./src/blocks.js ***!
   \***********************/
-/*! exports provided: installer, state */
+/*! exports provided: installer, blocks */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "installer", function() { return installer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "state", function() { return state; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "blocks", function() { return blocks; });
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -35646,14 +35642,14 @@ var installer = {
     });
   }
 };
-var state = {};
+var blocks = {};
 requireBlocks.keys().forEach(function (file) {
   var componentName = file.substr(2).replace('.js', '');
-  state[Object(lodash__WEBPACK_IMPORTED_MODULE_0__["kebabCase"])(componentName)] = requireBlocks(file).params;
+  blocks[Object(lodash__WEBPACK_IMPORTED_MODULE_0__["kebabCase"])(componentName)] = requireBlocks(file).params;
 });
 requireBlocksVue.keys().forEach(function (file) {
   var componentName = file.substr(2).replace('.vue', '');
-  state[Object(lodash__WEBPACK_IMPORTED_MODULE_0__["kebabCase"])(componentName)] = requireBlocksVue(file).params;
+  blocks[Object(lodash__WEBPACK_IMPORTED_MODULE_0__["kebabCase"])(componentName)] = requireBlocksVue(file).params;
 });
 
 
@@ -36016,16 +36012,113 @@ var params = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App */ "./src/App.vue");
+/* harmony import */ var _CreateBlock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateBlock */ "./src/CreateBlock.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _blocks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks.js */ "./src/blocks.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store.js */ "./src/store.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+
+
+
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_blocks_js__WEBPACK_IMPORTED_MODULE_4__["installer"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('create-block', _CreateBlock__WEBPACK_IMPORTED_MODULE_2__["default"]);
++function ($) {
+  "use strict";
+
+  var Base = $.oc.foundation.base,
+      BaseProto = Base.prototype;
+
+  var Zgutenberg = function Zgutenberg(element, options) {
+    this.$el = $(element);
+    this.$form = $(element).closest('form');
+    this.options = options || {};
+    $.oc.foundation.controlUtils.markDisposable(element);
+    Base.call(this);
+    this.init();
+  };
+
+  Zgutenberg.prototype = Object.create(BaseProto);
+  Zgutenberg.prototype.constructor = Zgutenberg;
+
+  Zgutenberg.prototype.init = function () {
+    var formId = this.setFormId();
+    this.$app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+      el: this.$el.get(0),
+      store: Object(_store_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
+        form: formId,
+        blocks: _blocks_js__WEBPACK_IMPORTED_MODULE_4__["blocks"],
+        Vuex: vuex__WEBPACK_IMPORTED_MODULE_3__["default"]
+      }),
+      components: {
+        App: _App__WEBPACK_IMPORTED_MODULE_1__["default"]
+      }
+    });
+  };
+
+  Zgutenberg.prototype.setFormId = function () {
+    this.formId = Math.random().toString(36).substring(7) + Math.random().toString(36).substring(7);
+    this.$form.attr('id', this.formId);
+    return this.formId;
+  };
+
+  Zgutenberg.DEFAULTS = {
+    someParam: null
+  }; // PLUGIN DEFINITION
+  // ============================
+
+  var old = $.fn.zgutenberg;
+
+  $.fn.zgutenberg = function (option) {
+    var args = Array.prototype.slice.call(arguments, 1),
+        items,
+        result;
+    items = this.each(function () {
+      var $this = $(this);
+      var data = $this.data('oc.zgutenberg');
+      var options = $.extend({}, Zgutenberg.DEFAULTS, $this.data(), _typeof(option) == 'object' && option);
+      if (!data) $this.data('oc.zgutenberg', data = new Zgutenberg(this, options));
+      if (typeof option == 'string') result = data[option].apply(data, args);
+      if (typeof result != 'undefined') return false;
+    });
+    return result ? result : items;
+  };
+
+  $.fn.zgutenberg.Constructor = Zgutenberg;
+
+  $.fn.zgutenberg.noConflict = function () {
+    $.fn.zgutenberg = old;
+    return this;
+  };
+
+  $(document).render(function () {
+    $('[data-zgutenberg]').zgutenberg();
+  });
+}(window.jQuery);
+
+/***/ }),
+
+/***/ "./src/store.js":
+/*!**********************!*\
+  !*** ./src/store.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App */ "./src/App.vue");
-/* harmony import */ var _CreateBlock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateBlock */ "./src/CreateBlock.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _blocks_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks.js */ "./src/blocks.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -36038,143 +36131,132 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-
-
-
-
-
-
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_4__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(_blocks_js__WEBPACK_IMPORTED_MODULE_5__["installer"]);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store({
-  strict: true,
-  state: {
-    blocks: _blocks_js__WEBPACK_IMPORTED_MODULE_5__["state"],
-    renderedBlocks: [],
-    sidebar: true,
-    handlers: {},
-    form: null,
-    selected: null
-  },
-  getters: {
-    asString: function asString(state) {
-      return function () {
-        return JSON.stringify(state.renderedBlocks);
-      };
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var form = _ref.form,
+      Vuex = _ref.Vuex,
+      blocks = _ref.blocks;
+  return new Vuex.Store({
+    strict: true,
+    state: {
+      blocks: blocks,
+      renderedBlocks: [],
+      sidebar: true,
+      handlers: {},
+      form: form,
+      selected: null
     },
-    block: function block(state) {
-      return function (k) {
-        return state.renderedBlocks[k];
-      };
-    }
-  },
-  mutations: {
-    init: function init(state, initialState) {
-      state.renderedBlocks = initialState.data;
-      state.handlers = initialState.handlers;
-      state.form = initialState.form;
-    },
-    select: function select(state, i) {
-      state.selected = i;
-    },
-    sidebar: function sidebar(state, s) {
-      state.sidebar = s;
-    },
-    updateBlock: function updateBlock(state, data) {
-      if (!state.renderedBlocks[data.id]) {
-        return;
+    getters: {
+      asString: function asString(state) {
+        return function () {
+          return JSON.stringify(state.renderedBlocks);
+        };
+      },
+      block: function block(state) {
+        return function (k) {
+          return state.renderedBlocks[k];
+        };
+      },
+      formObj: function formObj(state) {
+        return $('#' + state.form);
       }
+    },
+    mutations: {
+      init: function init(state, initialState) {
+        state.renderedBlocks = initialState.data;
+        state.handlers = initialState.handlers;
+      },
+      select: function select(state, i) {
+        state.selected = i;
+      },
+      sidebar: function sidebar(state, s) {
+        state.sidebar = s;
+      },
+      updateBlock: function updateBlock(state, data) {
+        if (!state.renderedBlocks[data.id]) {
+          return;
+        }
 
-      state.renderedBlocks.splice(data.id, 1, _objectSpread({}, state.renderedBlocks[data.id], {
-        'params': data.params,
-        'content': data.content
-      }));
+        state.renderedBlocks.splice(data.id, 1, _objectSpread({}, state.renderedBlocks[data.id], {
+          'params': data.params,
+          'content': data.content
+        }));
+      },
+      updateBlockIndex: function updateBlockIndex(state, data) {
+        var block = state.renderedBlocks[data.id];
+        block.content[data.index] = data.value;
+        state.renderedBlocks.splice(data.id, 1, block);
+      },
+      addBlockIndex: function addBlockIndex(state, data) {
+        var block = state.renderedBlocks[data.id];
+        block.content.splice(data.index, 0, data.value);
+        state.renderedBlocks.splice(data.id, 1, block);
+      },
+      destroyBlockIndex: function destroyBlockIndex(state, data) {
+        var block = state.renderedBlocks[data.id];
+        block.content.splice(data.index, 1);
+        state.renderedBlocks.splice(data.id, 1, block);
+      },
+      destroyBlock: function destroyBlock(state, id) {
+        state.renderedBlocks.splice(id, 1);
+      },
+      addRednderedBlock: function addRednderedBlock(state, block) {
+        var newLen = state.renderedBlocks.push(block);
+        state.selected = newLen - 1;
+      }
     },
-    updateBlockIndex: function updateBlockIndex(state, data) {
-      var block = state.renderedBlocks[data.id];
-      block.content[data.index] = data.value;
-      state.renderedBlocks.splice(data.id, 1, block);
-    },
-    addBlockIndex: function addBlockIndex(state, data) {
-      var block = state.renderedBlocks[data.id];
-      block.content.splice(data.index, 0, data.value);
-      state.renderedBlocks.splice(data.id, 1, block);
-    },
-    destroyBlockIndex: function destroyBlockIndex(state, data) {
-      var block = state.renderedBlocks[data.id];
-      block.content.splice(data.index, 1);
-      state.renderedBlocks.splice(data.id, 1, block);
-    },
-    destroyBlock: function destroyBlock(state, id) {
-      state.renderedBlocks.splice(id, 1);
-    },
-    addRednderedBlock: function addRednderedBlock(state, block) {
-      var newLen = state.renderedBlocks.push(block);
-      state.selected = newLen - 1;
-    }
-  },
-  actions: {
-    loadParams: function loadParams(_ref, component) {
-      var commit = _ref.commit,
-          state = _ref.state;
-      return new Promise(function (resolve) {
-        $('#' + state.form).request(state.handlers.params, {
-          data: {
-            component: component
-          },
-          success: function success(data) {
-            resolve(data);
-          }
-        });
-      });
-    },
-    addBlock: function addBlock(_ref2, config) {
-      var state = _ref2.state,
-          dispatch = _ref2.dispatch,
-          commit = _ref2.commit;
-      return _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!(typeof config.loadParams !== 'undefined')) {
-                  _context.next = 4;
-                  break;
-                }
-
-                _context.next = 3;
-                return dispatch('loadParams', config.loadParams);
-
-              case 3:
-                config.params = _context.sent;
-
-              case 4:
-                commit('addRednderedBlock', config);
-
-              case 5:
-              case "end":
-                return _context.stop();
+    actions: {
+      loadParams: function loadParams(_ref2, component) {
+        var getters = _ref2.getters,
+            commit = _ref2.commit,
+            state = _ref2.state;
+        return new Promise(function (resolve) {
+          getters.formObj.request(state.handlers.params, {
+            data: {
+              component: component
+            },
+            success: function success(data) {
+              resolve(data);
             }
-          }
-        }, _callee);
-      }))();
-    }
-  }
-});
-jQuery(document).ready(function () {
-  document.querySelectorAll('[data-zgutenberg]').forEach(function (el) {
-    vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('create-block', _CreateBlock__WEBPACK_IMPORTED_MODULE_3__["default"]);
-    var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
-      el: el,
-      store: store,
-      components: {
-        App: _App__WEBPACK_IMPORTED_MODULE_2__["default"]
+          });
+        });
+      },
+      addBlock: function addBlock(_ref3, config) {
+        var state = _ref3.state,
+            dispatch = _ref3.dispatch,
+            commit = _ref3.commit;
+        return _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  if (!(typeof config.loadParams !== 'undefined')) {
+                    _context.next = 4;
+                    break;
+                  }
+
+                  _context.next = 3;
+                  return dispatch('loadParams', config.loadParams);
+
+                case 3:
+                  config.params = _context.sent;
+
+                case 4:
+                  commit('addRednderedBlock', config);
+
+                case 5:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }))();
       }
-    });
+    }
   });
 });
+;
 
 /***/ }),
 

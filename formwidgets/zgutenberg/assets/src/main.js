@@ -2,98 +2,86 @@ import Vue from 'vue';
 import App from './App';
 import CreateBlock from './CreateBlock';
 import Vuex from 'vuex';
-import { installer, state } from './blocks.js';
+import { installer, blocks } from './blocks.js';
 import axios from 'axios';
+import store from './store.js';
 
 Vue.use(Vuex);
 Vue.use(installer);
 
-const store = new Vuex.Store({
-    strict: true,
-    state: {
-        blocks: state,
-        renderedBlocks: [],
-        sidebar: true,
-        handlers: {},
-        form: null,
-        selected: null
-    },
-    getters: {
-        asString: (state) => () => {
-            return JSON.stringify(state.renderedBlocks);
-        },
-        block: (state) => (k) => {
-            return state.renderedBlocks[k];
-        }
-    },
-    mutations: {
-        init(state, initialState) {
-            state.renderedBlocks = initialState.data;
-            state.handlers = initialState.handlers;
-            state.form = initialState.form;
-        },
-        select(state, i) {
-            state.selected = i;
-        },
-        sidebar(state, s) {
-            state.sidebar = s;
-        },
-        updateBlock(state, data) {
-            if (!state.renderedBlocks[data.id]) { return; }
-            state.renderedBlocks.splice(data.id, 1, { ...state.renderedBlocks[data.id], 'params': data.params, 'content': data.content });
-        },
-        updateBlockIndex(state, data) {
-            var block = state.renderedBlocks[data.id];
-            block.content[data.index] = data.value;
-            state.renderedBlocks.splice(data.id, 1, block);
-        },
-        addBlockIndex(state, data) {
-            var block = state.renderedBlocks[data.id];
-            block.content.splice(data.index, 0, data.value);
-            state.renderedBlocks.splice(data.id, 1, block);
-        },
-        destroyBlockIndex(state, data) {
-            var block = state.renderedBlocks[data.id];
-            block.content.splice(data.index, 1);
-            state.renderedBlocks.splice(data.id, 1, block);
-        },
-        destroyBlock(state, id) {
-            state.renderedBlocks.splice(id, 1);
-        },
-        addRednderedBlock(state, block) {
-            var newLen = state.renderedBlocks.push(block);
-            state.selected = newLen - 1;
-        }
-    },
-    actions: {
-        loadParams({ commit, state }, component) {
-            return new Promise((resolve) => {
-                $('#'+state.form).request(state.handlers.params, {
-                    data: { component: component },
-                    success: function(data) {
-                        resolve(data);
-                    }
-                });
-            });
-        },
-        async addBlock({ state, dispatch, commit }, config) {
-            if (typeof config.loadParams !== 'undefined') {
-                config.params = await dispatch('loadParams', config.loadParams);
-            }
+Vue.component('create-block', CreateBlock);
 
-            commit('addRednderedBlock', config);
-        },
-    },
-});
++function ($) { "use strict";
+    var Base = $.oc.foundation.base,
+        BaseProto = Base.prototype
 
-jQuery(document).ready(function() {
-    document.querySelectorAll('[data-zgutenberg]').forEach(function(el) {
-        Vue.component('create-block', CreateBlock);
+    var Zgutenberg = function (element, options) {
+        this.$el = $(element)
+        this.$form = $(element).closest('form');
+        this.options = options || {}
 
-        var app = new Vue({
-            el: el,
-            store,
+        $.oc.foundation.controlUtils.markDisposable(element)
+        Base.call(this)
+        this.init()
+    }
+
+    Zgutenberg.prototype = Object.create(BaseProto)
+    Zgutenberg.prototype.constructor = Zgutenberg
+
+    Zgutenberg.prototype.init = function() {
+        var formId = this.setFormId();
+
+        this.$app = new Vue({
+            el: this.$el.get(0),
+            store: store({
+                form: formId,
+                blocks: blocks,
+                Vuex: Vuex
+            }),
             components: { App }
         });
-    });
-});
+    }
+
+    Zgutenberg.prototype.setFormId = function() {
+        this.formId = Math.random().toString(36).substring(7) + Math.random().toString(36).substring(7);
+        this.$form.attr('id', this.formId);
+
+        return this.formId;
+    }
+
+    Zgutenberg.DEFAULTS = {
+        someParam: null
+    }
+
+    // PLUGIN DEFINITION
+    // ============================
+
+    var old = $.fn.zgutenberg
+
+    $.fn.zgutenberg = function (option) {
+        var args = Array.prototype.slice.call(arguments, 1), items, result
+
+        items = this.each(function () {
+            var $this   = $(this)
+            var data    = $this.data('oc.zgutenberg')
+            var options = $.extend({}, Zgutenberg.DEFAULTS, $this.data(), typeof option == 'object' && option)
+            if (!data) $this.data('oc.zgutenberg', (data = new Zgutenberg(this, options)))
+            if (typeof option == 'string') result = data[option].apply(data, args)
+            if (typeof result != 'undefined') return false
+        })
+
+        return result ? result : items
+    }
+
+    $.fn.zgutenberg.Constructor = Zgutenberg
+
+    $.fn.zgutenberg.noConflict = function () {
+        $.fn.zgutenberg = old
+        return this
+    }
+
+    $(document).render(function (){
+        $('[data-zgutenberg]').zgutenberg()
+    })
+
+}(window.jQuery);

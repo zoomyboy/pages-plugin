@@ -34,16 +34,12 @@ export default {
     },
     mounted() {
         var self = this;
-        var $form = window.jQuery(this.$el).closest('form');
-        var formId = Math.random().toString(36).substring(7) + Math.random().toString(36).substring(7);
-        $form.attr('id', formId);
 
-        $form.request(this.handlers.init, {
+        this.$store.getters.formObj.request(this.handlers.init, {
             success: (data) => {
                 self.$store.commit('init', {
                     data: data,
-                    handlers: this.handlers,
-                    form: formId
+                    handlers: this.handlers
                 });
             }
         });
