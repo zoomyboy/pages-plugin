@@ -24,7 +24,7 @@ import Output from './Output.vue';
 export default {
     props: {
         name: {},
-        handler: {}
+        handlers: {}
     },
     components: { Zgcontent, Toolbar, Sidebar, Output },
     computed: {
@@ -34,9 +34,17 @@ export default {
     },
     mounted() {
         var self = this;
-        window.jQuery(this.$el).closest('form').request('onGutenbergInit', {
-            success: function(data) {
-                self.$store.commit('init', data);
+        var $form = window.jQuery(this.$el).closest('form');
+        var formId = Math.random().toString(36).substring(7) + Math.random().toString(36).substring(7);
+        $form.attr('id', formId);
+
+        $form.request(this.handlers.init, {
+            success: (data) => {
+                self.$store.commit('init', {
+                    data: data,
+                    handlers: this.handlers,
+                    form: formId
+                });
             }
         });
     }

@@ -23,7 +23,7 @@ const component = {
                 keydown: (e) => {
                     if (e.keyCode == 13) {
                         e.preventDefault();
-                        self.$store.commit('addBlock', {
+                        self.$store.dispatch('addBlock', {
                             component: 'paragraph',
                             params: {tag: 'p'},
                             content: ''

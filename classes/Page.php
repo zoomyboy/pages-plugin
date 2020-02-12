@@ -923,6 +923,6 @@ class Page extends ContentBase
     }
 
     public function getGutenbergData() {
-        return json_decode($this->viewBag['content'] ?? '[]');
+        return json_decode($this->viewBag['zg_data'] ?? '[]');
     }
 }

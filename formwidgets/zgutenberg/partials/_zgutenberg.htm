@@ -6,6 +6,9 @@
 
 <?php else: ?>
 
-<div data-zgutenberg><app name="<?= $name ?>" handler="<?= $this->getEventHandler('onLoadValue') ?>"></app></div>
+<div data-zgutenberg><app name="<?= $name ?>" :handlers="{
+    'init': '<?= $this->getEventHandler('onLoadValue') ?>',
+    'params': '<?= $this->getEventHandler('onLoadParams') ?>'
+}"></app></div>
 
 <?php endif ?>

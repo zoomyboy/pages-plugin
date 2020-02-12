@@ -13,7 +13,7 @@ const component = {
                 keydown: (e) => {
                     if (e.keyCode == 13) {
                         e.preventDefault();
-                        self.$store.commit('addBlock', {
+                        self.$store.dispatch('addBlock', {
                             component: 'paragraph',
                             params: {},
                             content: ''
@@ -21,7 +21,7 @@ const component = {
                     }
                 },
                 blur: debounce(e => {
-                    self.$store.commit('updateBlock', {
+                    self.$store.dispatch('updateBlock', {
                         id: self.$vnode.key,
                         params: self.params,
                         content: e.target.innerHTML

@@ -19,6 +19,7 @@ use RainLab\Pages\Widgets\SnippetList;
 use RainLab\Pages\Classes\Snippet;
 use RainLab\Pages\Classes\Page as StaticPage;
 use RainLab\Pages\Classes\Router;
+use RainLab\Pages\Classes\Renderer;
 use RainLab\Pages\Classes\Content;
 use RainLab\Pages\Classes\MenuItem;
 use RainLab\Pages\Plugin as PagesPlugin;
@@ -565,8 +566,8 @@ class Index extends Controller
 
         if ($type == 'page') {
             $placeholders = array_get($saveData, 'placeholders');
-            $objectData['settings']['viewBag']['content'] = json_encode($objectData['markup']);
-            $objectData['markup'] = 'AA';
+            $objectData['settings']['viewBag']['zg_data'] = json_encode($objectData['markup']);
+            $objectData['markup'] = app(Renderer::class)->render($objectData['markup']);
 
             if (is_array($placeholders) && Config::get('cms.convertLineEndings', false) === true) {
                 $placeholders = array_map([$this, 'convertLineEndings'], $placeholders);

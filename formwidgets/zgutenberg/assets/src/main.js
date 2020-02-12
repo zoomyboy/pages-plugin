@@ -14,6 +14,8 @@ const store = new Vuex.Store({
         blocks: state,
         renderedBlocks: [],
         sidebar: true,
+        handlers: {},
+        form: null,
         selected: null
     },
     getters: {
@@ -26,11 +28,9 @@ const store = new Vuex.Store({
     },
     mutations: {
         init(state, initialState) {
-            state.renderedBlocks = initialState;
-        },
-        addBlock(state, config) {
-            var newLen = state.renderedBlocks.push(config);
-            state.selected = newLen - 1;
+            state.renderedBlocks = initialState.data;
+            state.handlers = initialState.handlers;
+            state.form = initialState.form;
         },
         select(state, i) {
             state.selected = i;
@@ -59,8 +59,31 @@ const store = new Vuex.Store({
         },
         destroyBlock(state, id) {
             state.renderedBlocks.splice(id, 1);
+        },
+        addRednderedBlock(state, block) {
+            var newLen = state.renderedBlocks.push(block);
+            state.selected = newLen - 1;
         }
-    }
+    },
+    actions: {
+        loadParams({ commit, state }, component) {
+            return new Promise((resolve) => {
+                $('#'+state.form).request(state.handlers.params, {
+                    data: { component: component },
+                    success: function(data) {
+                        resolve(data);
+                    }
+                });
+            });
+        },
+        async addBlock({ state, dispatch, commit }, config) {
+            if (typeof config.loadParams !== 'undefined') {
+                config.params = await dispatch('loadParams', config.loadParams);
+            }
+
+            commit('addRednderedBlock', config);
+        },
+    },
 });
 
 jQuery(document).ready(function() {

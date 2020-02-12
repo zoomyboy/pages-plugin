@@ -42,13 +42,16 @@ export default {
         onPaste(e, key) {
             var self = this;
             document.activeElement.blur();
-            e.target.innerHTML = this.s(e.clipboardData.getData('text'));
+            this.$store.commit('updateBlockIndex', {
+                id: this.$vnode.key,
+                index: key,
+                value: {'content': this.s(e.clipboardData.getData('text').replace("\n", ""))}
+            });
         },
         onFocus() {
             this.$refs.input.firstChild.focus();
         },
         updateContent(key, event) {
-            console.log('FFF');
             this.$store.commit('updateBlockIndex', {
                 id: this.$vnode.key,
                 index: key,

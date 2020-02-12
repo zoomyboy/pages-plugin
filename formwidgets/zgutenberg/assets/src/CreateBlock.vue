@@ -28,9 +28,10 @@ export default {
     },
     methods: {
         addBlock(v, componentName) {
-            this.$store.commit('addBlock', {
+            this.$store.dispatch('addBlock', {
                 component: componentName,
                 params: v.params,
+                loadParams: v.loadParams,                
                 content: v.content
             });
             this.$emit('input', false);

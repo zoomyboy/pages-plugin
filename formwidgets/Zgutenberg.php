@@ -1,5 +1,6 @@
 <?php namespace Rainlab\Pages\FormWidgets;
 
+use Input;
 use Response;
 use Backend\Classes\FormWidgetBase;
 
@@ -51,7 +52,7 @@ class Zgutenberg extends FormWidgetBase
         $this->addJs('js/zgutenberg.js', 'rainlab.pages');
     }
 
-    public function onGutenbergInit() {
+    public function onLoadValue() {
         if (method_exists($this->model, 'getGutenbergData')) {
             $value = $this->model->getGutenbergData();
         } else {
@@ -67,5 +68,24 @@ class Zgutenberg extends FormWidgetBase
     public function getSaveValue($value)
     {
         return json_decode($value);
+    }
+
+    public function loadMembersParams() {
+        return [
+            'category' => [
+                'label' => 'Kategorie',
+                'type' => 'dropdown',
+                'options' => [
+                    'start' => 'Startseite', 'aa' => 'BB'
+                ]
+            ]
+        ];
+    }
+
+    public function onLoadParams() {
+        $component = Input::get('component');
+        $method = camel_case('load_'.$component.'_params');
+
+        return Response::json($this->{$method}());
     }
 }

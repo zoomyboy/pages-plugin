@@ -1,0 +1,3 @@
+<?php foreach($markup as $component): ?>
+    <?php echo $this->makePartial($component->component, ['c' => $component]); ?>
+<?php endforeach; ?>
