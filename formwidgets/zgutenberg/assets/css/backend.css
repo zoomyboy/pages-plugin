@@ -1468,8 +1468,8 @@
   margin-bottom: 0.25rem;
 }
 
-.zg-content h2.c.no-topmargin,
-.zg-content h3.c.no-topmargin {
+.zg-content h2.c:first-child,
+.zg-content h3.c:first-child {
   margin-top: 0;
 }
 

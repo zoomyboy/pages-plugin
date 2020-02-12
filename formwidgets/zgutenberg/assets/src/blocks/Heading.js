@@ -21,7 +21,7 @@ const component = {
                     }
                 },
                 blur: debounce(e => {
-                    self.$store.dispatch('updateBlock', {
+                    self.$store.commit('updateBlock', {
                         id: self.$vnode.key,
                         params: self.params,
                         content: e.target.innerHTML

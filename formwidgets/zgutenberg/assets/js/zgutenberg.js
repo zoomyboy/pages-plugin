@@ -35698,7 +35698,7 @@ var component = {
           }
         },
         blur: Object(lodash__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (e) {
-          self.$store.dispatch('updateBlock', {
+          self.$store.commit('updateBlock', {
             id: self.$vnode.key,
             params: self.params,
             content: e.target.innerHTML
@@ -36189,9 +36189,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/pille/www/dpsgkoeln/plugins/rainlab/pages/formwidgets/zgutenberg/assets/src/main.js */"./src/main.js");
-__webpack_require__(/*! /home/pille/www/dpsgkoeln/plugins/rainlab/pages/formwidgets/zgutenberg/assets/css/backend-dev.scss */"./css/backend-dev.scss");
-module.exports = __webpack_require__(/*! /home/pille/www/dpsgkoeln/plugins/rainlab/pages/formwidgets/zgutenberg/assets/css/main.css */"./css/main.css");
+__webpack_require__(/*! /var/www/vhosts/dpsg-koeln.de/neu.dpsg-koeln.de/plugins/rainlab/pages/formwidgets/zgutenberg/assets/src/main.js */"./src/main.js");
+__webpack_require__(/*! /var/www/vhosts/dpsg-koeln.de/neu.dpsg-koeln.de/plugins/rainlab/pages/formwidgets/zgutenberg/assets/css/backend-dev.scss */"./css/backend-dev.scss");
+module.exports = __webpack_require__(/*! /var/www/vhosts/dpsg-koeln.de/neu.dpsg-koeln.de/plugins/rainlab/pages/formwidgets/zgutenberg/assets/css/main.css */"./css/main.css");
 
 
 /***/ })
