@@ -31,7 +31,10 @@ const component = {
             style: {
                 outline: 'none'
             },
-        }, this.content);
+            domProps: {
+                innerHTML: this.content
+            }
+        }, []);
     },
 
     methods: {

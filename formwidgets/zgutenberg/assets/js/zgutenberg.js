@@ -35707,8 +35707,11 @@ var component = {
       },
       style: {
         outline: 'none'
+      },
+      domProps: {
+        innerHTML: this.content
       }
-    }, this.content);
+    }, []);
   },
   methods: {
     onFocus: function onFocus() {
@@ -35914,10 +35917,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _block_mixin_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../block.mixin.js */ "./src/block.mixin.js");
+/* harmony import */ var _strip_mixin_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../strip.mixin.js */ "./src/strip.mixin.js");
+
 
 
 var component = {
-  mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"], _strip_mixin_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
   computed: {
     params: function params() {
       return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? {} : this.$store.getters.block(this.$vnode.key).params;
@@ -35938,8 +35943,9 @@ var component = {
       "class": ['c'],
       on: {
         keydown: function keydown(e) {
-          if (e.keyCode == 13) {
+          if (e.keyCode == 13 && !e.shiftKey) {
             e.preventDefault();
+            document.activeElement.blur();
             self.$store.dispatch('addBlock', {
               component: 'paragraph',
               params: {
@@ -35957,7 +35963,16 @@ var component = {
             return;
           }
         },
-        input: Object(lodash__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (e) {
+        paste: function paste(e) {
+          document.activeElement.blur();
+          self.$store.commit('updateBlock', {
+            id: self.$vnode.key,
+            params: self.params,
+            content: self.s(e.clipboardData.getData('text'))
+          });
+        },
+        blur: Object(lodash__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (e) {
+          console.log(e.target.innerHTML);
           self.$store.commit('updateBlock', {
             id: self.$vnode.key,
             params: self.params,
@@ -35967,8 +35982,11 @@ var component = {
       },
       style: {
         outline: 'none'
+      },
+      domProps: {
+        innerHTML: this.content
       }
-    }, this.content);
+    }, []);
   },
   methods: {
     onFocus: function onFocus() {

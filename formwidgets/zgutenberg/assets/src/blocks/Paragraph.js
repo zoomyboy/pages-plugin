@@ -1,8 +1,9 @@
 import { debounce } from 'lodash';
 import BlockMixin from '../block.mixin.js';
+import StripMixin from '../strip.mixin.js';
 
 const component = {
-    mixins: [ BlockMixin ],
+    mixins: [ BlockMixin, StripMixin ],
 
     computed: {
         params() {
@@ -21,8 +22,9 @@ const component = {
             class: [ 'c' ],
             on: {
                 keydown: (e) => {
-                    if (e.keyCode == 13) {
+                    if (e.keyCode == 13 && !e.shiftKey) {
                         e.preventDefault();
+                        document.activeElement.blur();
                         self.$store.dispatch('addBlock', {
                             component: 'paragraph',
                             params: {tag: 'p'},
@@ -38,7 +40,16 @@ const component = {
                         return;
                     }
                 },
-                input: debounce(e => {
+                paste(e) {
+                    document.activeElement.blur();
+                    self.$store.commit('updateBlock', {
+                        id: self.$vnode.key,
+                        params: self.params,
+                        content: self.s(e.clipboardData.getData('text'))
+                    });
+                },
+                blur: debounce(e => {
+                    console.log(e.target.innerHTML);
                     self.$store.commit('updateBlock', {
                         id: self.$vnode.key,
                         params: self.params,
@@ -49,7 +60,10 @@ const component = {
             style: {
                 outline: 'none'
             },
-        }, this.content);
+            domProps: {
+                innerHTML: this.content
+            }
+        }, []);
     },
 
     methods: {
