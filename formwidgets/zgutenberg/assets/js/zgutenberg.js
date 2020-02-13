@@ -2071,7 +2071,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    params: function params() {
+      return this.$store.getters.sidebarParams;
+    },
+    block: function block() {
+      return this.$store.getters.selectedBlockType;
+    }
+  },
+  methods: {
+    publish: function publish(name, event) {
+      this.$store.commit('updateParams', {
+        key: name,
+        value: event.target.value
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -2272,7 +2303,24 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mixins: [_block_mixin_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
-  methods: {}
+  watch: {
+    params: function params(newValue) {
+      var _this = this;
+
+      this.$store.getters.formObj.request('onUpdateComponent', {
+        data: {
+          component: 'members',
+          params: newValue
+        },
+        success: function success(data) {
+          _this.content = data;
+        }
+      });
+    }
+  },
+  methods: {
+    onFocus: function onFocus() {}
+  }
 });
 
 var render = function render(createElement) {};
@@ -21638,30 +21686,78 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass:
-        "zg-h-16 zg-flex zg-justify-between zg-bg-gray-200 zg-border-b zg-border-gray-300 zg-items-center zg-px-4"
-    },
     [
-      _c("div"),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "a",
-          {
-            staticClass: "fa-btn",
-            attrs: { href: "#" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.$store.commit("sidebar", false)
+      _c(
+        "div",
+        {
+          staticClass:
+            "zg-h-16 zg-flex zg-justify-between zg-bg-gray-200 zg-border-b zg-border-gray-300 zg-items-center zg-px-4"
+        },
+        [
+          _c("span", { domProps: { textContent: _vm._s(_vm.block.name) } }),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "fa-btn",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.$store.commit("sidebar", false)
+                }
               }
-            }
-          },
-          [_c("span", { staticClass: "fa fa-close" })]
-        )
-      ])
-    ]
+            },
+            [_c("span", { staticClass: "fa fa-close" })]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.params, function(param, name) {
+        return _c("div", [
+          param.type == "dropdown"
+            ? _c("div", [
+                _c("label", {
+                  attrs: { for: name },
+                  domProps: { textContent: _vm._s(param.label) }
+                }),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    attrs: { id: name, name: name },
+                    on: {
+                      change: function($event) {
+                        return _vm.publish(name, $event)
+                      }
+                    }
+                  },
+                  [
+                    _c("option", {
+                      domProps: {
+                        value: null,
+                        textContent: _vm._s(param.placeholder)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._l(param.options, function(value, key) {
+                      return _c(
+                        "option",
+                        {
+                          domProps: { value: key, textContent: _vm._s(value) }
+                        },
+                        [_vm._v(">")]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            : _vm._e()
+        ])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -36158,6 +36254,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       formObj: function formObj(state) {
         return $('#' + state.form);
+      },
+      sidebarParams: function sidebarParams(state) {
+        if (!state.selected) {
+          return [];
+        }
+
+        return state.renderedBlocks[state.selected].params;
+      },
+      selectedBlockType: function selectedBlockType(state) {
+        if (!state.selected) {
+          return [];
+        }
+
+        return state.blocks[state.renderedBlocks[state.selected].component];
       }
     },
     mutations: {
@@ -36202,13 +36312,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       addRednderedBlock: function addRednderedBlock(state, block) {
         var newLen = state.renderedBlocks.push(block);
         state.selected = newLen - 1;
+      },
+      updateParams: function updateParams(state, _ref2) {
+        var key = _ref2.key,
+            value = _ref2.value;
+        var p = state.renderedBlocks[state.selected].params;
+        p[key].value = value;
+
+        var newParamsr = _objectSpread({}, state.renderedBlocks[state.selected], {
+          params: p
+        });
+
+        state.renderedBlocks.splice(state.selected, 1, newParamsr);
       }
     },
     actions: {
-      loadParams: function loadParams(_ref2, component) {
-        var getters = _ref2.getters,
-            commit = _ref2.commit,
-            state = _ref2.state;
+      loadParams: function loadParams(_ref3, component) {
+        var getters = _ref3.getters,
+            commit = _ref3.commit,
+            state = _ref3.state;
         return new Promise(function (resolve) {
           getters.formObj.request(state.handlers.params, {
             data: {
@@ -36220,10 +36342,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         });
       },
-      addBlock: function addBlock(_ref3, config) {
-        var state = _ref3.state,
-            dispatch = _ref3.dispatch,
-            commit = _ref3.commit;
+      addBlock: function addBlock(_ref4, config) {
+        var state = _ref4.state,
+            dispatch = _ref4.dispatch,
+            commit = _ref4.commit;
         return _asyncToGenerator(
         /*#__PURE__*/
         _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {

@@ -18,6 +18,15 @@ export default function({ form, Vuex, blocks }) {
             },
             formObj(state) {
                 return $('#'+state.form);
+            },
+            sidebarParams(state) {
+                if (!state.selected) { return []; }
+                return state.renderedBlocks[state.selected].params;
+            },
+            selectedBlockType(state) {
+                if (!state.selected) { return []; }
+
+                return state.blocks[state.renderedBlocks[state.selected].component];
             }
         },
         mutations: {
@@ -56,6 +65,13 @@ export default function({ form, Vuex, blocks }) {
             addRednderedBlock(state, block) {
                 var newLen = state.renderedBlocks.push(block);
                 state.selected = newLen - 1;
+            },
+            updateParams(state, { key, value }) {
+                var p = state.renderedBlocks[state.selected].params;
+                p[key].value = value;
+
+                var newParamsr = { ...state.renderedBlocks[state.selected], params: p };
+                state.renderedBlocks.splice(state.selected, 1, newParamsr);
             }
         },
         actions: {
@@ -75,7 +91,7 @@ export default function({ form, Vuex, blocks }) {
                 }
 
                 commit('addRednderedBlock', config);
-            },
+            }
         },
     });
 };

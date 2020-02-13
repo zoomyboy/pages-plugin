@@ -1,8 +1,12 @@
 <?php namespace Rainlab\Pages\FormWidgets;
 
+use View;
 use Input;
 use Response;
 use Backend\Classes\FormWidgetBase;
+use Cms\Classes\Controller as CmsController;
+use Dv\Base\Models\Membercategory as Category;
+use Cms\Classes\ComponentManager;
 
 /**
  * zgutenberg Form Widget
@@ -70,14 +74,35 @@ class Zgutenberg extends FormWidgetBase
         return json_decode($value);
     }
 
+    public function onUpdateComponent() {
+        $controller = CmsController::getController();
+
+        $params = collect(Input::get('params'))->map(function($param) {
+            return $param['value'] ?? null;
+        })->toArray();
+
+        $component = ComponentManager::instance()->makeComponent(Input::get('component'), null, $params);
+
+        $page = app()->make('\Cms\Classes\Page');
+        $page->components = [Input::get('component') => $component];
+
+        $controller = app()->make('\Cms\Classes\Controller');
+        $controller->runPage($page, false);
+
+
+        $markup = $controller->renderComponent(Input::get('component'));
+
+        return Response::make($markup);
+    }
+
     public function loadMembersParams() {
         return [
             'category' => [
                 'label' => 'Kategorie',
                 'type' => 'dropdown',
-                'options' => [
-                    'start' => 'Startseite', 'aa' => 'BB'
-                ]
+                'placeholder' => 'Kategorie wählen',
+                'value' => null,
+                'options' => Category::get()->pluck('title', 'id')->toArray()
             ]
         ];
     }

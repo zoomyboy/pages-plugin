@@ -22,7 +22,19 @@ export default {
 
     mixins: [BlockMixin],
 
+    watch: {
+        params(newValue) {
+            this.$store.getters.formObj.request('onUpdateComponent', {
+                data: { component: 'members', params: newValue },
+                success: (data) => {
+                    this.content = data;
+                }
+            });
+        }
+    },
+
     methods: {
+        onFocus() {}
     }
 };
 
