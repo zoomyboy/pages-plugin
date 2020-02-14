@@ -65,9 +65,10 @@ export default function({ form, Vuex, blocks }) {
             destroyBlock(state, id) {
                 state.renderedBlocks.splice(id, 1);
             },
-            addRednderedBlock(state, block) {
-                var newLen = state.renderedBlocks.push(block);
-                state.selected = newLen - 1;
+            addRenderedBlock(state, block) {
+                var index = typeof block.after === 'undefined' ? state.renderedBlocks.length : block.after + 1;
+                state.renderedBlocks.splice(index, 0, block);
+                state.selected = index;
             },
             updateParams(state, { key, value }) {
                 var p = state.renderedBlocks[state.selected].params;
@@ -93,7 +94,7 @@ export default function({ form, Vuex, blocks }) {
                     config.params = await dispatch('loadParams', config.loadParams);
                 }
 
-                commit('addRednderedBlock', config);
+                commit('addRenderedBlock', config);
             },
             getInit({ state, commit, getters }, initialState) {
                 commit('init', initialState);

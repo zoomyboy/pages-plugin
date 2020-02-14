@@ -27,7 +27,8 @@ const component = {
                         document.activeElement.blur();
                         self.$store.dispatch('addBlock', {
                             ...self.$store.getters.block(self.$vnode.key),
-                            content: ''
+                            content: '',
+                            after: this.$vnode.key
                         });
 
                         return;

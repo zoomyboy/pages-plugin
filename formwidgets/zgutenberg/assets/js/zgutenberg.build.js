@@ -36018,7 +36018,8 @@ var component = {
             e.preventDefault();
             document.activeElement.blur();
             self.$store.dispatch('addBlock', _objectSpread({}, self.$store.getters.block(self.$vnode.key), {
-              content: ''
+              content: '',
+              after: _this.$vnode.key
             }));
             return;
           } // Delete paragraph if backspace is pressed
@@ -36288,9 +36289,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       destroyBlock: function destroyBlock(state, id) {
         state.renderedBlocks.splice(id, 1);
       },
-      addRednderedBlock: function addRednderedBlock(state, block) {
-        var newLen = state.renderedBlocks.push(block);
-        state.selected = newLen - 1;
+      addRenderedBlock: function addRenderedBlock(state, block) {
+        var index = typeof block.after === 'undefined' ? state.renderedBlocks.length : block.after + 1;
+        state.renderedBlocks.splice(index, 0, block);
+        state.selected = index;
       },
       updateParams: function updateParams(state, _ref2) {
         var key = _ref2.key,
@@ -36344,7 +36346,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   config.params = _context.sent;
 
                 case 4:
-                  commit('addRednderedBlock', config);
+                  commit('addRenderedBlock', config);
 
                 case 5:
                 case "end":
