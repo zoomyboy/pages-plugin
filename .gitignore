@@ -2,3 +2,6 @@
 .idea
 /vendor
 formwidgets/zgutenberg/assets/node_modules
+formwidgets/zgutenberg/assets/css/backend.build.css
+formwidgets/zgutenberg/assets/js/zgutenberg.build.js
+
