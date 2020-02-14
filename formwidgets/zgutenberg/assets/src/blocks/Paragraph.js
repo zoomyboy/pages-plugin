@@ -26,8 +26,7 @@ const component = {
                         e.preventDefault();
                         document.activeElement.blur();
                         self.$store.dispatch('addBlock', {
-                            component: 'paragraph',
-                            params: {tag: 'p'},
+                            ...self.$store.getters.block(self.$vnode.key),
                             content: ''
                         });
 
@@ -80,6 +79,7 @@ const render = function(createElement) {
 
 const params = {
     icon: 'paragraph',
+    is: 'paragraph',
     name: 'Absatz',
     params: {},
     content: ''

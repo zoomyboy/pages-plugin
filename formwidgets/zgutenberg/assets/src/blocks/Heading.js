@@ -61,6 +61,7 @@ const render = function(createElement) {
 
 const params = {
     icon: 'heading',
+    is: 'heading',
     name: 'Überschrift',
     params: {
         tag: 'h2'

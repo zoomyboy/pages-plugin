@@ -2321,6 +2321,7 @@ var render = function render(createElement) {};
 
 var params = {
   icon: 'list',
+  is: 'list',
   name: 'List',
   params: {},
   content: [{
@@ -35878,6 +35879,7 @@ var render = function render(createElement) {};
 
 var params = {
   icon: 'heading',
+  is: 'heading',
   name: 'Überschrift',
   params: {
     tag: 'h2'
@@ -35981,6 +35983,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _block_mixin_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../block.mixin.js */ "./src/block.mixin.js");
 /* harmony import */ var _strip_mixin_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../strip.mixin.js */ "./src/strip.mixin.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -36009,13 +36017,9 @@ var component = {
           if (e.keyCode == 13 && !e.shiftKey) {
             e.preventDefault();
             document.activeElement.blur();
-            self.$store.dispatch('addBlock', {
-              component: 'paragraph',
-              params: {
-                tag: 'p'
-              },
+            self.$store.dispatch('addBlock', _objectSpread({}, self.$store.getters.block(self.$vnode.key), {
               content: ''
-            });
+            }));
             return;
           } // Delete paragraph if backspace is pressed
 
@@ -36062,6 +36066,7 @@ var render = function render(createElement) {};
 
 var params = {
   icon: 'paragraph',
+  is: 'paragraph',
   name: 'Absatz',
   params: {},
   content: ''

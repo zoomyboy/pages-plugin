@@ -94,6 +94,7 @@ const render = function(createElement) {
 
 const params = {
     icon: 'list',
+    is: 'list',
     name: 'List',
     params: {},
     content: [{content: ''}]
