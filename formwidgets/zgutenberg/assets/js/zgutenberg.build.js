@@ -36013,6 +36013,9 @@ var component = {
       ref: 'input',
       "class": ['c'],
       on: {
+        click: function click(e) {
+          self.$store.commit('select', self.$vnode.key);
+        },
         keydown: function keydown(e) {
           if (e.keyCode == 13 && !e.shiftKey) {
             e.preventDefault();
@@ -36025,7 +36028,9 @@ var component = {
           } // Delete paragraph if backspace is pressed
 
 
-          if (event.target.innerHTML == '' && e.keyCode == 8) {
+          console.log(e.target.innerHTML);
+
+          if (e.target.innerHTML == '' && e.keyCode == 8) {
             _this.$store.commit('destroyBlock', _this.$vnode.key);
 
             return;
@@ -36287,6 +36292,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         state.renderedBlocks.splice(data.id, 1, block);
       },
       destroyBlock: function destroyBlock(state, id) {
+        // Wenn der letzte Block gelöscht wird, selektiere nichts
+        if (state.renderedBlocks.length == 1) {
+          state.selected = null; // Wenn der erste Block gelöscht wird, selektiere vorgehenden
+        } else if (id == state.renderedBlocks.length - 1) {
+          state.selected--;
+        }
+
         state.renderedBlocks.splice(id, 1);
       },
       addRenderedBlock: function addRenderedBlock(state, block) {

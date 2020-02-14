@@ -21,6 +21,9 @@ const component = {
             ref: 'input',
             class: [ 'c' ],
             on: {
+                click(e) {
+                    self.$store.commit('select', self.$vnode.key);
+                },
                 keydown: (e) => {
                     if (e.keyCode == 13 && !e.shiftKey) {
                         e.preventDefault();
@@ -35,7 +38,8 @@ const component = {
                     }
                     
                     // Delete paragraph if backspace is pressed
-                    if (event.target.innerHTML == '' && e.keyCode == 8) {
+                    console.log(e.target.innerHTML);
+                    if (e.target.innerHTML == '' && e.keyCode == 8) {
                         this.$store.commit('destroyBlock', this.$vnode.key);
                         return;
                     }

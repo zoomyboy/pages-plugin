@@ -63,6 +63,15 @@ export default function({ form, Vuex, blocks }) {
                 state.renderedBlocks.splice(data.id, 1, block);
             },
             destroyBlock(state, id) {
+                // Wenn der letzte Block gelöscht wird, selektiere nichts
+                if (state.renderedBlocks.length == 1) {
+                    state.selected = null;
+
+                // Wenn der erste Block gelöscht wird, selektiere vorgehenden
+                } else if (id == state.renderedBlocks.length - 1) {
+                    state.selected--;
+                }
+
                 state.renderedBlocks.splice(id, 1);
             },
             addRenderedBlock(state, block) {
