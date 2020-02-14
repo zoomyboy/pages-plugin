@@ -12,7 +12,7 @@
 
             <div v-if="param.type == 'dropdown'">
                 <label :for="name" v-text="param.label"></label>
-                <select :id="name" :name="name" @change="publish(name, $event)">
+                <select :id="name" :name="name" @change="publish(name, $event)" :value="param.value">
                     <option :value="null" v-text="param.placeholder"></option>
                     <option :value="key" v-for="(value, key) in param.options" v-text="value">></option>
                 </select>

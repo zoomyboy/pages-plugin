@@ -30,9 +30,7 @@ export default {
         addBlock(v, componentName) {
             this.$store.dispatch('addBlock', {
                 component: componentName,
-                params: v.params,
-                loadParams: v.loadParams,                
-                content: v.content
+                ...v
             });
             this.$emit('input', false);
         }

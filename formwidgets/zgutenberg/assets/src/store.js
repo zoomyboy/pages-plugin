@@ -34,6 +34,9 @@ export default function({ form, Vuex, blocks }) {
                 state.renderedBlocks = initialState.data;
                 state.handlers = initialState.handlers;
             },
+            updateAvailableBlocks(state, blocks) {
+                state.blocks = blocks;
+            },
             select(state, i) {
                 state.selected = i;
             },
@@ -91,7 +94,19 @@ export default function({ form, Vuex, blocks }) {
                 }
 
                 commit('addRednderedBlock', config);
-            }
+            },
+            getInit({ state, commit, getters }, initialState) {
+                commit('init', initialState);
+                new Promise((resolve) => {
+                    getters.formObj.request(state.handlers.blocks, {
+                        success(data) {
+                            resolve(data);
+                        }
+                    });
+                }).then(data => {
+                    commit('updateAvailableBlocks', { ...state.blocks, ...data });
+                });
+            },
         },
     });
 };

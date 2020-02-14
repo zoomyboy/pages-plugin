@@ -1,10 +1,10 @@
 <template>
-    <div v-html="content"></div>
+    <div v-html="content" @click="select"></div>
 </template>
 
 <script>
 import { debounce } from 'lodash';
-import BlockMixin from '../block.mixin.js';
+import BlockMixin from './block.mixin.js';
 
 export default {
 
@@ -24,8 +24,18 @@ export default {
 
     watch: {
         params(newValue) {
+            this.render();
+        }
+    },
+
+    methods: {
+        select() {
+            this.$store.commit('select', this.$vnode.key);
+        },
+        onFocus() {},
+        render() {
             this.$store.getters.formObj.request('onUpdateComponent', {
-                data: { component: 'members', params: newValue },
+                data: { component: 'members', params: this.params },
                 success: (data) => {
                     this.content = data;
                 }
@@ -33,20 +43,9 @@ export default {
         }
     },
 
-    methods: {
-        onFocus() {}
+    mounted() {
+        this.render();
     }
-};
-
-const render = function(createElement) {
 
 };
-
-const params = {
-    icon: 'users',
-    name: 'Mitglieder',
-    loadParams: 'members'
-};
-
-export { render, params };
 </script>

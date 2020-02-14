@@ -1,3 +1,4 @@
 <?php foreach($markup as $component): ?>
-    <?php echo $this->makePartial($component->component, ['c' => $component]); ?>
+    <?php $partial = $component->is == 'comp' ? 'component' : $component->component; ?>
+    <?php echo $this->makePartial($partial, ['c' => $component]); ?>
 <?php endforeach; ?>

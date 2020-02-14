@@ -17,6 +17,11 @@
             "role": "Co-founder"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "RainLab\\Pages\\Interfaces\\": "./interfaces"
+        }
+    },
     "require": {
         "php": ">=5.5.9",
         "composer/installers": "~1.0"

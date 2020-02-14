@@ -591,6 +591,12 @@ class Page extends ContentBase
         );
 
         /*
+         * Process Gutenberg components
+         */
+        $markup = app(Renderer::class)->processPageMarkup($this->markup);
+
+
+        /*
          * Inject global view variables
          */
         $globalVars = ViewHelper::getGlobalVars();
@@ -641,6 +647,8 @@ class Page extends ContentBase
             $this->theme,
             $this->markup.$this->code
         );
+
+        $snippetComponents = array_merge($snippetComponents, Renderer::insertCmsComponents($this->markup));
 
         $componentManager = ComponentManager::instance();
         foreach ($snippetComponents as $componentInfo) {

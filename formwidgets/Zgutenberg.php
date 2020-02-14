@@ -7,6 +7,8 @@ use Backend\Classes\FormWidgetBase;
 use Cms\Classes\Controller as CmsController;
 use Dv\Base\Models\Membercategory as Category;
 use Cms\Classes\ComponentManager;
+use RainLab\Pages\Interfaces\Gutenbergable;
+use Cms\Classes\ComponentHelpers;
 
 /**
  * zgutenberg Form Widget
@@ -49,11 +51,11 @@ class Zgutenberg extends FormWidgetBase
      */
     public function loadAssets()
     {
-        $this->addCss('css/zgutenberg.css', 'rainlab.pages');
+        $this->addCss('css/zgutenberg.build.css', 'rainlab.pages');
         $this->addCss('css/font.css', 'rainlab.pages');
-        $this->addCss('css/backend.css', 'rainlab.pages');
+        $this->addCss('css/backend.build.css', 'rainlab.pages');
         $this->addCss('css/theme-fonts.css', 'rainlab.pages');
-        $this->addJs('js/zgutenberg.js', 'rainlab.pages');
+        $this->addJs('js/zgutenberg.build.js', 'rainlab.pages');
     }
 
     public function onLoadValue() {
@@ -75,8 +77,6 @@ class Zgutenberg extends FormWidgetBase
     }
 
     public function onUpdateComponent() {
-        $controller = CmsController::getController();
-
         $params = collect(Input::get('params'))->map(function($param) {
             return $param['value'] ?? null;
         })->toArray();
@@ -89,28 +89,33 @@ class Zgutenberg extends FormWidgetBase
         $controller = app()->make('\Cms\Classes\Controller');
         $controller->runPage($page, false);
 
-
         $markup = $controller->renderComponent(Input::get('component'));
 
         return Response::make($markup);
     }
 
-    public function loadMembersParams() {
-        return [
-            'category' => [
-                'label' => 'Kategorie',
-                'type' => 'dropdown',
-                'placeholder' => 'Kategorie wählen',
-                'value' => null,
-                'options' => Category::get()->pluck('title', 'id')->toArray()
-            ]
-        ];
-    }
+    public function onGetComponentBlocks() {
+        $components = collect(ComponentManager::instance()->listComponents())->filter(function($class) {
+            return in_array(Gutenbergable::class, class_implements($class));
+        })->map(function($component) {
+            $component = ComponentManager::instance()->makeComponent($component);
 
-    public function onLoadParams() {
-        $component = Input::get('component');
-        $method = camel_case('load_'.$component.'_params');
+            $properties = collect($component->defineProperties())->map(function($prop, $key) use ($component) {
+                $method = 'get'.ucfirst($key).'Options';
+                $prop['options'] = $component->{$method}();
 
-        return Response::json($this->{$method}());
+                return $prop;
+            });
+
+            return [
+                'content' => '',
+                'icon' => $component->componentDetails()['icon'],
+                'name' => $component->componentDetails()['name'],
+                'is' => 'comp',
+                'params' => $properties
+            ];
+        });
+
+        return Response::json($components);
     }
 }

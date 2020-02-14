@@ -10,7 +10,6 @@
                 <sidebar></sidebar>
             </div>
         </div>
-        <output></output>
         <input type="hidden" :name="name" :value="asString">
     </div>
 </template>
@@ -19,14 +18,13 @@
 import Zgcontent from './Zgcontent';
 import Toolbar from './Toolbar';
 import Sidebar from './Sidebar';
-import Output from './Output.vue';
 
 export default {
     props: {
         name: {},
         handlers: {}
     },
-    components: { Zgcontent, Toolbar, Sidebar, Output },
+    components: { Zgcontent, Toolbar, Sidebar },
     computed: {
         asString() {
             return this.$store.getters.asString();
@@ -37,7 +35,7 @@ export default {
 
         this.$store.getters.formObj.request(this.handlers.init, {
             success: (data) => {
-                self.$store.commit('init', {
+                self.$store.dispatch('getInit', {
                     data: data,
                     handlers: this.handlers
                 });

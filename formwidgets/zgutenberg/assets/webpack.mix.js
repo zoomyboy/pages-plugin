@@ -13,13 +13,13 @@ let mix = require('laravel-mix');
 
 mix.config.resourceRoot = '..';
 
-mix.js('src/main.js', 'js/zgutenberg.js')
-.postCss('css/main.css', 'css/zgutenberg.css', [ 
+mix.js('src/main.js', 'js/zgutenberg.build.js')
+.postCss('css/main.css', 'css/zgutenberg.build.css', [ 
     require('postcss-import'), 
     require('tailwindcss'), 
     require('postcss-nested') 
 ])
-.sass('css/backend-dev.scss', 'css/backend.css');
+.sass('css/backend-dev.scss', 'css/backend.build.css');
 // .sass('css/font.scss', 'css/font.css');
 
 
