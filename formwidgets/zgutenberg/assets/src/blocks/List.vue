@@ -1,6 +1,6 @@
 <template>
     <ul ref="input" class="c">
-        <li :key="key" v-on:keydown.enter="addElement(key, $event)" v-for="(point, key) in innerContent" contenteditable="true" v-html="point.content" @blur="updateContent(key, $event)" @keydown.backspace="onDeleteChar($event, key)" @paste="onPaste($event, key)"></li>
+        <editable tag="li" :key="key" v-for="(point, key) in innerContent" @input="updateContent" :value="point.content" @enter="onEnter"></editable>
     </ul>
 </template>
 
@@ -25,37 +25,27 @@ export default {
     mixins: [BlockMixin, StripMixin],
 
     methods: {
-        addElement(index, event) {
+        onEnter(content, key) {
             var self = this;
-            event.preventDefault();
 
             this.$store.commit('addBlockIndex', {
                 id: this.$vnode.key,
-                index: index+1,
+                index: key + 1,
                 value: {content: ''}
             });
 
             this.$nextTick(function() {
-                self.$el.children[index+1].focus();
-            });
-        },
-        onPaste(e, key) {
-            var self = this;
-            document.activeElement.blur();
-            this.$store.commit('updateBlockIndex', {
-                id: this.$vnode.key,
-                index: key,
-                value: {'content': this.s(e.clipboardData.getData('text').replace("\n", ""))}
+                self.$el.children[key+1].focus();
             });
         },
         onFocus() {
             this.$refs.input.firstChild.focus();
         },
-        updateContent(key, event) {
+        updateContent(content, key) {
             this.$store.commit('updateBlockIndex', {
                 id: this.$vnode.key,
                 index: key,
-                value: {'content': event.target.innerHTML}
+                value: {'content': content}
             });
         },
         onDeleteChar(event, index) {
