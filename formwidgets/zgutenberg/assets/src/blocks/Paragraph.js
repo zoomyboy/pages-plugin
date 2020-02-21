@@ -21,8 +21,8 @@ const component = {
             ref: 'input',
             class: [ 'c' ],
             on: {
-                click(e) {
-                    self.$store.commit('select', self.$vnode.key);
+                click() {
+                    self.$emit('click');
                 },
                 keydown: (e) => {
                     if (e.keyCode == 13 && !e.shiftKey) {

@@ -10,6 +10,9 @@ const component = {
             ref: 'input',
             class: [ 'c' ],
             on: {
+                click(e) {
+                    self.$emit('click');
+                },
                 keydown: (e) => {
                     if (e.keyCode == 13) {
                         e.preventDefault();

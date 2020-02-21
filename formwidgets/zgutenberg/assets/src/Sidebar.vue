@@ -8,7 +8,7 @@
 
         </div>
 
-        <div v-for="(param, name) in params">
+        <div v-for="(param, name) in block.params">
 
             <div v-if="param.type == 'dropdown'">
                 <label :for="name" v-text="param.label"></label>
@@ -26,11 +26,8 @@
 <script>
 export default {
     computed: {
-        params() {
-            return this.$store.getters.sidebarParams;
-        },
         block() {
-            return this.$store.getters.selectedBlockType;
+            return this.$store.getters.selectedRenderedBlock;
         }
     },
 

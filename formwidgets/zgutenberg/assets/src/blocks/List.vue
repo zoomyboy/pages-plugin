@@ -1,5 +1,5 @@
 <template>
-    <ul ref="input" class="c">
+    <ul ref="input" class="c" @click="$emit('click')">
         <editable tag="li" :key="key" v-for="(point, key) in innerContent" @input="updateContent" :value="point.content" @enter="onEnter"></editable>
     </ul>
 </template>

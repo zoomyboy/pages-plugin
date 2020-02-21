@@ -19,14 +19,9 @@ export default function({ form, Vuex, blocks }) {
             formObj(state) {
                 return $('#'+state.form);
             },
-            sidebarParams(state) {
-                if (!state.selected) { return []; }
-                return state.renderedBlocks[state.selected].params;
-            },
-            selectedBlockType(state) {
-                if (!state.selected) { return []; }
-
-                return state.blocks[state.renderedBlocks[state.selected].component];
+            selectedRenderedBlock(state) {
+                if (state.selected === null) { return []; }
+                return state.renderedBlocks[state.selected];
             }
         },
         mutations: {
