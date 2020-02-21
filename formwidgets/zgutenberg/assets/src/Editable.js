@@ -24,6 +24,9 @@ export default {
             },
             ref: 'input',
             on: {
+                click() {
+                    self.$emit('click');
+                },
                 blur(e) {
                     self.$emit('input', e.target.innerHTML, self.$vnode.key);
                 },
