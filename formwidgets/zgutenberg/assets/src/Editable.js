@@ -37,8 +37,10 @@ export default {
                         self.$emit('enter', e.target.innerHTML, self.$vnode.key);
                     }
 
-                    if (e.keyCode == 8) {
+                    if (e.keyCode == 8 && e.target.innerHTML === '') {
                         e.preventDefault();
+                        e.target.blur();
+                        self.$emit('void');
                     }
                 },
                 paste(e) {

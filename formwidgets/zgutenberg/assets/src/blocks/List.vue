@@ -39,7 +39,7 @@ export default {
             });
         },
         onFocus() {
-            this.$refs.input.firstChild.focus();
+            
         },
         updateContent(content, key) {
             this.$store.commit('updateBlockIndex', {

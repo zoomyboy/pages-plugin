@@ -62,7 +62,7 @@ export default function({ form, Vuex, blocks }) {
                 if (state.renderedBlocks.length == 1) {
                     state.selected = null;
 
-                // Wenn der erste Block gelöscht wird, selektiere vorgehenden
+                // Wenn der letzte Block gelöscht wird, selektiere vorgehenden
                 } else if (id == state.renderedBlocks.length - 1) {
                     state.selected--;
                 }
