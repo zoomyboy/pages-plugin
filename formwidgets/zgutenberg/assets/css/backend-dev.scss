@@ -1,3 +1,11 @@
 .zg-content {
     @import "app";
 }
+
+[data-zgutenberg] {
+    font-size: 16px;
+}
+
+.zg-component:hover {
+    box-shadow: 0 0 4px hsl(207, 100%, 17%);
+}
