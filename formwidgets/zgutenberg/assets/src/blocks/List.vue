@@ -1,6 +1,6 @@
 <template>
     <ul ref="input" class="c" @click="$emit('click')">
-        <editable tag="li" :key="key" v-for="(point, key) in innerContent" @input="updateContent" :value="point.content" @enter="onEnter"></editable>
+        <editable tag="li" @void="deletePoint(key)" :key="key" v-for="(point, key) in innerContent" @input="updateContent" :value="point.content" @enter="onEnter"></editable>
     </ul>
 </template>
 
@@ -48,32 +48,29 @@ export default {
                 value: {'content': content}
             });
         },
-        onDeleteChar(event, index) {
-            if (event.target.innerHTML == '') {
-                event.preventDefault();
-                var self = this;
+        deletePoint(index) {
+            var self = this;
 
-                if (index == this.innerContent.length - 1) {
-                    var nextFocus = index - 1;
-                } else if (this.innerContent.length > 1) {
-                    var nextFocus = index;
-                }
-
-                if (this.innerContent.length == 1) {
-                    // delete the whole component
-                    this.$store.commit('destroyBlock', this.$vnode.key);
-                    return;
-                }
-
-                this.$store.commit('destroyBlockIndex', {
-                    id: this.$vnode.key,
-                    index: index
-                });
-
-                this.$nextTick(function() {
-                    self.$el.children[nextFocus].focus();
-                });
+            if (index == this.innerContent.length - 1) {
+                var nextFocus = index - 1;
+            } else if (this.innerContent.length > 1) {
+                var nextFocus = index;
             }
+
+            if (this.innerContent.length == 1) {
+                // delete the whole component
+                this.$store.commit('destroyBlock', this.$vnode.key);
+                return;
+            }
+
+            this.$store.commit('destroyBlockIndex', {
+                id: this.$vnode.key,
+                index: index
+            });
+
+            this.$nextTick(function() {
+                self.$el.children[nextFocus].focus();
+            });
         }
     }
 };
