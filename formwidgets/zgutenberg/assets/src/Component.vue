@@ -8,19 +8,23 @@ import BlockMixin from './block.mixin.js';
 
 export default {
 
+    props: {
+        block: {}
+    },
+
     data: function() {
         return {
             content: ''
         };
     },
 
+    mixins: [BlockMixin],
+
     computed: {
         params() {
             return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? {} : this.$store.getters.block(this.$vnode.key).params;
         }
     },
-
-    mixins: [BlockMixin],
 
     watch: {
         params(newValue) {
@@ -40,7 +44,7 @@ export default {
             }
 
             this.$store.getters.formObj.request('onUpdateComponent', {
-                data: { component: 'members', params: this.params },
+                data: { component: this.block.component, params: this.params },
                 success: (data) => {
                     this.content = data;
                 }

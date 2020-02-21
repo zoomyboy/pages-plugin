@@ -14,7 +14,9 @@ class Renderer {
     }
 
     public static function parseParams($params) {
-        $params = explode(' ', trim($params));
+        $params = collect(explode(' ', trim($params)))->filter(function($param) {
+            return !empty(trim($param));
+        });
 
         return collect($params)->mapWithKeys(function($param) {
             preg_match_all('/data-([^=]+)="([^"]+)"/', $param, $match);
