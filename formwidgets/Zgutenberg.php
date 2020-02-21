@@ -104,6 +104,10 @@ class Zgutenberg extends FormWidgetBase
                 $method = 'get'.ucfirst($key).'Options';
                 $prop['options'] = $component->{$method}();
 
+                if ($prop['type'] == 'dropdown') {
+                    $prop['value'] = null;
+                }
+
                 return $prop;
             });
 

@@ -34,6 +34,11 @@ export default {
         },
         onFocus() {},
         render() {
+            if (Object.keys(this.params).map(param => this.params[param]).some(param => param.value === null && param.required === true)) {
+                this.content = 'Bitte alle Parameter definieren';
+                return;
+            }
+
             this.$store.getters.formObj.request('onUpdateComponent', {
                 data: { component: 'members', params: this.params },
                 success: (data) => {
