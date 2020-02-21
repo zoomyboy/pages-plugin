@@ -19,6 +19,7 @@ class StaticMenu extends ComponentBase
      * Each item is an object of the RainLab\Pages\Classes\MenuItemReference class.
      */
     protected $menuItems;
+    public $menuName;
 
     public function componentDetails()
     {
@@ -70,6 +71,7 @@ class StaticMenu extends ComponentBase
 
         $theme = Theme::getActiveTheme();
         $menu = PagesMenu::loadCached($theme, $this->property('code'));
+        $this->menuName = $menu->name;
 
         if ($menu) {
             $this->menuItems = $menu->generateReferences($this->page);
