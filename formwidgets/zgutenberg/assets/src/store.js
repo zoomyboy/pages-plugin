@@ -26,7 +26,6 @@ export default function({ form, Vuex, blocks }) {
         },
         mutations: {
             init(state, initialState) {
-                state.renderedBlocks = initialState.data;
                 state.handlers = initialState.handlers;
             },
             updateAvailableBlocks(state, blocks) {
@@ -80,6 +79,14 @@ export default function({ form, Vuex, blocks }) {
 
                 var newParamsr = { ...state.renderedBlocks[state.selected], params: p };
                 state.renderedBlocks.splice(state.selected, 1, newParamsr);
+            },
+            addSection(state, { after }) {
+                if (state.renderedBlocks.length == 0) {
+                    state.renderedBlocks = [{ type: 'section', params: state.blocks.section, children: [] }];
+                    return;
+                }
+
+                state.renderedBlocks.splice(after, 0, { type: 'section', params: state.blocks.section, children: [] });
             }
         },
         actions: {

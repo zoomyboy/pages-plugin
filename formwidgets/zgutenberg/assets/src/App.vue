@@ -4,7 +4,7 @@
 
         <div class="zg-flex">
             <div class="zg-flex-grow zg-px-3 zg-py-6">
-                <zgcontent></zgcontent>
+                <zgcontent v-model="content"></zgcontent>
             </div>
             <div class="zg-w-sidebar zg-border-l zg-bg-white" v-show="$store.state.sidebar">
                 <sidebar></sidebar>
@@ -20,6 +20,11 @@ import Toolbar from './Toolbar';
 import Sidebar from './Sidebar';
 
 export default {
+    data: function() {
+        return {
+            content: []
+        };
+    },
     props: {
         name: {},
         handlers: {}
@@ -35,8 +40,8 @@ export default {
 
         this.$store.getters.formObj.request(this.handlers.init, {
             success: (data) => {
+                this.content = data;
                 self.$store.dispatch('getInit', {
-                    data: data,
                     handlers: this.handlers
                 });
             }
