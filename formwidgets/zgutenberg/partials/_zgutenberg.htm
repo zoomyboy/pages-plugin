@@ -8,7 +8,6 @@
 
 <div data-zgutenberg><app name="<?= $name ?>" :handlers="{
     'init': '<?= $this->getEventHandler('onLoadValue') ?>',
-    'init': '<?= $this->getEventHandler('onLoadValue') ?>',
     'blocks': '<?= $this->getEventHandler('onGetComponentBlocks') ?>',
     'params': '<?= $this->getEventHandler('onLoadParams') ?>'
 }"></app></div>
