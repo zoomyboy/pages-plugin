@@ -4,6 +4,9 @@ import Component from './Component.vue';
 const requireBlocks = require.context(
     './blocks', false, /^\.\/.*\.js$/
 );
+const requireModals = require.context(
+    './modals', false, /^\.\/.*\.vue/
+);
 const requireBlocksVue = require.context(
     './blocks', false, /^\.\/.*\.vue$/
 );
@@ -14,6 +17,11 @@ const installer = {
             let componentName = file.substr(2).replace('.js', '');
 
             Vue.component(kebabCase(componentName), requireBlocks(file).component);
+        });
+        requireModals.keys().forEach((file) => {
+            let componentName = file.substr(2).replace('.vue', '');
+
+            Vue.component(kebabCase(componentName), requireModals(file).default);
         });
         requireBlocksVue.keys().forEach((file) => {
             let componentName = file.substr(2).replace('.vue', '');

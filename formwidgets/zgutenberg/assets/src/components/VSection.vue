@@ -8,12 +8,18 @@
 export default {
 
     props: {
-        value: []
+        value: {}
     },
 
     mounted() {
         if (this.value.children.length == 0) {
-            this.$store.commit('addModal', { 'is': 'selectrow' });
+            this.$store.dispatch('modal/open', {
+                'component': 'selectrow'
+            }).then(data => {
+                console.log(data);
+            }).catch(err => {
+                this.$emit('destroy');
+            });
         }
     }
 };

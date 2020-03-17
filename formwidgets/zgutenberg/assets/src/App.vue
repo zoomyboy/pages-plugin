@@ -11,6 +11,9 @@
             </div>
         </div>
         <input type="hidden" :name="name" :value="asString">
+        <div class="zg-content">
+            <modals></modals>
+        </div>
     </div>
 </template>
 
@@ -18,6 +21,7 @@
 import Zgcontent from './Zgcontent';
 import Toolbar from './Toolbar';
 import Sidebar from './Sidebar';
+import Modals from './components/Modals.vue';
 
 export default {
     data: function() {
@@ -29,7 +33,7 @@ export default {
         name: {},
         handlers: {}
     },
-    components: { Zgcontent, Toolbar, Sidebar },
+    components: { Zgcontent, Toolbar, Sidebar, Modals },
     computed: {
         asString() {
             return this.$store.getters.asString();

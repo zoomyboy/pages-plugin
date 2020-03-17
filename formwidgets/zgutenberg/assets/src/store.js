@@ -1,5 +1,8 @@
+import modal from './store/modal.js';
+
 export default function({ form, Vuex, blocks }) {
     return new Vuex.Store({
+        modules: { modal: modal },
         strict: true,
         state: {
             blocks: blocks,

@@ -1,7 +1,9 @@
 <template>
     <div class="zg-content">
         <div v-if="value.length != 0">
-            <v-section v-for="(section, index) in value" v-odel="section" :key="index" @click="select(index)"></v-section>
+            <div v-for="(section, index) in value">
+                <v-section v-model="section.data" :key="index" @click="select(index)" @destroy="destroy(index)"></v-section>
+            </div>
         </div>
         <div class="flex justify-center" v-else>
             <a href="#" @click.prevent="addSection()" class="rounded-full flex justify-center items-center w-12 h-12 block bg-section text-white">
@@ -21,14 +23,19 @@ export default {
     components: { VSection },
 
     methods: {
+        destroy(index) {
+            var content = this.value;
+            content.splice(index, 1);
+            this.$emit('input', content);
+        },
         addSection(index) {
             if (typeof index == "undefined") {
-                this.$emit('input', [ { type: 'section', children: [] } ]);
+                this.$emit('input', [ { type: 'section', data: { children: [] } } ]);
                 return;
             }
 
             var content = this.value;
-            content.splice(index, 0, { type: 'section', children: [] });
+            content.splice(index, 0, { type: 'section', data: { children: [] } });
             this.$emit('input', content);
         }
     }
