@@ -3,7 +3,6 @@
         <div class="zg--mx-2 zg-flex">
             <div class="zg-px-2 zg-relative">
                 <a href="#" class="fa-btn" @click.prevent="cb = !cb"><span class="fa-plus fa fa-xs"></span></a>
-                <create-block v-model="cb"></create-block>
             </div>
             <div class="zg-px-2">
                 <a href="#" class="fa-btn"><span class="fa-info fa fa-xs"></span></a>

@@ -1,22 +1,8 @@
 <template>
-    <div class="bg-sektion bg-gray-200">
-
-        <div class="bg-section flex rounded p-4 items-center">
-            <div class="actions w-1/4"></div>
-            <div class="title w-2/4">
-                <input type="text" v-model="value.title" class="leading-none bg-section outline-none text-center text-white w-full">
-            </div>
-            <div class="dropdown w-1/4">
-                
-            </div>
+    <div class="bg-gray-800 rounded p-2 flex items-center">
+        <div class="title w-full">
+            <input type="text" v-model="value.name" class="leading-none bg-gray-800 outline-none text-center text-white w-full">
         </div>
-
-        <div class="p-6 flex -mx-6">
-            <div class="p-6" :key="index" v-for="(column, index) in this.value.columns" :class="'w-'+column.width">
-                <v-column v-model="column.modules" @click="select(index)"></v-column>
-            </div>
-        </div>
-
     </div>
 </template>
 

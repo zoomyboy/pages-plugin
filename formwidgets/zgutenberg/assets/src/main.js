@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import App from './App';
-import CreateBlock from './CreateBlock';
 import Vuex from 'vuex';
 import { installer, blocks } from './blocks.js';
 import axios from 'axios';
@@ -10,7 +9,6 @@ import Editable from './Editable.js';
 Vue.use(Vuex);
 Vue.use(installer);
 
-Vue.component('create-block', CreateBlock);
 Vue.component('editable', Editable);
 
 +function ($) { "use strict";

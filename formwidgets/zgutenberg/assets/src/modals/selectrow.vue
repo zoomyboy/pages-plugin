@@ -5,7 +5,7 @@
             <h4 class="modal-title">Zeile einfügen</h4>
         </div>
         <div class="modal-body">
-            <div class="flex flex-wrap -m-3">
+            <div class="flex flex-wrap -mx-3">
                 <div class="p-3 w-1/3 mb-6" v-for="row in rows">
                     <a href="#" @click.prevent="$emit('confirm', row)" class="flex -mx-1">
                         <span v-for="width in row" class="px-1" :class="'w-'+width">

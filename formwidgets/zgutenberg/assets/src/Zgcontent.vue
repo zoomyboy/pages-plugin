@@ -30,12 +30,12 @@ export default {
         },
         addSection(index) {
             if (typeof index == "undefined") {
-                this.$emit('input', [ { type: 'section', data: { children: [] } } ]);
+                this.$emit('input', [ { type: 'section', data: { columns: [], title: 'Sektion' } } ]);
                 return;
             }
 
             var content = this.value;
-            content.splice(index, 0, { type: 'section', data: { children: [] } });
+            content.splice(index, 0, { type: 'section', data: { columns: [], title: 'Sektion' } });
             this.$emit('input', content);
         }
     }
