@@ -3,7 +3,7 @@
         <toolbar></toolbar>
 
         <div class="zg-flex">
-            <div class="zg-flex-grow zg-px-3 zg-py-6">
+            <div class="zg-flex-grow zg-p-6">
                 <zgcontent v-model="content"></zgcontent>
             </div>
             <div class="zg-w-sidebar zg-border-l zg-bg-white" v-show="$store.state.sidebar">
