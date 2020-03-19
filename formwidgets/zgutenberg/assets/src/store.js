@@ -7,7 +7,7 @@ export default function({ form, Vuex, blocks }) {
         state: {
             blocks: blocks,
             renderedBlocks: [],
-            sidebar: true,
+            sidebar: false,
             handlers: {},
             form: form,
             selected: null
