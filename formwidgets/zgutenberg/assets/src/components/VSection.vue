@@ -43,7 +43,6 @@ export default {
                     };
                 });
             }).catch(err => {
-                console.log(err);
                 this.$emit('destroy');
             });
         }
