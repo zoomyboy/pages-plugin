@@ -55,7 +55,7 @@ const render = function(createElement) {
 };
 
 const params = {
-    icon: 'paragraph',
+    icon: 'header',
     is: 'paragraph',
     name: 'Absatz',
     params: {},
