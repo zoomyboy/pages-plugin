@@ -9,7 +9,7 @@
                 <div class="zg-p-3 zg-w-1/3 zg-mb-6" v-for="row in rows">
                     <a href="#" @click.prevent="$emit('confirm', row)" class="zg-flex zg--mx-1">
                         <span v-for="width in row" class="zg-px-1" :class="'zg-w-'+width">
-                            <span class="zg-bg-row zg-h-12 zg-block zg-rounded"></span>
+                            <span class="zg-bg-row zg-h-6 zg-block zg-rounded"></span>
                         </span>
                     </a>
                 </div>

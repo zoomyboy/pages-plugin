@@ -29,7 +29,7 @@
 }
     
 .zg-btn {
-    @apply zg-rounded-full zg-flex zg-justify-center zg-items-center zg-w-12 zg-h-12 zg-text-white;
+    @apply zg-rounded-full zg-flex zg-justify-center zg-items-center zg-w-10 zg-h-10 zg-text-white;
     &:hover {
         @apply zg-no-underline;
     }

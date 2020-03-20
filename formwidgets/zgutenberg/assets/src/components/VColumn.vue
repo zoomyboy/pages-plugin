@@ -6,8 +6,8 @@
             </div>
         </div>
         <div class="zg-flex zg-justify-center" v-else>
-            <a href="#" @click.prevent="addModule()" class="zg-rounded-full zg-flex zg-justify-center zg-items-center zg-w-12 zg-h-12 zg-block zg-bg-gray-800 zg-text-white">
-                <span class="fa fa-plus fa-xs"></span>
+            <a href="#" @click.prevent="addModule()" class="zg-btn zg-bg-gray-800">
+                <span class="icon-plus"></span>
             </a>
         </div>
     </div>

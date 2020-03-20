@@ -5,12 +5,12 @@
             <h4 class="modal-title">Modul einfügen</h4>
         </div>
         <div class="modal-body">
-            <div class="flex flex-wrap -mx-3">
-                <div class="p-3 w-1/3 mb-6" v-for="(block, c) in blocks" :key="c">
-                    <a href="#" @click.prevent="$emit('confirm', block)" class="block-item zg-p-2 zg-bg-gray-200 zg-p-2 zg-flex zg-flex-col">
-                        <span :class="'fa fa-lg fa-'+block.icon"></span>
+            <div class="zg-flex zg-flex-wrap zg--mx-2">
+                <div class="zg-px-2 zg-w-1/3 zg-mb-4" v-for="(block, c) in blocks" :key="c">
+                    <button type="button" class="w-full btn btn-primary btn-lg px-2" @click.prevent="$emit('confirm', block)">
+                        <span :class="'oc-icon-'+block.icon"></span>
                         <span v-html="block.name"></span>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
