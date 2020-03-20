@@ -52,9 +52,6 @@ class Zgutenberg extends FormWidgetBase
     public function loadAssets()
     {
         $this->addCss('css/zgutenberg.build.css', 'rainlab.pages');
-        $this->addCss('css/font.css', 'rainlab.pages');
-        $this->addCss('css/backend.build.css', 'rainlab.pages');
-        $this->addCss('css/theme-fonts.css', 'rainlab.pages');
         $this->addJs('js/zgutenberg.build.js', 'rainlab.pages');
     }
 

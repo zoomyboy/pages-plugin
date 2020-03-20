@@ -5,9 +5,9 @@
                 <v-section v-model="section.data" :key="index" @click="select(index)" @destroy="destroy(index)"></v-section>
             </div>
         </div>
-        <div class="flex justify-center" v-else>
-            <a href="#" @click.prevent="addSection()" class="rounded-full flex justify-center items-center w-12 h-12 block bg-section text-white">
-                <span class="fa fa-plus fa-xs"></span>
+        <div class="zg-flex zg-justify-center" v-else>
+            <a href="#" @click.prevent="addSection()" class="zg-btn zg-bg-section">
+                <span class="icon-plus"></span>
             </a>
         </div>
     </div>

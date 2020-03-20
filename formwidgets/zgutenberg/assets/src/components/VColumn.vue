@@ -5,8 +5,8 @@
                 <v-module v-model="module.data" :key="index" @click="select(index)" @destroy="destroy(index)"></v-module>
             </div>
         </div>
-        <div class="flex justify-center" v-else>
-            <a href="#" @click.prevent="addModule()" class="rounded-full flex justify-center items-center w-12 h-12 block bg-gray-800 text-white">
+        <div class="zg-flex zg-justify-center" v-else>
+            <a href="#" @click.prevent="addModule()" class="zg-rounded-full zg-flex zg-justify-center zg-items-center zg-w-12 zg-h-12 zg-block zg-bg-gray-800 zg-text-white">
                 <span class="fa fa-plus fa-xs"></span>
             </a>
         </div>

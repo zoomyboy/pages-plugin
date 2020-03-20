@@ -18,5 +18,4 @@ mix.js('src/main.js', 'js/zgutenberg.build.js')
     require('postcss-import'), 
     require('tailwindcss'), 
     require('postcss-nested') 
-])
-.sass('css/backend-dev.scss', 'css/backend.build.css');
+]);

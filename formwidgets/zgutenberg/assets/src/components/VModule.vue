@@ -1,7 +1,7 @@
 <template>
     <div class="bg-gray-800 rounded p-2 flex items-center">
         <div class="title w-full">
-            <input type="text" v-model="value.name" class="leading-none bg-gray-800 outline-none text-center text-white w-full">
+            <input type="text" v-model="value.name" class="zg-leading-none zg-bg-gray-800 zg-outline-none zg-text-center zg-text-white zg-w-full">
         </div>
     </div>
 </template>
