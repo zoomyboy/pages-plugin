@@ -1,4 +1,12 @@
-<?php foreach($markup as $component): ?>
-    <?php $partial = $component->is == 'comp' ? 'component' : $component->component; ?>
-    <?php echo $this->makePartial($partial, ['c' => $component]); ?>
+<?php foreach($markup as $section): ?>
+    <div class="container">
+        <?php foreach ($section->data->columns as $column): ?>
+            <div class="w-<?php echo $column->width; ?>">
+                <?php foreach ($column->modules as $module): ?>
+                    <?php $partial = $module->data->is == 'comp' ? 'component' : $module->data->is; ?>
+                    <?php echo $this->makePartial($partial, ['c' => $module->data]); ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
 <?php endforeach; ?>

@@ -7,7 +7,7 @@
         <div class="modal-body">
             <div class="zg-flex zg-flex-wrap zg--mx-2">
                 <div class="zg-px-2 zg-w-1/3 zg-mb-4" v-for="(block, c) in blocks" :key="c">
-                    <button type="button" class="w-full btn btn-primary btn-lg px-2" @click.prevent="$emit('confirm', block)">
+                    <button type="button" class="w-full btn btn-primary btn-lg px-2" @click.prevent="$emit('confirm', { block: block, c: c })">
                         <span :class="'icon-'+block.icon"></span>
                         <span v-html="block.name"></span>
                     </button>

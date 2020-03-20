@@ -36,7 +36,7 @@ export default {
     components: { Zgcontent, Toolbar, Sidebar, Modals },
     computed: {
         asString() {
-            return this.$store.getters.asString();
+            return JSON.stringify(this.content);
         }
     },
     mounted() {

@@ -2,7 +2,7 @@
     <div>
         <div v-if="value.length != 0">
             <div v-for="(module, index) in value">
-                <v-module v-model="module.data" :key="index" @click="select(index)" @destroy="destroy(index)"></v-module>
+                <v-module v-model="module.data" :key="index" @click="select(index)" @destroy="destroy(index)" :new="module.new" :component="module.component" @permanent="permanent(module)"></v-module>
             </div>
         </div>
         <div class="zg-flex zg-justify-center" v-else>
@@ -25,15 +25,21 @@ export default {
     components: { VModule },
 
     methods: {
+        permanent(module) {
+            module.new = false;
+        },
         addModule() {
             this.$store.dispatch('modal/open', {
                 'component': 'selectblock'
-            }).then(module => {
+            }).then(({ block, c }) => {
                 var content = this.value;
-                content.push({ data: module });
+                content.push({ data: block, new: true, component: c });
                 this.$emit('input', content);
             }).catch(err => {
             });
+        },
+        destroy(index) {
+            this.value.splice(index, 1);
         }
     },
 

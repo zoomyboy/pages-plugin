@@ -12,24 +12,29 @@ import VColumn from './VColumn';
 export default {
 
     props: {
-        value: {}
+        value: {},
+        new: {
+            type: Boolean,
+            required: true
+        },
+        component: {
+            required: true,
+            type: String
+        }
     },
 
     components: { VColumn },
 
     mounted() {
-        if (this.value.columns.length == 0) {
+        if (this.new) {
+            console.log(this.value);
             this.$store.dispatch('modal/open', {
-                'component': 'selectrow'
+                'component': this.component,
+                params: { params: this.value }
             }).then(data => {
-                this.value.columns = data.map(column => {
-                    return {
-                        width: column,
-                        modules: []
-                    };
-                });
+                this.$emit('input', data);
+                this.$emit('permanent');
             }).catch(err => {
-                console.log(err);
                 this.$emit('destroy');
             });
         }
