@@ -11,6 +11,7 @@
         <app name="<?= $name ?>" :handlers="{
             'init': '<?= $this->getEventHandler('onLoadValue') ?>',
             'blocks': '<?= $this->getEventHandler('onGetComponentBlocks') ?>',
+            'block': '<?= $this->getEventHandler('onGetComponentBlock') ?>',
             'params': '<?= $this->getEventHandler('onLoadParams') ?>'
         }">
         </app>

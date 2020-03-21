@@ -12,15 +12,7 @@ import VColumn from './VColumn';
 export default {
 
     props: {
-        value: {},
-        new: {
-            type: Boolean,
-            required: true
-        },
-        component: {
-            required: true,
-            type: String
-        }
+        value: {}
     },
 
     components: { VColumn },
@@ -28,12 +20,12 @@ export default {
     methods: {
         edit() {
             this.$store.dispatch('modal/open', {
-                'component': this.component,
-                params: { params: this.value }
+                'component': this.value.is,
+                params: { value: this.value }
             }).then(data => {
                 this.$emit('input', data);
             }).catch(err => {
-                    
+                console.log(err);
             });
         },
         remove() {
@@ -41,13 +33,13 @@ export default {
         }
     },
 
-    mounted() {
-        if (this.new) {
+    async created() {
+        if (this.value.new) {
             this.$store.dispatch('modal/open', {
-                'component': this.component,
-                params: { params: this.value }
+                'component': this.value.is,
+                params: { value: this.value }
             }).then(data => {
-                this.$emit('input', data);
+                this.$emit('input', { ...data, new: false });
                 this.$emit('permanent');
             }).catch(err => {
                 this.$emit('destroy');

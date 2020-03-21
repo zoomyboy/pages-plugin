@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" @click="$emit('close')" class="close">×</button>
-            <h4 class="modal-title" v-html="params.name"></h4>
+            <h4 class="modal-title" v-html="value.name"></h4>
         </div>
         <div class="modal-body">
             <div class="form-group">
@@ -34,33 +34,29 @@ export default {
     },
 
     props: {
-        params: {}
+        value: {}
     },
 
     computed: {
         output() {
-            return { ...this.params, content: this.content, tag: this.tag };
+            return { ...this.value, content: this.content, tag: this.tag };
         }
     },
 
-
     created() {
-        this.content = this.params.content;
-        this.tag = this.params.tag;
+        this.content = this.value.content;
+        this.tag = this.value.tag;
     }
-};
-
-const render = function(createElement) {
-
 };
 
 const params = {
     icon: 'header',
-    is: 'heading',
     name: 'Überschrift',
-    params: {},
-    content: ''
+    params: {
+        content: '',
+        tag: 'h2'
+    }
 };
 
-export { render, params };
+export { params };
 </script>

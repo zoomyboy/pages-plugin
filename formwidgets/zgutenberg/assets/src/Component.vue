@@ -1,59 +1,57 @@
 <template>
-    <div v-html="content" @click="select"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" @click="$emit('close')" class="close">×</button>
+            <h4 class="modal-title" v-html="value.name"></h4>
+        </div>
+        <div class="modal-body">
+            <div v-for="(param, name) in params">
+
+                <div v-if="param.type == 'dropdown'">
+                    <label :for="name" v-text="param.label"></label>
+                    <select :id="name" v-model="innerValues[name]">
+                        <option :value="null" v-text="param.placeholder"></option>
+                        <option :value="key" v-for="(value, key) in param.options" v-text="value">></option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary zg-mt-2" @click="$emit('confirm', output)" data-dismiss="modal">Speichern</button>
+            <button type="button" class="btn btn-default zg-mt-2" @click="$emit('close')" data-dismiss="modal">Abbrechen</button>
+        </div>
+    </div>
 </template>
 
 <script>
 import { debounce } from 'lodash';
-import BlockMixin from './block.mixin.js';
 
 export default {
 
-    props: {
-        block: {}
-    },
-
     data: function() {
         return {
-            content: ''
+            innerValues: {}
         };
     },
 
-    mixins: [BlockMixin],
+    props: {
+        value: {}
+    },
 
     computed: {
-        params() {
-            return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? {} : this.$store.getters.block(this.$vnode.key).params;
-        }
-    },
-
-    watch: {
-        params(newValue) {
-            this.render();
-        }
-    },
-
-    methods: {
-        select() {
-            this.$store.commit('select', this.$vnode.key);
+        output() {
+            return { ...this.value, params: this.innerValues };
         },
-        onFocus() {},
-        render() {
-            if (Object.keys(this.params).map(param => this.params[param]).some(param => param.value === null && param.required === true)) {
-                this.content = 'Bitte alle Parameter definieren';
-                return;
-            }
-
-            this.$store.getters.formObj.request('onUpdateComponent', {
-                data: { component: this.block.component, params: this.params },
-                success: (data) => {
-                    this.content = data;
-                }
-            });
+        params() {
+            return this.$store.state.blocks[this.value.component].params;
         }
     },
 
-    mounted() {
-        this.render();
+    created() {
+        for (const key in this.value.params) {
+            this.innerValues[key] = this.value.params[key];
+        }
     }
 
 };

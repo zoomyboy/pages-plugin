@@ -73,24 +73,6 @@ class Zgutenberg extends FormWidgetBase
         return json_decode($value);
     }
 
-    public function onUpdateComponent() {
-        $params = collect(Input::get('params'))->map(function($param) {
-            return $param['value'] ?? null;
-        })->toArray();
-
-        $component = ComponentManager::instance()->makeComponent(Input::get('component'), null, $params);
-
-        $page = app()->make('\Cms\Classes\Page');
-        $page->components = [Input::get('component') => $component];
-
-        $controller = app()->make('\Cms\Classes\Controller');
-        $controller->runPage($page, false);
-
-        $markup = $controller->renderComponent(Input::get('component'));
-
-        return Response::make($markup);
-    }
-
     public function onGetComponentBlocks() {
         $components = collect(ComponentManager::instance()->listComponents())->filter(function($class) {
             return in_array(Gutenbergable::class, class_implements($class));
@@ -109,14 +91,38 @@ class Zgutenberg extends FormWidgetBase
             });
 
             return [
-                'content' => '',
                 'icon' => $component->componentDetails()['icon'],
                 'name' => $component->componentDetails()['name'],
                 'is' => 'comp',
-                'params' => $properties
+                'params' => (object) $properties->toArray()
             ];
         });
 
         return Response::json($components);
+    }
+
+    public function onGetComponentBlock() {
+        $block = Input::get('block');
+        $component = collect(ComponentManager::instance()->listComponents())->get(Input::get('block'));
+
+        $component = ComponentManager::instance()->makeComponent($component);
+
+        $properties = collect($component->defineProperties())->map(function($prop, $key) use ($component) {
+            $method = 'get'.ucfirst($key).'Options';
+            $prop['options'] = $component->{$method}();
+
+            if ($prop['type'] == 'dropdown') {
+                $prop['value'] = null;
+            }
+
+            return $prop;
+        });
+
+        return Response::json([
+            'icon' => $component->componentDetails()['icon'],
+            'name' => $component->componentDetails()['name'],
+            'is' => 'comp',
+            'params' => (object) $properties->toArray()
+        ]);
     }
 }
