@@ -1,7 +1,8 @@
 <template>
     <div class="zg-bg-gray-800 zg-rounded zg-p-2 zg-flex zg-items-center flex">
         <input type="text" v-model="value.name" class="zg-leading-none zg-bg-gray-800 zg-outline-none zg-text-center zg-text-white zg-w-full zg-border-0 flex-grow">
-        <a href="#" @click.prevent="edit" class="hover:zg-no-underline"><span class="zg-text-white icon-cog"></span></a>
+        <a href="#" @click.prevent="edit" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-cog"></span></a>
+        <a href="#" @click.prevent="remove" class="hover:zg-no-underline"><span class="zg-text-white icon-trash"></span></a>
     </div>
 </template>
 
@@ -34,6 +35,9 @@ export default {
             }).catch(err => {
                     
             });
+        },
+        remove() {
+            this.$emit('remove');
         }
     },
 
