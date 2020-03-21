@@ -32,7 +32,7 @@ Vue.component('editable', Editable);
         var formId = this.setFormId();
 
         this.$app = new Vue({
-            el: this.$el.get(0),
+            el: this.$el.children('div').get(0),
             store: store({
                 form: formId,
                 blocks: blocks,
