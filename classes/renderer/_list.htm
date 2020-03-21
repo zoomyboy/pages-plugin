@@ -1,6 +1,6 @@
 <ul class="c">
-    <?php foreach ($c->content as $point): ?>
-    <li><?php echo $point->content; ?></li>
+    <?php foreach (array_filter(explode("\n", $c->content)) as $point): ?>
+    <li><?php echo $point; ?></li>
     <?php endforeach; ?>
 </ul>
 

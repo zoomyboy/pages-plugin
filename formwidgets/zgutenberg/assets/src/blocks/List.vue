@@ -1,77 +1,42 @@
 <template>
-    <ul ref="input" class="c" @click="$emit('click')">
-        <editable tag="li" @void="deletePoint(key)" :key="key" v-for="(point, key) in innerContent" @input="updateContent" :value="point.content" @enter="onEnter"></editable>
-    </ul>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" @click="$emit('close')" class="close">×</button>
+            <h4 class="modal-title" v-html="params.name"></h4>
+        </div>
+        <div class="modal-body">
+            <textarea class="form-control" v-model="content" rows="20"></textarea>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary zg-mt-2" @click="$emit('confirm', output)" data-dismiss="modal">Speichern</button>
+            <button type="button" class="btn btn-default zg-mt-2" @click="$emit('close')" data-dismiss="modal">Abbrechen</button>
+        </div>
+    </div>
 </template>
 
 <script>
-import { debounce } from 'lodash';
 import BlockMixin from '../block.mixin.js';
 import StripMixin from '../strip.mixin.js';
 
 export default {
-
-    props: {},
-
-    computed: {
-        params() {
-            return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? {} : this.$store.getters.block(this.$vnode.key).params;
-        },
-        innerContent() {
-            return typeof this.$store.getters.block(this.$vnode.key) === 'undefined' ? [] : this.$store.getters.block(this.$vnode.key).content;
+    data: function() {
+        return {
+            content: ''
         }
     },
 
-    mixins: [BlockMixin, StripMixin],
+    props: {
+        params: {}
+    },
 
-    methods: {
-        onEnter(content, key) {
-            var self = this;
-
-            this.$store.commit('addBlockIndex', {
-                id: this.$vnode.key,
-                index: key + 1,
-                value: {content: ''}
-            });
-
-            this.$nextTick(function() {
-                self.$el.children[key+1].focus();
-            });
-        },
-        onFocus() {
-            
-        },
-        updateContent(content, key) {
-            this.$store.commit('updateBlockIndex', {
-                id: this.$vnode.key,
-                index: key,
-                value: {'content': content}
-            });
-        },
-        deletePoint(index) {
-            var self = this;
-
-            if (index == this.innerContent.length - 1) {
-                var nextFocus = index - 1;
-            } else if (this.innerContent.length > 1) {
-                var nextFocus = index;
-            }
-
-            if (this.innerContent.length == 1) {
-                // delete the whole component
-                this.$store.commit('destroyBlock', this.$vnode.key);
-                return;
-            }
-
-            this.$store.commit('destroyBlockIndex', {
-                id: this.$vnode.key,
-                index: index
-            });
-
-            this.$nextTick(function() {
-                self.$el.children[nextFocus].focus();
-            });
+    computed: {
+        output() {
+            return { ...this.params, content: this.content };
         }
+    },
+
+    created() {
+        this.content = this.params.content;
     }
 };
 
@@ -82,9 +47,9 @@ const render = function(createElement) {
 const params = {
     icon: 'list',
     is: 'list',
-    name: 'List',
+    name: 'Liste',
     params: {},
-    content: [{content: ''}]
+    content: ''
 };
 
 export { render, params };
