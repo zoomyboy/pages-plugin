@@ -1,15 +1,9 @@
 <template>
-    <div>
-        <div v-if="value.length != 0">
-            <div v-for="(module, index) in value">
-                <v-module v-model="module.data" :key="index" @click="select(index)" @remove="remove(index)" :new="module.new" :component="module.component" @permanent="permanent(module)"></v-module>
-            </div>
-        </div>
-        <div class="zg-flex zg-justify-center" v-else>
-            <a href="#" @click.prevent="addModule()" class="zg-btn zg-bg-gray-800">
-                <span class="icon-plus"></span>
-            </a>
-        </div>
+    <div class="zg-flex zg-flex-col zg-items-center">
+        <v-module v-model="module.data" :key="index" @click="select(index)" @remove="remove(index)" :new="module.new" :component="module.component" @permanent="permanent(module)" v-for="(module, index) in value" :class="{'zg-mt-1': index != 0}"></v-module>
+        <a href="#" @click.prevent="addModule()" class="zg-btn zg-bg-gray-800" :class="{'zg-mt-1': value.length != 0}">
+            <span class="icon-plus"></span>
+        </a>
     </div>
 </template>
 
