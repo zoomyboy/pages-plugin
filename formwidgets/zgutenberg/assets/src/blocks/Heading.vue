@@ -5,11 +5,11 @@
             <h4 class="modal-title" v-html="params.name"></h4>
         </div>
         <div class="modal-body">
-            <textarea v-model="content"></textarea>
+            <input type="text" class="form-control" v-model="content"></text>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="$emit('confirm', output)" data-dismiss="modal">Speichern</button>
-            <button type="button" class="btn btn-default" @click="$emit('close')" data-dismiss="modal">Abbrechen</button>
+            <button type="button" class="btn btn-primary zg-mt-2" @click="$emit('confirm', output)" data-dismiss="modal">Speichern</button>
+            <button type="button" class="btn btn-default zg-mt-2" @click="$emit('close')" data-dismiss="modal">Abbrechen</button>
         </div>
     </div>
 </template>
@@ -49,7 +49,7 @@ const render = function(createElement) {
 const params = {
     icon: 'header',
     is: 'paragraph',
-    name: 'Absatz',
+    name: 'Überschrift',
     params: {},
     content: ''
 };
