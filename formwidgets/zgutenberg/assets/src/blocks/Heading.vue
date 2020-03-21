@@ -5,6 +5,12 @@
             <h4 class="modal-title" v-html="params.name"></h4>
         </div>
         <div class="modal-body">
+            <div class="form-group">
+                <label for="tag">Tag</label>
+                <select class="form-control" id="tag" v-model="tag">
+                    <option v-for="tag in tagList" :value="tag" v-html="tag"></option>
+                </select>
+            </div>
             <input type="text" class="form-control" v-model="content"></text>
         </div>
         <div class="modal-footer">
@@ -21,7 +27,9 @@ import StripMixin from '../strip.mixin.js';
 export default {
     data: function() {
         return {
-            content: ''
+            content: '',
+            tag: 'h2',
+            tagList: [ 'h2', 'h3', 'h4' ]
         }
     },
 
@@ -32,13 +40,14 @@ export default {
     computed: {
         output() {
             // @todo assign tag h2, h3, h4
-            return { ...this.params, content: this.content, tag: 'h2' };
+            return { ...this.params, content: this.content, tag: this.tag };
         }
     },
 
 
     created() {
         this.content = this.params.content;
+        this.tag = this.params.tag;
     }
 };
 
