@@ -18,4 +18,4 @@ mix.js('src/main.js', 'js/zgutenberg.build.js')
     require('postcss-import'), 
     require('tailwindcss'), 
     require('postcss-nested') 
-]);
+]).sourceMaps();
