@@ -39,7 +39,6 @@ export default {
 
     computed: {
         output() {
-            // @todo assign tag h2, h3, h4
             return { ...this.params, content: this.content, tag: this.tag };
         }
     },
@@ -57,7 +56,7 @@ const render = function(createElement) {
 
 const params = {
     icon: 'header',
-    is: 'paragraph',
+    is: 'heading',
     name: 'Überschrift',
     params: {},
     content: ''

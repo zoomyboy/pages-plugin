@@ -1,5 +1,17 @@
 <template>
-    <editable tag="p" @void="onVoid" @click="select" class="c" @input="updateContent" :value="content" @enter="onEnter"></editable>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" @click="$emit('close')" class="close">×</button>
+            <h4 class="modal-title" v-html="params.name"></h4>
+        </div>
+        <div class="modal-body">
+            <textarea class="form-control" v-model="content"></textarea>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary zg-mt-2" @click="$emit('confirm', output)" data-dismiss="modal">Speichern</button>
+            <button type="button" class="btn btn-default zg-mt-2" @click="$emit('close')" data-dismiss="modal">Abbrechen</button>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -7,46 +19,25 @@ import BlockMixin from '../block.mixin.js';
 import StripMixin from '../strip.mixin.js';
 
 export default {
-    props: {},
-
-    computed: {
-        params() {
-            return  this.$store.getters.block(this.$vnode.key).params;
-        },
-        content() {
-            return this.$store.getters.block(this.$vnode.key).content;
+    data: function() {
+        return {
+            content: ''
         }
     },
 
-    mixins: [ BlockMixin, StripMixin ],
+    props: {
+        params: {}
+    },
 
-    methods: {
-        updateContent(content, key) {
-            this.$store.commit('updateBlock', {
-                id: this.$vnode.key,
-                params: this.params,
-                content: content
-            });
-        },
-        select() {
-            this.$emit('click');
-        },
-        onEnter(content, key) {
-            var self = this;
-
-            this.$store.dispatch('addBlock', {
-                ...self.$store.getters.block(self.$vnode.key),
-                content: '',
-                after: this.$vnode.key
-            });
-        },
-        onVoid() {
-            console.log('AAA');
-            this.$store.commit('destroyBlock', this.$vnode.key);
-        },
-        onFocus() {
-            this.$el.focus();
+    computed: {
+        output() {
+            return { ...this.params, content: this.content };
         }
+    },
+
+
+    created() {
+        this.content = this.params.content;
     }
 };
 
