@@ -56,13 +56,7 @@ class Zgutenberg extends FormWidgetBase
     }
 
     public function onLoadValue() {
-        if (method_exists($this->model, 'getGutenbergData')) {
-            $value = $this->model->getGutenbergData();
-        } else {
-            $value = $this->getLoadValue() ?: [];
-        }
-
-        return Response::json($value);
+        return Response::json(json_decode($this->getLoadValue()));
     }
 
     /**
@@ -70,7 +64,7 @@ class Zgutenberg extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
-        return json_decode($value);
+        return $value;
     }
 
     public function onGetComponentBlocks() {

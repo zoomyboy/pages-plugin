@@ -59,6 +59,6 @@ tabs:
 secondaryTabs:
     stretch: true
     fields:
-        markup:
+        viewBag[zg_data]:
             tab: rainlab.pages::lang.editor.content
             type: zgutenberg

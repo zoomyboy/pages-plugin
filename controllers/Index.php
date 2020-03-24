@@ -566,8 +566,11 @@ class Index extends Controller
 
         if ($type == 'page') {
             $placeholders = array_get($saveData, 'placeholders');
-            $objectData['settings']['viewBag']['zg_data'] = json_encode($objectData['markup']);
-            $objectData['markup'] = app(Renderer::class)->render($objectData['markup']);
+
+            $objectData['markup'] = app(Renderer::class)->render(
+                json_decode(array_get($objectData, 'settings.viewBag.zg_data')),
+                array_get($objectData, 'settings.viewBag')
+            );
 
             if (is_array($placeholders) && Config::get('cms.convertLineEndings', false) === true) {
                 $placeholders = array_map([$this, 'convertLineEndings'], $placeholders);

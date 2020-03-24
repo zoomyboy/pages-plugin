@@ -1,5 +1,7 @@
 <?php foreach($markup as $section): ?>
+    <?php if (!(bool)array_get($params, 'settings.viewBag.sidebar', false)): ?>
     <div class="container">
+    <?php endif; ?>
         <?php foreach ($section->data->columns as $column): ?>
             <div class="w-<?php echo $column->width; ?>">
                 <?php foreach ($column->modules as $module): ?>
@@ -8,5 +10,7 @@
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
+    <?php if (!(bool)array_get($params, 'settings.viewBag.sidebar', false)): ?>
     </div>
+    <?php endif; ?>
 <?php endforeach; ?>

@@ -9,8 +9,11 @@ use Cms\Classes\ComponentManager;
 class Renderer {
     use \System\Traits\ViewMaker;
 
-    public function render($markup) {
-        return $this->makePartial('main', ['markup' => $markup]);
+    public function render($markup, $params) {
+        return $this->makePartial('main', [
+            'markup' => $markup,
+            'params' => $params
+        ]);
     }
 
     public static function parseParams($params) {

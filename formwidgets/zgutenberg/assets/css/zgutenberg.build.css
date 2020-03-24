@@ -11252,116 +11252,135 @@
 
 .zg-col-gap-0 {
   grid-column-gap: 0;
-  -moz-column-gap: 0;
-       column-gap: 0;
+  -webkit-column-gap: 0;
+     -moz-column-gap: 0;
+          column-gap: 0;
 }
 
 .zg-col-gap-1 {
   grid-column-gap: 0.4rem;
-  -moz-column-gap: 0.4rem;
-       column-gap: 0.4rem;
+  -webkit-column-gap: 0.4rem;
+     -moz-column-gap: 0.4rem;
+          column-gap: 0.4rem;
 }
 
 .zg-col-gap-2 {
   grid-column-gap: 0.8rem;
-  -moz-column-gap: 0.8rem;
-       column-gap: 0.8rem;
+  -webkit-column-gap: 0.8rem;
+     -moz-column-gap: 0.8rem;
+          column-gap: 0.8rem;
 }
 
 .zg-col-gap-3 {
   grid-column-gap: 1.2rem;
-  -moz-column-gap: 1.2rem;
-       column-gap: 1.2rem;
+  -webkit-column-gap: 1.2rem;
+     -moz-column-gap: 1.2rem;
+          column-gap: 1.2rem;
 }
 
 .zg-col-gap-4 {
   grid-column-gap: 1.6rem;
-  -moz-column-gap: 1.6rem;
-       column-gap: 1.6rem;
+  -webkit-column-gap: 1.6rem;
+     -moz-column-gap: 1.6rem;
+          column-gap: 1.6rem;
 }
 
 .zg-col-gap-5 {
   grid-column-gap: 2.0rem;
-  -moz-column-gap: 2.0rem;
-       column-gap: 2.0rem;
+  -webkit-column-gap: 2.0rem;
+     -moz-column-gap: 2.0rem;
+          column-gap: 2.0rem;
 }
 
 .zg-col-gap-6 {
   grid-column-gap: 2.4rem;
-  -moz-column-gap: 2.4rem;
-       column-gap: 2.4rem;
+  -webkit-column-gap: 2.4rem;
+     -moz-column-gap: 2.4rem;
+          column-gap: 2.4rem;
 }
 
 .zg-col-gap-8 {
   grid-column-gap: 3.2rem;
-  -moz-column-gap: 3.2rem;
-       column-gap: 3.2rem;
+  -webkit-column-gap: 3.2rem;
+     -moz-column-gap: 3.2rem;
+          column-gap: 3.2rem;
 }
 
 .zg-col-gap-10 {
   grid-column-gap: 4rem;
-  -moz-column-gap: 4rem;
-       column-gap: 4rem;
+  -webkit-column-gap: 4rem;
+     -moz-column-gap: 4rem;
+          column-gap: 4rem;
 }
 
 .zg-col-gap-12 {
   grid-column-gap: 4.8rem;
-  -moz-column-gap: 4.8rem;
-       column-gap: 4.8rem;
+  -webkit-column-gap: 4.8rem;
+     -moz-column-gap: 4.8rem;
+          column-gap: 4.8rem;
 }
 
 .zg-col-gap-16 {
   grid-column-gap: 6.4rem;
-  -moz-column-gap: 6.4rem;
-       column-gap: 6.4rem;
+  -webkit-column-gap: 6.4rem;
+     -moz-column-gap: 6.4rem;
+          column-gap: 6.4rem;
 }
 
 .zg-col-gap-20 {
   grid-column-gap: 8rem;
-  -moz-column-gap: 8rem;
-       column-gap: 8rem;
+  -webkit-column-gap: 8rem;
+     -moz-column-gap: 8rem;
+          column-gap: 8rem;
 }
 
 .zg-col-gap-24 {
   grid-column-gap: 9.6rem;
-  -moz-column-gap: 9.6rem;
-       column-gap: 9.6rem;
+  -webkit-column-gap: 9.6rem;
+     -moz-column-gap: 9.6rem;
+          column-gap: 9.6rem;
 }
 
 .zg-col-gap-32 {
   grid-column-gap: 12.8rem;
-  -moz-column-gap: 12.8rem;
-       column-gap: 12.8rem;
+  -webkit-column-gap: 12.8rem;
+     -moz-column-gap: 12.8rem;
+          column-gap: 12.8rem;
 }
 
 .zg-col-gap-40 {
   grid-column-gap: 16rem;
-  -moz-column-gap: 16rem;
-       column-gap: 16rem;
+  -webkit-column-gap: 16rem;
+     -moz-column-gap: 16rem;
+          column-gap: 16rem;
 }
 
 .zg-col-gap-48 {
   grid-column-gap: 19.2rem;
-  -moz-column-gap: 19.2rem;
-       column-gap: 19.2rem;
+  -webkit-column-gap: 19.2rem;
+     -moz-column-gap: 19.2rem;
+          column-gap: 19.2rem;
 }
 
 .zg-col-gap-56 {
   grid-column-gap: 22.4rem;
-  -moz-column-gap: 22.4rem;
-       column-gap: 22.4rem;
+  -webkit-column-gap: 22.4rem;
+     -moz-column-gap: 22.4rem;
+          column-gap: 22.4rem;
 }
 
 .zg-col-gap-64 {
   grid-column-gap: 25.6rem;
-  -moz-column-gap: 25.6rem;
-       column-gap: 25.6rem;
+  -webkit-column-gap: 25.6rem;
+     -moz-column-gap: 25.6rem;
+          column-gap: 25.6rem;
 }
 
 .zg-col-gap-px {
   grid-column-gap: 1px;
-  -moz-column-gap: 1px;
-       column-gap: 1px;
+  -webkit-column-gap: 1px;
+     -moz-column-gap: 1px;
+          column-gap: 1px;
 }
 
 .zg-row-gap-0 {
@@ -24847,116 +24866,135 @@
 
   .sm\:zg-col-gap-0 {
     grid-column-gap: 0;
-    -moz-column-gap: 0;
-         column-gap: 0;
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
   }
 
   .sm\:zg-col-gap-1 {
     grid-column-gap: 0.4rem;
-    -moz-column-gap: 0.4rem;
-         column-gap: 0.4rem;
+    -webkit-column-gap: 0.4rem;
+       -moz-column-gap: 0.4rem;
+            column-gap: 0.4rem;
   }
 
   .sm\:zg-col-gap-2 {
     grid-column-gap: 0.8rem;
-    -moz-column-gap: 0.8rem;
-         column-gap: 0.8rem;
+    -webkit-column-gap: 0.8rem;
+       -moz-column-gap: 0.8rem;
+            column-gap: 0.8rem;
   }
 
   .sm\:zg-col-gap-3 {
     grid-column-gap: 1.2rem;
-    -moz-column-gap: 1.2rem;
-         column-gap: 1.2rem;
+    -webkit-column-gap: 1.2rem;
+       -moz-column-gap: 1.2rem;
+            column-gap: 1.2rem;
   }
 
   .sm\:zg-col-gap-4 {
     grid-column-gap: 1.6rem;
-    -moz-column-gap: 1.6rem;
-         column-gap: 1.6rem;
+    -webkit-column-gap: 1.6rem;
+       -moz-column-gap: 1.6rem;
+            column-gap: 1.6rem;
   }
 
   .sm\:zg-col-gap-5 {
     grid-column-gap: 2.0rem;
-    -moz-column-gap: 2.0rem;
-         column-gap: 2.0rem;
+    -webkit-column-gap: 2.0rem;
+       -moz-column-gap: 2.0rem;
+            column-gap: 2.0rem;
   }
 
   .sm\:zg-col-gap-6 {
     grid-column-gap: 2.4rem;
-    -moz-column-gap: 2.4rem;
-         column-gap: 2.4rem;
+    -webkit-column-gap: 2.4rem;
+       -moz-column-gap: 2.4rem;
+            column-gap: 2.4rem;
   }
 
   .sm\:zg-col-gap-8 {
     grid-column-gap: 3.2rem;
-    -moz-column-gap: 3.2rem;
-         column-gap: 3.2rem;
+    -webkit-column-gap: 3.2rem;
+       -moz-column-gap: 3.2rem;
+            column-gap: 3.2rem;
   }
 
   .sm\:zg-col-gap-10 {
     grid-column-gap: 4rem;
-    -moz-column-gap: 4rem;
-         column-gap: 4rem;
+    -webkit-column-gap: 4rem;
+       -moz-column-gap: 4rem;
+            column-gap: 4rem;
   }
 
   .sm\:zg-col-gap-12 {
     grid-column-gap: 4.8rem;
-    -moz-column-gap: 4.8rem;
-         column-gap: 4.8rem;
+    -webkit-column-gap: 4.8rem;
+       -moz-column-gap: 4.8rem;
+            column-gap: 4.8rem;
   }
 
   .sm\:zg-col-gap-16 {
     grid-column-gap: 6.4rem;
-    -moz-column-gap: 6.4rem;
-         column-gap: 6.4rem;
+    -webkit-column-gap: 6.4rem;
+       -moz-column-gap: 6.4rem;
+            column-gap: 6.4rem;
   }
 
   .sm\:zg-col-gap-20 {
     grid-column-gap: 8rem;
-    -moz-column-gap: 8rem;
-         column-gap: 8rem;
+    -webkit-column-gap: 8rem;
+       -moz-column-gap: 8rem;
+            column-gap: 8rem;
   }
 
   .sm\:zg-col-gap-24 {
     grid-column-gap: 9.6rem;
-    -moz-column-gap: 9.6rem;
-         column-gap: 9.6rem;
+    -webkit-column-gap: 9.6rem;
+       -moz-column-gap: 9.6rem;
+            column-gap: 9.6rem;
   }
 
   .sm\:zg-col-gap-32 {
     grid-column-gap: 12.8rem;
-    -moz-column-gap: 12.8rem;
-         column-gap: 12.8rem;
+    -webkit-column-gap: 12.8rem;
+       -moz-column-gap: 12.8rem;
+            column-gap: 12.8rem;
   }
 
   .sm\:zg-col-gap-40 {
     grid-column-gap: 16rem;
-    -moz-column-gap: 16rem;
-         column-gap: 16rem;
+    -webkit-column-gap: 16rem;
+       -moz-column-gap: 16rem;
+            column-gap: 16rem;
   }
 
   .sm\:zg-col-gap-48 {
     grid-column-gap: 19.2rem;
-    -moz-column-gap: 19.2rem;
-         column-gap: 19.2rem;
+    -webkit-column-gap: 19.2rem;
+       -moz-column-gap: 19.2rem;
+            column-gap: 19.2rem;
   }
 
   .sm\:zg-col-gap-56 {
     grid-column-gap: 22.4rem;
-    -moz-column-gap: 22.4rem;
-         column-gap: 22.4rem;
+    -webkit-column-gap: 22.4rem;
+       -moz-column-gap: 22.4rem;
+            column-gap: 22.4rem;
   }
 
   .sm\:zg-col-gap-64 {
     grid-column-gap: 25.6rem;
-    -moz-column-gap: 25.6rem;
-         column-gap: 25.6rem;
+    -webkit-column-gap: 25.6rem;
+       -moz-column-gap: 25.6rem;
+            column-gap: 25.6rem;
   }
 
   .sm\:zg-col-gap-px {
     grid-column-gap: 1px;
-    -moz-column-gap: 1px;
-         column-gap: 1px;
+    -webkit-column-gap: 1px;
+       -moz-column-gap: 1px;
+            column-gap: 1px;
   }
 
   .sm\:zg-row-gap-0 {
@@ -38387,116 +38425,135 @@
 
   .md\:zg-col-gap-0 {
     grid-column-gap: 0;
-    -moz-column-gap: 0;
-         column-gap: 0;
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
   }
 
   .md\:zg-col-gap-1 {
     grid-column-gap: 0.4rem;
-    -moz-column-gap: 0.4rem;
-         column-gap: 0.4rem;
+    -webkit-column-gap: 0.4rem;
+       -moz-column-gap: 0.4rem;
+            column-gap: 0.4rem;
   }
 
   .md\:zg-col-gap-2 {
     grid-column-gap: 0.8rem;
-    -moz-column-gap: 0.8rem;
-         column-gap: 0.8rem;
+    -webkit-column-gap: 0.8rem;
+       -moz-column-gap: 0.8rem;
+            column-gap: 0.8rem;
   }
 
   .md\:zg-col-gap-3 {
     grid-column-gap: 1.2rem;
-    -moz-column-gap: 1.2rem;
-         column-gap: 1.2rem;
+    -webkit-column-gap: 1.2rem;
+       -moz-column-gap: 1.2rem;
+            column-gap: 1.2rem;
   }
 
   .md\:zg-col-gap-4 {
     grid-column-gap: 1.6rem;
-    -moz-column-gap: 1.6rem;
-         column-gap: 1.6rem;
+    -webkit-column-gap: 1.6rem;
+       -moz-column-gap: 1.6rem;
+            column-gap: 1.6rem;
   }
 
   .md\:zg-col-gap-5 {
     grid-column-gap: 2.0rem;
-    -moz-column-gap: 2.0rem;
-         column-gap: 2.0rem;
+    -webkit-column-gap: 2.0rem;
+       -moz-column-gap: 2.0rem;
+            column-gap: 2.0rem;
   }
 
   .md\:zg-col-gap-6 {
     grid-column-gap: 2.4rem;
-    -moz-column-gap: 2.4rem;
-         column-gap: 2.4rem;
+    -webkit-column-gap: 2.4rem;
+       -moz-column-gap: 2.4rem;
+            column-gap: 2.4rem;
   }
 
   .md\:zg-col-gap-8 {
     grid-column-gap: 3.2rem;
-    -moz-column-gap: 3.2rem;
-         column-gap: 3.2rem;
+    -webkit-column-gap: 3.2rem;
+       -moz-column-gap: 3.2rem;
+            column-gap: 3.2rem;
   }
 
   .md\:zg-col-gap-10 {
     grid-column-gap: 4rem;
-    -moz-column-gap: 4rem;
-         column-gap: 4rem;
+    -webkit-column-gap: 4rem;
+       -moz-column-gap: 4rem;
+            column-gap: 4rem;
   }
 
   .md\:zg-col-gap-12 {
     grid-column-gap: 4.8rem;
-    -moz-column-gap: 4.8rem;
-         column-gap: 4.8rem;
+    -webkit-column-gap: 4.8rem;
+       -moz-column-gap: 4.8rem;
+            column-gap: 4.8rem;
   }
 
   .md\:zg-col-gap-16 {
     grid-column-gap: 6.4rem;
-    -moz-column-gap: 6.4rem;
-         column-gap: 6.4rem;
+    -webkit-column-gap: 6.4rem;
+       -moz-column-gap: 6.4rem;
+            column-gap: 6.4rem;
   }
 
   .md\:zg-col-gap-20 {
     grid-column-gap: 8rem;
-    -moz-column-gap: 8rem;
-         column-gap: 8rem;
+    -webkit-column-gap: 8rem;
+       -moz-column-gap: 8rem;
+            column-gap: 8rem;
   }
 
   .md\:zg-col-gap-24 {
     grid-column-gap: 9.6rem;
-    -moz-column-gap: 9.6rem;
-         column-gap: 9.6rem;
+    -webkit-column-gap: 9.6rem;
+       -moz-column-gap: 9.6rem;
+            column-gap: 9.6rem;
   }
 
   .md\:zg-col-gap-32 {
     grid-column-gap: 12.8rem;
-    -moz-column-gap: 12.8rem;
-         column-gap: 12.8rem;
+    -webkit-column-gap: 12.8rem;
+       -moz-column-gap: 12.8rem;
+            column-gap: 12.8rem;
   }
 
   .md\:zg-col-gap-40 {
     grid-column-gap: 16rem;
-    -moz-column-gap: 16rem;
-         column-gap: 16rem;
+    -webkit-column-gap: 16rem;
+       -moz-column-gap: 16rem;
+            column-gap: 16rem;
   }
 
   .md\:zg-col-gap-48 {
     grid-column-gap: 19.2rem;
-    -moz-column-gap: 19.2rem;
-         column-gap: 19.2rem;
+    -webkit-column-gap: 19.2rem;
+       -moz-column-gap: 19.2rem;
+            column-gap: 19.2rem;
   }
 
   .md\:zg-col-gap-56 {
     grid-column-gap: 22.4rem;
-    -moz-column-gap: 22.4rem;
-         column-gap: 22.4rem;
+    -webkit-column-gap: 22.4rem;
+       -moz-column-gap: 22.4rem;
+            column-gap: 22.4rem;
   }
 
   .md\:zg-col-gap-64 {
     grid-column-gap: 25.6rem;
-    -moz-column-gap: 25.6rem;
-         column-gap: 25.6rem;
+    -webkit-column-gap: 25.6rem;
+       -moz-column-gap: 25.6rem;
+            column-gap: 25.6rem;
   }
 
   .md\:zg-col-gap-px {
     grid-column-gap: 1px;
-    -moz-column-gap: 1px;
-         column-gap: 1px;
+    -webkit-column-gap: 1px;
+       -moz-column-gap: 1px;
+            column-gap: 1px;
   }
 
   .md\:zg-row-gap-0 {
@@ -51927,116 +51984,135 @@
 
   .lg\:zg-col-gap-0 {
     grid-column-gap: 0;
-    -moz-column-gap: 0;
-         column-gap: 0;
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
   }
 
   .lg\:zg-col-gap-1 {
     grid-column-gap: 0.4rem;
-    -moz-column-gap: 0.4rem;
-         column-gap: 0.4rem;
+    -webkit-column-gap: 0.4rem;
+       -moz-column-gap: 0.4rem;
+            column-gap: 0.4rem;
   }
 
   .lg\:zg-col-gap-2 {
     grid-column-gap: 0.8rem;
-    -moz-column-gap: 0.8rem;
-         column-gap: 0.8rem;
+    -webkit-column-gap: 0.8rem;
+       -moz-column-gap: 0.8rem;
+            column-gap: 0.8rem;
   }
 
   .lg\:zg-col-gap-3 {
     grid-column-gap: 1.2rem;
-    -moz-column-gap: 1.2rem;
-         column-gap: 1.2rem;
+    -webkit-column-gap: 1.2rem;
+       -moz-column-gap: 1.2rem;
+            column-gap: 1.2rem;
   }
 
   .lg\:zg-col-gap-4 {
     grid-column-gap: 1.6rem;
-    -moz-column-gap: 1.6rem;
-         column-gap: 1.6rem;
+    -webkit-column-gap: 1.6rem;
+       -moz-column-gap: 1.6rem;
+            column-gap: 1.6rem;
   }
 
   .lg\:zg-col-gap-5 {
     grid-column-gap: 2.0rem;
-    -moz-column-gap: 2.0rem;
-         column-gap: 2.0rem;
+    -webkit-column-gap: 2.0rem;
+       -moz-column-gap: 2.0rem;
+            column-gap: 2.0rem;
   }
 
   .lg\:zg-col-gap-6 {
     grid-column-gap: 2.4rem;
-    -moz-column-gap: 2.4rem;
-         column-gap: 2.4rem;
+    -webkit-column-gap: 2.4rem;
+       -moz-column-gap: 2.4rem;
+            column-gap: 2.4rem;
   }
 
   .lg\:zg-col-gap-8 {
     grid-column-gap: 3.2rem;
-    -moz-column-gap: 3.2rem;
-         column-gap: 3.2rem;
+    -webkit-column-gap: 3.2rem;
+       -moz-column-gap: 3.2rem;
+            column-gap: 3.2rem;
   }
 
   .lg\:zg-col-gap-10 {
     grid-column-gap: 4rem;
-    -moz-column-gap: 4rem;
-         column-gap: 4rem;
+    -webkit-column-gap: 4rem;
+       -moz-column-gap: 4rem;
+            column-gap: 4rem;
   }
 
   .lg\:zg-col-gap-12 {
     grid-column-gap: 4.8rem;
-    -moz-column-gap: 4.8rem;
-         column-gap: 4.8rem;
+    -webkit-column-gap: 4.8rem;
+       -moz-column-gap: 4.8rem;
+            column-gap: 4.8rem;
   }
 
   .lg\:zg-col-gap-16 {
     grid-column-gap: 6.4rem;
-    -moz-column-gap: 6.4rem;
-         column-gap: 6.4rem;
+    -webkit-column-gap: 6.4rem;
+       -moz-column-gap: 6.4rem;
+            column-gap: 6.4rem;
   }
 
   .lg\:zg-col-gap-20 {
     grid-column-gap: 8rem;
-    -moz-column-gap: 8rem;
-         column-gap: 8rem;
+    -webkit-column-gap: 8rem;
+       -moz-column-gap: 8rem;
+            column-gap: 8rem;
   }
 
   .lg\:zg-col-gap-24 {
     grid-column-gap: 9.6rem;
-    -moz-column-gap: 9.6rem;
-         column-gap: 9.6rem;
+    -webkit-column-gap: 9.6rem;
+       -moz-column-gap: 9.6rem;
+            column-gap: 9.6rem;
   }
 
   .lg\:zg-col-gap-32 {
     grid-column-gap: 12.8rem;
-    -moz-column-gap: 12.8rem;
-         column-gap: 12.8rem;
+    -webkit-column-gap: 12.8rem;
+       -moz-column-gap: 12.8rem;
+            column-gap: 12.8rem;
   }
 
   .lg\:zg-col-gap-40 {
     grid-column-gap: 16rem;
-    -moz-column-gap: 16rem;
-         column-gap: 16rem;
+    -webkit-column-gap: 16rem;
+       -moz-column-gap: 16rem;
+            column-gap: 16rem;
   }
 
   .lg\:zg-col-gap-48 {
     grid-column-gap: 19.2rem;
-    -moz-column-gap: 19.2rem;
-         column-gap: 19.2rem;
+    -webkit-column-gap: 19.2rem;
+       -moz-column-gap: 19.2rem;
+            column-gap: 19.2rem;
   }
 
   .lg\:zg-col-gap-56 {
     grid-column-gap: 22.4rem;
-    -moz-column-gap: 22.4rem;
-         column-gap: 22.4rem;
+    -webkit-column-gap: 22.4rem;
+       -moz-column-gap: 22.4rem;
+            column-gap: 22.4rem;
   }
 
   .lg\:zg-col-gap-64 {
     grid-column-gap: 25.6rem;
-    -moz-column-gap: 25.6rem;
-         column-gap: 25.6rem;
+    -webkit-column-gap: 25.6rem;
+       -moz-column-gap: 25.6rem;
+            column-gap: 25.6rem;
   }
 
   .lg\:zg-col-gap-px {
     grid-column-gap: 1px;
-    -moz-column-gap: 1px;
-         column-gap: 1px;
+    -webkit-column-gap: 1px;
+       -moz-column-gap: 1px;
+            column-gap: 1px;
   }
 
   .lg\:zg-row-gap-0 {
@@ -65467,116 +65543,135 @@
 
   .xl\:zg-col-gap-0 {
     grid-column-gap: 0;
-    -moz-column-gap: 0;
-         column-gap: 0;
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
   }
 
   .xl\:zg-col-gap-1 {
     grid-column-gap: 0.4rem;
-    -moz-column-gap: 0.4rem;
-         column-gap: 0.4rem;
+    -webkit-column-gap: 0.4rem;
+       -moz-column-gap: 0.4rem;
+            column-gap: 0.4rem;
   }
 
   .xl\:zg-col-gap-2 {
     grid-column-gap: 0.8rem;
-    -moz-column-gap: 0.8rem;
-         column-gap: 0.8rem;
+    -webkit-column-gap: 0.8rem;
+       -moz-column-gap: 0.8rem;
+            column-gap: 0.8rem;
   }
 
   .xl\:zg-col-gap-3 {
     grid-column-gap: 1.2rem;
-    -moz-column-gap: 1.2rem;
-         column-gap: 1.2rem;
+    -webkit-column-gap: 1.2rem;
+       -moz-column-gap: 1.2rem;
+            column-gap: 1.2rem;
   }
 
   .xl\:zg-col-gap-4 {
     grid-column-gap: 1.6rem;
-    -moz-column-gap: 1.6rem;
-         column-gap: 1.6rem;
+    -webkit-column-gap: 1.6rem;
+       -moz-column-gap: 1.6rem;
+            column-gap: 1.6rem;
   }
 
   .xl\:zg-col-gap-5 {
     grid-column-gap: 2.0rem;
-    -moz-column-gap: 2.0rem;
-         column-gap: 2.0rem;
+    -webkit-column-gap: 2.0rem;
+       -moz-column-gap: 2.0rem;
+            column-gap: 2.0rem;
   }
 
   .xl\:zg-col-gap-6 {
     grid-column-gap: 2.4rem;
-    -moz-column-gap: 2.4rem;
-         column-gap: 2.4rem;
+    -webkit-column-gap: 2.4rem;
+       -moz-column-gap: 2.4rem;
+            column-gap: 2.4rem;
   }
 
   .xl\:zg-col-gap-8 {
     grid-column-gap: 3.2rem;
-    -moz-column-gap: 3.2rem;
-         column-gap: 3.2rem;
+    -webkit-column-gap: 3.2rem;
+       -moz-column-gap: 3.2rem;
+            column-gap: 3.2rem;
   }
 
   .xl\:zg-col-gap-10 {
     grid-column-gap: 4rem;
-    -moz-column-gap: 4rem;
-         column-gap: 4rem;
+    -webkit-column-gap: 4rem;
+       -moz-column-gap: 4rem;
+            column-gap: 4rem;
   }
 
   .xl\:zg-col-gap-12 {
     grid-column-gap: 4.8rem;
-    -moz-column-gap: 4.8rem;
-         column-gap: 4.8rem;
+    -webkit-column-gap: 4.8rem;
+       -moz-column-gap: 4.8rem;
+            column-gap: 4.8rem;
   }
 
   .xl\:zg-col-gap-16 {
     grid-column-gap: 6.4rem;
-    -moz-column-gap: 6.4rem;
-         column-gap: 6.4rem;
+    -webkit-column-gap: 6.4rem;
+       -moz-column-gap: 6.4rem;
+            column-gap: 6.4rem;
   }
 
   .xl\:zg-col-gap-20 {
     grid-column-gap: 8rem;
-    -moz-column-gap: 8rem;
-         column-gap: 8rem;
+    -webkit-column-gap: 8rem;
+       -moz-column-gap: 8rem;
+            column-gap: 8rem;
   }
 
   .xl\:zg-col-gap-24 {
     grid-column-gap: 9.6rem;
-    -moz-column-gap: 9.6rem;
-         column-gap: 9.6rem;
+    -webkit-column-gap: 9.6rem;
+       -moz-column-gap: 9.6rem;
+            column-gap: 9.6rem;
   }
 
   .xl\:zg-col-gap-32 {
     grid-column-gap: 12.8rem;
-    -moz-column-gap: 12.8rem;
-         column-gap: 12.8rem;
+    -webkit-column-gap: 12.8rem;
+       -moz-column-gap: 12.8rem;
+            column-gap: 12.8rem;
   }
 
   .xl\:zg-col-gap-40 {
     grid-column-gap: 16rem;
-    -moz-column-gap: 16rem;
-         column-gap: 16rem;
+    -webkit-column-gap: 16rem;
+       -moz-column-gap: 16rem;
+            column-gap: 16rem;
   }
 
   .xl\:zg-col-gap-48 {
     grid-column-gap: 19.2rem;
-    -moz-column-gap: 19.2rem;
-         column-gap: 19.2rem;
+    -webkit-column-gap: 19.2rem;
+       -moz-column-gap: 19.2rem;
+            column-gap: 19.2rem;
   }
 
   .xl\:zg-col-gap-56 {
     grid-column-gap: 22.4rem;
-    -moz-column-gap: 22.4rem;
-         column-gap: 22.4rem;
+    -webkit-column-gap: 22.4rem;
+       -moz-column-gap: 22.4rem;
+            column-gap: 22.4rem;
   }
 
   .xl\:zg-col-gap-64 {
     grid-column-gap: 25.6rem;
-    -moz-column-gap: 25.6rem;
-         column-gap: 25.6rem;
+    -webkit-column-gap: 25.6rem;
+       -moz-column-gap: 25.6rem;
+            column-gap: 25.6rem;
   }
 
   .xl\:zg-col-gap-px {
     grid-column-gap: 1px;
-    -moz-column-gap: 1px;
-         column-gap: 1px;
+    -webkit-column-gap: 1px;
+       -moz-column-gap: 1px;
+            column-gap: 1px;
   }
 
   .xl\:zg-row-gap-0 {
