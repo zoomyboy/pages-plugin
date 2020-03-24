@@ -6,7 +6,7 @@
             <div class="zg-flex-grow zg-p-6">
                 <zgcontent v-model="content"></zgcontent>
             </div>
-            <div class="zg-w-sidebar zg-border-l zg-bg-white" v-show="$store.state.sidebar">
+            <div class="zg-w-sidebar zg-bg-white zg-shadow-lg" v-show="$store.state.sidebar">
                 <sidebar></sidebar>
             </div>
         </div>
