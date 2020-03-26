@@ -1,20 +1,16 @@
-<?php foreach($markup->sections as $section): ?>
-    <?php if (!(bool)array_get($params, 'settings.viewBag.sidebar', false)): ?>
-    <div class="container">
-    <?php endif; ?>
-        <?php foreach ($section->data->rows as $row): ?>
+<?php foreach($markup->sections as $index => $section): ?>
+    <?php echo $this->presenter($section, $index)->openTag(); ?>
+        <?php foreach ($section->rows as $row): ?>
         <div>
             <?php foreach ($row->data->columns as $column): ?>
                 <div class="w-<?php echo $column->width; ?>">
                     <?php foreach ($column->modules as $module): ?>
                         <?php $partial = $module->data->is == 'comp' ? 'component' : $module->data->is; ?>
-                        <?php echo $this->makePartial($partial, ['c' => $module, 'params' => $params]); ?>
+                        <?php echo $this->makePartial($partial, ['c' => $module, 'params' => $params, 'section' => $section]); ?>
                     <?php endforeach; ?>
                 </div>
             <?php endforeach; ?>
         </div>
         <?php endforeach; ?>
-    <?php if (!(bool)array_get($params, 'settings.viewBag.sidebar', false)): ?>
-    </div>
-    <?php endif; ?>
+    <?php echo $this->presenter($section, $index)->closingTag(); ?>
 <?php endforeach; ?>

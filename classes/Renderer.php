@@ -5,11 +5,16 @@ namespace RainLab\Pages\Classes;
 use Twig;
 use Cms\Classes\Controller as CmsController;
 use Cms\Classes\ComponentManager;
+use RainLab\Pages\Presenters\SectionPresenter;
 
 class Renderer {
     use \System\Traits\ViewMaker;
 
+    private $markup;
+
     public function render($markup, $params) {
+        $this->markup = $markup;
+
         return $this->makePartial('main', [
             'markup' => $markup,
             'params' => $params
@@ -56,5 +61,11 @@ class Renderer {
             $controller = CmsController::getController();
             return $controller->renderComponent($component);
         }, $markup);
+    }
+
+    public function presenter($block, $index = null) {
+        if (in_array($block->meta->type, ['section', 'fullwidth'])) {
+            return new SectionPresenter($block, $index, $index === count($this->markup->sections) -1);
+        }
     }
 }

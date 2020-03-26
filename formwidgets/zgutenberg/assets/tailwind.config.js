@@ -12,7 +12,7 @@ module.exports = {
                 'section': 'hsla(211, 96%, 43%, 1)',
                 'row': 'hsl(352, 88%, 64%)',
                 'module': 'hsl(200, 0%, 100%)'
-            },
+            }
         },
         fontSize: {
             xs: '0.75rem',

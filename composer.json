@@ -19,7 +19,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "RainLab\\Pages\\Interfaces\\": "./interfaces"
+            "RainLab\\Pages\\Interfaces\\": "./interfaces",
+            "RainLab\\Pages\\Presenters\\": "./presenters"
         }
     },
     "require": {
