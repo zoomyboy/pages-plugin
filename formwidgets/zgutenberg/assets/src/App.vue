@@ -4,10 +4,10 @@
 
         <div class="zg-flex">
             <div class="zg-flex-grow zg-p-6">
-                <zgcontent v-model="content"></zgcontent>
+                <zgcontent v-model="content.sections"></zgcontent>
             </div>
             <div class="zg-w-sidebar zg-bg-white zg-shadow-lg" v-show="$store.state.sidebar">
-                <sidebar></sidebar>
+                <sidebar :header="header" v-model="content"></sidebar>
             </div>
         </div>
         <input type="hidden" :name="name" :value="asString">
@@ -26,12 +26,21 @@ import Modals from './components/Modals.vue';
 export default {
     data: function() {
         return {
-            content: []
+            content: {
+                sections: [],
+                placeholders: {
+                    header: {}
+                }
+            }
         };
     },
     props: {
         name: {},
-        handlers: {}
+        handlers: {},
+        header: {
+            type: Boolean,
+            default: false
+        }
     },
     components: { Zgcontent, Toolbar, Sidebar, Modals },
     computed: {

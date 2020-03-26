@@ -13639,6 +13639,10 @@
     text-decoration: none;
   }
 
+.fancy-layout .modal-content .form-tabless-fields {
+  background: transparent !important;
+}
+
 @media (min-width: 640px) {
   .sm\:zg-sr-only {
     position: absolute;

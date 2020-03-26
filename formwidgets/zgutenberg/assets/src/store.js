@@ -7,7 +7,7 @@ export default function({ form, Vuex, blocks }) {
         state: {
             blocks: blocks,
             renderedBlocks: [],
-            sidebar: false,
+            sidebar: true,
             handlers: {},
             form: form,
             selected: null
@@ -93,6 +93,18 @@ export default function({ form, Vuex, blocks }) {
             }
         },
         actions: {
+
+            async request({ getters, state }, { handler, params }) {
+                return new Promise((resolve) => {
+                    getters.formObj.request(state.handlers[handler], {
+                        data: params,
+                        success(data) {
+                            resolve(data);
+                        }
+                    });
+                });
+            },
+
             loadParams({ getters, commit, state }, component) {
                 return new Promise((resolve) => {
                     getters.formObj.request(state.handlers.params, {
@@ -110,15 +122,9 @@ export default function({ form, Vuex, blocks }) {
 
                 commit('addRenderedBlock', config);
             },
-            getInit({ state, commit, getters }, initialState) {
+            getInit({ dispatch, state, commit, getters }, initialState) {
                 commit('init', initialState);
-                new Promise((resolve) => {
-                    getters.formObj.request(state.handlers.blocks, {
-                        success(data) {
-                            resolve(data);
-                        }
-                    });
-                }).then(data => {
+                dispatch('request', { handler: 'blocks', params: {} }).then(data => {
                     commit('updateAvailableBlocks', { ...state.blocks, ...data });
                 });
             },

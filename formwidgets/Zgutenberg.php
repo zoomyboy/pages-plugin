@@ -2,7 +2,9 @@
 
 use View;
 use Input;
+use Model;
 use Response;
+use Backend\Classes\Controller;
 use Backend\Classes\FormWidgetBase;
 use Cms\Classes\Controller as CmsController;
 use Dv\Base\Models\Membercategory as Category;
@@ -19,12 +21,16 @@ class Zgutenberg extends FormWidgetBase
      * @inheritDoc
      */
     protected $defaultAlias = 'rainlab_pages_zgutenberg';
+    public $header = false;
 
     /**
      * @inheritDoc
      */
     public function init()
     {
+        $this->fillFromConfig([
+            'header'
+        ]);
     }
 
     /**

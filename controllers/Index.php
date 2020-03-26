@@ -403,7 +403,6 @@ class Index extends Controller
         if ($type == 'page') {
             $widget->bindEvent('form.extendFieldsBefore', function() use ($widget, $object) {
                 $this->checkContentField($widget, $object);
-                $this->addPagePlaceholders($widget, $object);
                 $this->addPageSyntaxFields($widget, $object);
             });
         }
@@ -458,46 +457,6 @@ class Index extends Controller
             if (in_array($fieldConfig['type'], $translatableTypes)) {
                 $page->translatable[] = 'viewBag['.$fieldCode.']';
             }
-        }
-    }
-
-    protected function addPagePlaceholders($formWidget, $page)
-    {
-        $placeholders = $page->listLayoutPlaceholders();
-
-        foreach ($placeholders as $placeholderCode => $info) {
-            if ($info['ignore']) {
-                continue;
-            }
-
-            $placeholderTitle = $info['title'];
-            $fieldConfig = [
-                'tab'     => $placeholderTitle,
-                'stretch' => '1',
-                'size'    => 'huge'
-            ];
-
-            if ($info['type'] != 'text') {
-                $fieldConfig['type'] = 'richeditor';
-            }
-            else {
-                $fieldConfig['type'] = 'codeeditor';
-                $fieldConfig['language'] = 'text';
-                $fieldConfig['theme'] = 'chrome';
-                $fieldConfig['showGutter'] = false;
-                $fieldConfig['highlightActiveLine'] = false;
-                $fieldConfig['cssClass'] = 'pagesTextEditor';
-                $fieldConfig['showInvisibles'] = false;
-                $fieldConfig['fontSize'] = 13;
-                $fieldConfig['margin'] = '20';
-            }
-
-            $formWidget->secondaryTabs['fields']['placeholders['.$placeholderCode.']'] = $fieldConfig;
-
-            /*
-             * Translation support
-             */
-            $page->translatable[] = 'placeholders['.$placeholderCode.']';
         }
     }
 
@@ -567,14 +526,17 @@ class Index extends Controller
         if ($type == 'page') {
             $placeholders = array_get($saveData, 'placeholders');
 
+            $zgData = json_decode(array_get($objectData, 'settings.viewBag.zg_data'));
             $objectData['markup'] = app(Renderer::class)->render(
-                json_decode(array_get($objectData, 'settings.viewBag.zg_data')),
+                $zgData,
+                array_get($objectData, 'settings.viewBag')
+            );
+            $placeholders = app(Renderer::class)->renderPlaceholders(
+                $zgData->placeholders,
                 array_get($objectData, 'settings.viewBag')
             );
 
-            if (is_array($placeholders) && Config::get('cms.convertLineEndings', false) === true) {
-                $placeholders = array_map([$this, 'convertLineEndings'], $placeholders);
-            }
+            $placeholders = array_map([$this, 'convertLineEndings'], $placeholders);
 
             $objectData['placeholders'] = $placeholders;
         }

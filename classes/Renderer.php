@@ -16,6 +16,12 @@ class Renderer {
         ]);
     }
 
+    public function renderPlaceholders($placeholders, $params) {
+        return collect($placeholders)->map(function($placeholder, $name) {
+            return $this->makePartial('placeholder_'.$name, (array) $placeholder);
+        })->toArray();
+    }
+
     public static function parseParams($params) {
         $params = collect(explode(' ', trim($params)))->filter(function($param) {
             return !empty(trim($param));

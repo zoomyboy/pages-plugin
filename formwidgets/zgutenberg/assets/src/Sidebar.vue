@@ -1,43 +1,40 @@
 <template>
     <div>
-        <div class="zg-h-16 zg-flex zg-justify-between zg-bg-gray-200 zg-border-b zg-border-gray-300 zg-items-center zg-px-4">
-
-            <span v-text="block.name"></span>
-            <a href="#" @click.prevent="$store.commit('sidebar', false)" class="fa-btn"><span class="fa fa-close"></span></a>
-
-
+        <div v-if="header" class="zg-p-3 zg-flex zg-flex-col zg-items-center">
+            <a class="btn btn-primary" href="#" @click.prevent="editHeader">Kopfbereich</a>
         </div>
 
-        <div v-for="(param, name) in block.params">
-
-            <div v-if="param.type == 'dropdown'">
-                <label :for="name" v-text="param.label"></label>
-                <select :id="name" :name="name" @change="publish(name, $event)" :value="param.value">
-                    <option :value="null" v-text="param.placeholder"></option>
-                    <option :value="key" v-for="(value, key) in param.options" v-text="value">></option>
-                </select>
-            </div>
-
-        </div>
     </div>
 
 </template>
 
 <script>
+import subform from './subform.mixin.js';
+
 export default {
-    computed: {
-        block() {
-            return this.$store.getters.selectedRenderedBlock;
+    mixins: [ subform ],
+    
+    data: function() {
+        return {
+            modalContent: '',
+            loaded: false
+        };
+    },
+
+    props: {
+        value: {},
+        header: {
+            type: Boolean,
+            required: true
         }
     },
 
     methods: {
-        publish(name, event) {
-            this.$store.commit('updateParams', {
-                key: name,
-                value: event.target.value
+        async editHeader() {
+            this.openForm('header', 'Kopfbereich bearbeiten', this.value.placeholders.header).then(data => {
+                this.value.placeholders.header = data;
             });
         }
-    }
+    },
 };
 </script>

@@ -62,3 +62,4 @@ secondaryTabs:
         viewBag[zg_data]:
             tab: rainlab.pages::lang.editor.content
             type: zgutenberg
+            header: true

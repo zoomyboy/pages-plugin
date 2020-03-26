@@ -1,0 +1,15 @@
+image:
+    type: mediafinder
+    mode: image
+    label: Logo
+heading:
+    label: Überschrift
+    type: textarea
+    size: small
+text:
+    type: textarea
+    label: Fliesstext
+background:
+    type: mediafinder
+    mode: image
+    label: Hintergrundbild
