@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="zg-bg-gray-400">
 
         <div class="zg-bg-section zg-flex zg-rounded zg-p-3 zg-items-center">
             <input type="text" v-model="value.title" class="zg-flex-grow zg-border-0 zg-leading-none zg-bg-section zg-outline-none zg-text-center zg-text-white zg-w-full">

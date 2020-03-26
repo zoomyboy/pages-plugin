@@ -1,8 +1,13 @@
 <template>
     <div class="zg-content">
         <div v-if="value.length != 0">
-            <div v-for="(section, index) in value">
+            <div v-for="(section, index) in value" :class="{'zg-mt-6': index !== 0}">
                 <v-section v-model="section.data" :key="index" @click="select(index)" @remove="remove(index)"></v-section>
+                <div class="zg-flex zg-justify-center">
+                    <a href="#" @click.prevent="addSection(index)" class="zg-btn zg-bg-section zg--mt-5">
+                        <span class="icon-plus"></span>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="zg-flex zg-justify-center" v-else>
@@ -57,7 +62,7 @@ export default {
                 }
 
                 var content = this.value;
-                content.splice(index, 0, data);
+                content.splice(index+1, 0, data);
                 this.$emit('input', content);
             });
         }
