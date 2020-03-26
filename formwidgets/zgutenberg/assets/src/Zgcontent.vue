@@ -15,7 +15,11 @@
 
 <script>
 import VSection from './components/VSection';
+import subform from './subform.mixin.js';
+
 export default {
+    mixins: [ subform ],
+
     props: {
         value: {}
     },
@@ -29,14 +33,33 @@ export default {
             this.$emit('input', content);
         },
         addSection(index) {
-            if (typeof index == "undefined") {
-                this.$emit('input', [ { type: 'section', data: { columns: [], title: 'Sektion' } } ]);
-                return;
-            }
+            this.openForm('section', 'Sektion einfügen', {
+                title: 'Sektion',
+                layout: null,
+                background: null,
+                type: 'section'
+            }).then(data => {
+                var columns = data.layout.split(',').map(column => {
+                    return {
+                        width: column,
+                        modules: []
+                    };
+                });
 
-            var content = this.value;
-            content.splice(index, 0, { type: 'section', data: { columns: [], title: 'Sektion' } });
-            this.$emit('input', content);
+                var data = { 
+                    type: data.type,
+                    data: { columns: columns, title: data.title, background: data.background }
+                };
+
+                if (typeof index == "undefined") {
+                    this.$emit('input', [ data ]);
+                    return;
+                }
+
+                var content = this.value;
+                content.splice(index, 0, data);
+                this.$emit('input', content);
+            });
         }
     }
 };

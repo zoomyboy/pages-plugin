@@ -30,23 +30,6 @@ export default {
         remove() {
             this.$emit('remove');
         }
-    },
-
-    mounted() {
-        if (this.value.columns.length == 0) {
-            this.$store.dispatch('modal/open', {
-                'component': 'selectrow'
-            }).then(data => {
-                this.value.columns = data.map(column => {
-                    return {
-                        width: column,
-                        modules: []
-                    };
-                });
-            }).catch(err => {
-                this.$emit('destroy');
-            });
-        }
     }
 };
 </script>
