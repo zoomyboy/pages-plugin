@@ -105,6 +105,10 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function register() {
+        $this->registerConsoleCommand('pagetransform', Console\PageTransform::class);
+    }
+
     public function boot()
     {
         Event::listen('cms.router.beforeRoute', function($url) {

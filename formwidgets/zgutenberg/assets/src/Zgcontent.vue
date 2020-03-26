@@ -53,7 +53,7 @@ export default {
 
                 var data = { 
                     type: data.type,
-                    data: { columns: columns, title: data.title, background: data.background }
+                    data: { rows: [{ data: { title: 'Zeile', columns: columns} }], title: data.title, background: data.background }
                 };
 
                 if (typeof index == "undefined") {
