@@ -6,7 +6,7 @@
             <div class="w-<?php echo $column->width; ?>">
                 <?php foreach ($column->modules as $module): ?>
                     <?php $partial = $module->data->is == 'comp' ? 'component' : $module->data->is; ?>
-                    <?php echo $this->makePartial($partial, ['c' => $module]); ?>
+                    <?php echo $this->makePartial($partial, ['c' => $module, 'params' => $params]); ?>
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
