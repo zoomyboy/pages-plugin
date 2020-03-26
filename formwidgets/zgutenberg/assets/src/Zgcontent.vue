@@ -2,7 +2,7 @@
     <div class="zg-content">
         <div v-if="value.length != 0">
             <div v-for="(section, index) in value">
-                <v-section v-model="section.data" :key="index" @click="select(index)" @destroy="destroy(index)"></v-section>
+                <v-section v-model="section.data" :key="index" @click="select(index)" @remove="remove(index)"></v-section>
             </div>
         </div>
         <div class="zg-flex zg-justify-center" v-else>
@@ -23,7 +23,7 @@ export default {
     components: { VSection },
 
     methods: {
-        destroy(index) {
+        remove(index) {
             var content = this.value;
             content.splice(index, 1);
             this.$emit('input', content);

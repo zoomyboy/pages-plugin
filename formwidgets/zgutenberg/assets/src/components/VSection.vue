@@ -1,14 +1,9 @@
 <template>
-    <div class="zg-bg-sektion zg-bg-gray-200">
+    <div>
 
         <div class="zg-bg-section zg-flex zg-rounded zg-p-3 zg-items-center">
-            <div class="actions zg-w-1/4"></div>
-            <div class="title zg-w-2/4">
-                <input type="text" v-model="value.title" class="zg-border-0 zg-leading-none zg-bg-section zg-outline-none zg-text-center zg-text-white zg-w-full">
-            </div>
-            <div class="dropdown w-1/4">
-                
-            </div>
+            <input type="text" v-model="value.title" class="zg-flex-grow zg-border-0 zg-leading-none zg-bg-section zg-outline-none zg-text-center zg-text-white zg-w-full">
+            <a href="#" @click.prevent="remove" class="hover:zg-no-underline"><span class="zg-text-white icon-trash"></span></a>
         </div>
 
         <div class="zg-p-4 zg-flex zg--mx-4">
@@ -30,6 +25,12 @@ export default {
     },
 
     components: { VColumn },
+
+    methods: {
+        remove() {
+            this.$emit('remove');
+        }
+    },
 
     mounted() {
         if (this.value.columns.length == 0) {
