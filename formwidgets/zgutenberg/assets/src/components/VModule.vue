@@ -8,8 +8,10 @@
 
 <script>
 import VColumn from './VColumn';
+import subform from '../subform.mixin.js';
 
 export default {
+    mixins: [ subform ],
 
     props: {
         value: {}
@@ -34,12 +36,26 @@ export default {
     },
 
     async created() {
-        if (this.value.new) {
+        if (this.value.new && this.value.is != 'comp') {
             this.$store.dispatch('modal/open', {
                 'component': this.value.is,
                 params: { value: this.value }
             }).then(data => {
                 this.$emit('input', { ...data, new: false });
+                this.$emit('permanent');
+            }).catch(err => {
+                this.$emit('destroy');
+            });
+
+            return;
+        }
+
+        if (this.value.is == 'comp') {
+            this.openForm('component', this.value.name, {
+                component: this.value.component,
+                title: this.value.name
+            }).then(params => {
+                this.$emit('input', { ...this.value, params: params });
                 this.$emit('permanent');
             }).catch(err => {
                 this.$emit('destroy');
