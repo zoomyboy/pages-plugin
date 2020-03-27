@@ -1,5 +1,5 @@
-title: 
-    label: Titel
+section[title]: 
+    label: Sektionstitel
 
 layout:
     type: dropdown
@@ -11,20 +11,23 @@ layout:
         1/3,2/3: 1/3 2/3
         2/3,1/3: 2/3 1/3
 
-background:
+row[title]:
+    label: Zeilentitel
+
+section[background]:
     type: mediafinder
     label: Hintergrundbold
     mode: image
     comment: Nur für Volle Beite Sektionen gesetzt
 
-type:
+section[type]:
     type: dropdown
     label: Typ
     options:
         section: Normale sektion
         fullwidth: Volle Breite  
 
-transparent:
+section[transparent]:
     type: checkbox
     label: Transparent
     comment: Macht das Hintergrundbild tranzparenter

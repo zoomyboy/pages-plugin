@@ -1,13 +1,24 @@
 <template>
-    <div>
+    <div class="zg-p-6">
+        <div class="zg-relative zg-bg-gray-300"
+            :class="{'zg-mt-6': index !== 0}"
+            v-for="(row, index) in value"
+            v-if="value.length !== 0" 
+        >
 
-        <div class="zg-p-4 zg-flex zg-flex-col" v-for="(row, index) in this.value">
-            <v-row v-model="row.data" :key="index" @remove="removeRow(index)"></v-row>
-            <div class="zg-flex zg-justify-center">
-                <a href="#" @click.prevent="addRow(index)" class="zg-btn zg-bg-row zg--mt-5">
+            <div class="zg-bg-row zg-flex zg-rounded zg-p-3 zg-items-center">
+                <input type="text" v-model="row.meta.title" class="zg-flex-grow zg-border-0 zg-leading-none zg-bg-row zg-outline-none zg-text-center zg-text-white zg-w-full">
+                <a href="#" @click.prevent="remove(index)" class="hover:zg-no-underline"><span class="zg-text-white icon-trash"></span></a>
+            </div>
+
+            <v-row v-model="row.columns" :key="index"></v-row>
+
+            <div class="zg-flex zg-justify-center zg-absolute zg-bottom-0 zg--mt-3 zg-w-full">
+                <a href="#" @click.prevent="addRow(index)" class="zg-btn zg-btn-sm zg-bg-row">
                     <span class="icon-plus"></span>
                 </a>
             </div>
+
         </div>
 
     </div>
@@ -29,30 +40,29 @@ export default {
     methods: {
         addRow(index) {
             this.openForm('row', 'Zeile einfügen', {
-                title: 'Zeile',
-                layout: null,
-            }).then(data => {
-                var columns = data.layout.split(',').map(column => {
+                row: { title: 'Zeile' },
+            }).then(formData => {
+                var columns = formData.layout.split(',').map(column => {
                     return {
                         width: column,
                         modules: []
                     };
                 });
 
-                var row = { data: {
-                    title: data.title,
+                var newRow = {
+                    meta: formData.row,
                     columns: columns
-                } };
+                };
 
                 var content = this.value;
-                content.splice(index+1, 0, row);
+                content.splice(index+1, 0, newRow);
                 this.$emit('input', content);
             });
         },
-        removeRow(index) {
+        remove(index) {
             if (this.value.length === 1) {
                 var content = this.value;
-                content[0].data.columns = content[0].data.columns.map(column => {
+                content[0].columns = content[0].columns.map(column => {
                     return { ...column, modules: [] };
                 });
                 this.$emit('input', content);

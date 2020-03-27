@@ -30,6 +30,10 @@
     
 .zg-btn {
     @apply zg-rounded-full zg-flex zg-justify-center zg-items-center zg-w-10 zg-h-10 zg-text-white;
+    &.zg-btn-sm {
+        @apply zg-w-6 zg-h-6;
+    }
+
     &:hover {
         @apply zg-no-underline;
     }

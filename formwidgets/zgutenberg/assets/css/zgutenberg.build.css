@@ -13635,6 +13635,11 @@
   color: #fff;
 }
 
+.zg-btn.zg-btn-sm {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
 .zg-btn:hover {
     text-decoration: none;
   }

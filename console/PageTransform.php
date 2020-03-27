@@ -29,15 +29,14 @@ class PageTransform extends Command
         dd($zgData);
 
         $zgData->sections = collect($zgData->sections)->map(function($section) {
-            $s = (object) [];
-            $s->rows = $section->data->rows;
-            $s->meta = (object) [
-                'type' => $section->type,
-                'title' => $section->data->title,
-                'background' => $section->data->background
-            ];
+            $section->rows = collect($section->rows)->map(function($row) {
+                return (object) [
+                    'meta' => (object) [ 'title' => $row->data->title ],
+                    'columns' => $row->data->columns
+                ];
+            });
 
-            return $s;
+            return $section;
         })->toArray();
 
         $page->viewBag['zg_data'] = json_encode($zgData);

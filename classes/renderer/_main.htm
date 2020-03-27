@@ -2,7 +2,7 @@
     <?php echo $this->presenter($section, $index)->openTag(); ?>
         <?php foreach ($section->rows as $row): ?>
         <div>
-            <?php foreach ($row->data->columns as $column): ?>
+            <?php foreach ($row->columns as $column): ?>
                 <div class="w-<?php echo $column->width; ?>">
                     <?php foreach ($column->modules as $module): ?>
                         <?php $partial = $module->data->is == 'comp' ? 'component' : $module->data->is; ?>
