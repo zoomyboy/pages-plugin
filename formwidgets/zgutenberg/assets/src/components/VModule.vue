@@ -50,12 +50,12 @@ export default {
             return;
         }
 
-        if (this.value.is == 'comp') {
+        if (this.value.is == 'comp' && this.value.new) {
             this.openForm('component', this.value.name, {
                 component: this.value.component,
                 title: this.value.name
             }).then(params => {
-                this.$emit('input', { ...this.value, params: params });
+                this.$emit('input', { ...this.value, params: params, new: false });
                 this.$emit('permanent');
             }).catch(err => {
                 this.$emit('destroy');
