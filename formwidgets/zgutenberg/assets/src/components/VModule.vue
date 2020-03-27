@@ -21,6 +21,21 @@ export default {
 
     methods: {
         edit() {
+            if (this.value.is == 'comp') {
+                this.openForm('component', this.value.name, {
+                    component: this.value.component,
+                    title: this.value.name,
+                    ...this.value.params
+                }).then(params => {
+                    this.$emit('input', { ...this.value, params: params });
+                    this.$emit('permanent');
+                }).catch(err => {
+                    this.$emit('destroy');
+                });
+
+                return;
+            }
+
             this.$store.dispatch('modal/open', {
                 'component': this.value.is,
                 params: { value: this.value }
