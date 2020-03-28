@@ -1,12 +1,12 @@
 <template>
     <div class="wrapper" style="min-height: 20vh;">
-        <toolbar></toolbar>
+        <toolbar v-model="generalSettings"></toolbar>
 
         <div class="zg-flex">
             <div class="zg-flex-grow">
                 <zgcontent v-model="content.sections"></zgcontent>
             </div>
-            <div class="zg-w-sidebar zg-bg-white zg-shadow-lg" v-show="$store.state.sidebar">
+            <div class="zg-w-sidebar zg-bg-white zg-shadow-lg" v-show="generalSettings.sidebarVisible">
                 <sidebar :header="header" v-model="content"></sidebar>
             </div>
         </div>
@@ -31,6 +31,9 @@ export default {
                 placeholders: {
                     header: {}
                 }
+            },
+            generalSettings: {
+                sidebarVisible: true
             }
         };
     },

@@ -6,16 +6,12 @@
 
 <script>
 export default {
-    data: function() {
-        return {
-            cb: false
-        };
-    },
-    computed: {
+    props: {
+        value: {}
     },
     methods: {
         toggleSidebar() {
-            this.$store.commit('sidebar', !this.$store.state.sidebar);
+            this.value.sidebarVisible = !this.value.sidebarVisible;
         }
     }
 };
