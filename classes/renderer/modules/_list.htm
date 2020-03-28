@@ -1,5 +1,5 @@
-<ul class="c">
-    <?php foreach (array_filter(explode("\n", $module->meta->content)) as $point): ?>
+<ul class="c text-<?php echo $module->meta->textSize; ?>">
+    <?php foreach (array_filter(explode("\r\n", $module->meta->content)) as $point): ?>
     <li><?php echo $point; ?></li>
     <?php endforeach; ?>
 </ul>

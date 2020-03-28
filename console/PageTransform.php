@@ -49,7 +49,7 @@ class PageTransform extends Command
         }
 
         $zgData = $this->mapModules($zgData, function($module) {
-            if ($module->is->component == 'paragraph') {
+            if ($module->is->component == 'list') {
                 $module->meta->textSize = 'base';
             }
 
