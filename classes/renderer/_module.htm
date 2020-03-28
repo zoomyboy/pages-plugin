@@ -1,1 +1,4 @@
-<?php echo $this->makePartial('modules/'.$module->is->component, ['module' => $module, 'section' => $section, 'params' => $params]); ?>
+<?php $marginTop = $before && $before->is->component == 'heading' && $section->meta->type == 'fullwidth' ? 'mt-6' : ''; ?>
+<div class="<?php echo $marginTop; ?>">
+    <?php echo $this->makePartial('modules/'.$module->is->component, ['module' => $module, 'section' => $section, 'params' => $params, 'before' => $before]); ?>
+</div>

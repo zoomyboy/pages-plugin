@@ -41,7 +41,7 @@ class Renderer {
         });
 
         return collect($params)->mapWithKeys(function($param) {
-            preg_match_all('/data-([^=]+)="([^"]+)"/', $param, $match);
+            preg_match_all('/data-([^=]+)="([^"]*)"/', $param, $match);
 
             return [ $match[1][0] => $match[2][0] ];
         })->toArray();

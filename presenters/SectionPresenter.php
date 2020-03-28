@@ -34,10 +34,13 @@ class SectionPresenter {
             $style['background-position'] = 'bottom center';
             $style['background-attachment'] = 'fixed';
         }
-
-        if ($this->section->meta->transparent) {
-            $beforeContainer = '<div class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
+        if ($this->section->meta->color) {
+            $style['background-color'] = $this->section->meta->color;
         }
+
+    if ($this->section->meta->transparent) {
+        $beforeContainer = '<div class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
+    }
 
         return '<div '.$this->mergeStyle($style).' class="py-20 relative">'.$beforeContainer.'<div class="container relative">';
     }
@@ -55,7 +58,7 @@ class SectionPresenter {
     }
 
     public function fullwidthClosingTag() {
-        return '</div>';
+        return '</div></div>';
     }
 
     public function mergeStyle($style) {

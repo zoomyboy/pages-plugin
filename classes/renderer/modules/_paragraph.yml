@@ -8,6 +8,15 @@ meta:
         type: textarea
         size: huge
 
+    textAlign:
+        label: Textausrichtung
+        type: dropdown
+        default: left
+        options:
+            center: Zentriert
+            left: Links
+            right: Rechts
+
     textSize:
         label: Schriftgröße
         type: dropdown

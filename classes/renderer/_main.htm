@@ -1,15 +1,16 @@
 <?php foreach($markup->sections as $index => $section): ?>
     <?php echo $this->presenter($section, $index)->openTag(); ?>
-        <?php foreach ($section->rows as $row): ?>
-        <div>
-            <?php foreach ($row->columns as $column): ?>
-                <div class="w-<?php echo $column->width; ?>">
-                    <?php foreach ($column->modules as $module): ?>
-                    <?php echo $this->makePartial($module->is->type, ['module' => $module, 'section' => $section, 'params' => $params]); ?>
-                    <?php endforeach; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <?php foreach ($section->rows as $ri => $row): ?>
+            <?php $rowMarginTop = $ri != 0 && $section->meta->type == 'fullwidth' ? 'mt-20' : ''; ?>
+            <div class="<?php echo $rowMarginTop; ?>">
+                <?php foreach ($row->columns as $ci => $column): ?>
+                    <div class="w-<?php echo $column->width; ?>">
+                        <?php foreach ($column->modules as $mi => $module): ?>
+                        <?php echo $this->makePartial($module->is->type, ['module' => $module, 'section' => $section, 'params' => $params, 'before' => array_get($column->modules, $mi-1, null)]); ?>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         <?php endforeach; ?>
     <?php echo $this->presenter($section, $index)->closingTag(); ?>
 <?php endforeach; ?>

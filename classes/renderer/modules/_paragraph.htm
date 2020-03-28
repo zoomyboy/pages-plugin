@@ -1,1 +1,2 @@
-<p class="c text-<?php echo $module->meta->textSize; ?>"><?php echo $module->meta->content; ?></p>
+<?php $marginTop = $before && $before->is->component == 'pagetitle' ? 'mt-3' : ''; ?>
+<p class="c text-<?php echo $module->meta->textAlign; ?> <?php echo $marginTop; ?> text-<?php echo $module->meta->textSize; ?>"><?php echo $module->meta->content; ?></p>

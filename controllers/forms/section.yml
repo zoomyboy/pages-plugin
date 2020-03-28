@@ -20,6 +20,13 @@ section[background]:
     mode: image
     comment: Nur für Volle Beite Sektionen gesetzt
 
+section[color]:
+    type: colorpicker
+    label: Hintergrundfarbe
+    comment: Nur für Volle Beite Sektionen gesetzt
+    allowEmpty: true
+    availableColors: ["#a3e5ff"]
+
 section[type]:
     type: dropdown
     label: Typ

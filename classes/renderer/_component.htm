@@ -1,1 +1,4 @@
-<figure data-component="<?php echo $module->is->component; ?>"<?php foreach ($module->meta as $name => $param): ?> data-<?php echo $name; ?>="<?php echo $param; ?>"<?php endforeach; ?>></figure>
+<?php $marginTop = $before && $before->is->component == 'heading' && $section->meta->type == 'fullwidth' ? 'mt-6' : ''; ?>
+<div class="<?php echo $marginTop; ?>">
+    <figure data-component="<?php echo $module->is->component; ?>"<?php foreach ($module->meta as $name => $param): ?> data-<?php echo $name; ?>="<?php echo $param; ?>"<?php endforeach; ?>></figure>
+</div>
