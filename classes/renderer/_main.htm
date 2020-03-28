@@ -5,7 +5,7 @@
             <?php foreach ($row->columns as $column): ?>
                 <div class="w-<?php echo $column->width; ?>">
                     <?php foreach ($column->modules as $module): ?>
-                        <?php echo $this->makePartial($module->is->type, ['module' => $module, 'section' => $section]); ?>
+                    <?php echo $this->makePartial($module->is->type, ['module' => $module, 'section' => $section, 'params' => $params]); ?>
                     <?php endforeach; ?>
                 </div>
             <?php endforeach; ?>
