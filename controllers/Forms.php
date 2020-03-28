@@ -6,19 +6,38 @@ use Input;
 use BackendMenu;
 use Backend\Classes\Controller;
 use Cms\Classes\ComponentManager;
+use Rainlab\Pages\Classes\Renderer;
 
 /**
  * Forms Back-end Controller
  */
 class Forms extends Controller
 {
+
+    public function getModulesConfig() {
+        $renderer = app(Renderer::class);
+        
+        return $renderer->getModulesConfigs()->map(function($config, $moduleName) {
+            return (object) [
+                'is' => (object) [
+                    'type' => 'module',
+                    'component' => $moduleName,
+                    'icon' => array_get($config, 'settings.icon.default')
+                ],
+                'meta' => (object) [
+                    'title' => array_get($config, 'meta.title.default')
+                ]
+            ];
+        })->toArray();
+    }
+
     public function getFormConfig($form, $model) {
         if (is_array($form) && $form['type'] == 'component') {
             $fields = $this->getComponentFields($form['component']);
             $fields = ['title' => [ 'label' => 'Titel' ] ] + $fields;
         } else if (is_array($form) && $form['type'] == 'module') {
-            $fields = (array) $this->makeConfig($form['component'].'.yml');
-            $fields = ['title' => [ 'label' => 'Titel' ] ] + $fields;
+            $renderer = app(Renderer::class);
+            $fields = $renderer->getModulesConfigs()->get($form['component'])->get('meta', []);
         } else {
             $fields = (array) $this->makeConfig($form.'.yml');
         }

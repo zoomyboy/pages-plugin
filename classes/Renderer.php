@@ -9,8 +9,16 @@ use RainLab\Pages\Presenters\SectionPresenter;
 
 class Renderer {
     use \System\Traits\ViewMaker;
+    use \System\Traits\ConfigMaker;
 
     private $markup;
+
+    public function getModulesConfigs() {
+        return collect(glob($this->guessViewPath('/modules').'/*.yml'))->mapWithKeys(function($module) {
+            $moduleName = str_replace('_', '', basename($module, '.yml'));
+            return [ $moduleName => collect($this->makeConfig("modules/_{$moduleName}.yml")) ];
+        });
+    }
 
     public function render($markup, $params) {
         $this->markup = $markup;

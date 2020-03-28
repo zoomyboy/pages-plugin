@@ -11,6 +11,8 @@ use Dv\Base\Models\Membercategory as Category;
 use Cms\Classes\ComponentManager;
 use RainLab\Pages\Interfaces\Gutenbergable;
 use Cms\Classes\ComponentHelpers;
+use Rainlab\Pages\Classes\Renderer;
+use Rainlab\Pages\Controllers\Forms;
 
 /**
  * zgutenberg Form Widget
@@ -40,6 +42,9 @@ class Zgutenberg extends FormWidgetBase
                 ]
             ];
         });
+
+        $forms = app(Forms::class);
+        $components = $components->merge($forms->getModulesConfig());
 
         return $components;
     }

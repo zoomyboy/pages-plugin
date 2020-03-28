@@ -1,0 +1,13 @@
+meta:
+    title:
+        default: Absatz
+        label: Titel
+
+    content:
+        label: Inhalt
+        type: textarea
+        size: huge
+
+settings:
+    icon:
+        default: paragraph
