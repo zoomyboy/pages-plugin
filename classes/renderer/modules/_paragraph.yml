@@ -8,6 +8,20 @@ meta:
         type: textarea
         size: huge
 
+    textSize:
+        label: Schriftgröße
+        type: dropdown
+        default: base
+        options:
+            xs: kleiner
+            sm: klein
+            base: Normal
+            lg: groß
+            xl: größer
+            2xl: 2 x größer
+            3xl: 3 x größer
+            4xl: 4 x größer
+
 settings:
     icon:
         default: paragraph

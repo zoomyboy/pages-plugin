@@ -49,9 +49,9 @@ class PageTransform extends Command
         }
 
         $zgData = $this->mapModules($zgData, function($module) {
-            unset($module->new);
-            $module->is->icon = $module->icon;
-            unset($module->icon);
+            if ($module->is->component == 'paragraph') {
+                $module->meta->textSize = 'base';
+            }
 
             return $module;
         });
