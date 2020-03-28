@@ -10,8 +10,12 @@ module.exports = {
             },
             colors: {
                 'section': 'hsla(211, 96%, 43%, 1)',
+                'sidebar': 'hsl(271, 100%, 50%)',
                 'row': 'hsl(352, 88%, 64%)',
                 'module': 'hsl(218, 23%, 23%)'
+            },
+            inset: {
+                'full': '100%'
             }
         },
         fontSize: {
@@ -46,9 +50,6 @@ module.exports = {
             '48': '19.2rem',
             '56': '22.4rem',
             '64': '25.6rem'
-        },
-        inset: {
-            'full': '100%'
         }
     },
     variants: {

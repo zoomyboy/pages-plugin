@@ -13,7 +13,7 @@
                 <a href="#" @click.prevent="remove(index)" class="hover:zg-no-underline"><span class="zg-text-white icon-trash"></span></a>
             </div>
 
-            <div class="zg-flex zg-justify-center zg-absolute zg-bottom-0 zg--mt-3 zg-w-full">
+            <div class="zg-flex zg-justify-center zg-absolute zg--mt-3 zg-w-full">
                 <a href="#" @click.prevent="addModule(index)" class="zg-btn zg-btn-sm zg-bg-module">
                     <span class="icon-plus"></span>
                 </a>
@@ -22,7 +22,7 @@
         </div>
 
         <div v-if="value.length === 0">
-            <div class="zg-flex zg-justify-center zg-bottom-0 zg--mt-3 zg-w-full">
+            <div class="zg-flex zg-justify-center zg--mt-3 zg-w-full">
                 <a href="#" @click.prevent="addModule" class="zg-btn zg-btn-sm zg-bg-module">
                     <span class="icon-plus"></span>
                 </a>

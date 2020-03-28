@@ -13,7 +13,7 @@
 
             <v-row v-model="row.columns" :key="index"></v-row>
 
-            <div class="zg-flex zg-justify-center zg-absolute zg-bottom-0 zg--mt-3 zg-w-full">
+            <div class="zg-flex zg-justify-center zg-absolute zg--mt-3 zg-w-full">
                 <a href="#" @click.prevent="addRow(index)" class="zg-btn zg-btn-sm zg-bg-row">
                     <span class="icon-plus"></span>
                 </a>

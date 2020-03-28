@@ -17,6 +17,15 @@ class PageTransform extends Command
      */
     protected $description = 'Tranforms a page';
 
+    public function mapSectionMeta($data, $callback) {
+        $data->sections = collect($data->sections)->map(function($section) use ($callback) {
+            $section->meta = call_user_func($callback, $section->meta);
+            return $section;
+        })->toArray();
+
+        return $data;
+    }
+
     public function mapModules($data, $callback) {
         $data->sections = collect($data->sections)->map(function($section) use ($callback) {
             $section->rows = collect($section->rows)->map(function($row) use ($callback) {
@@ -48,13 +57,16 @@ class PageTransform extends Command
             exit;
         }
 
-        $zgData = $this->mapModules($zgData, function($module) {
-            if ($module->is->component == 'list') {
-                $module->meta->textSize = 'base';
-            }
+        $zgData->sections = collect($zgData->sections)->map(function ($section) {
+            unset($section->meta->sidebar);
 
-            return $module;
-        });
+            $section->sidebar = (object) [
+                'meta' => (object) ['position' => false],
+                'modules' => [],
+            ];
+
+            return $section;
+        })->toArray();
 
         $page->viewBag['zg_data'] = json_encode($zgData);
         $page->fill(['settings' => ['viewBag' => $page->viewBag]]);

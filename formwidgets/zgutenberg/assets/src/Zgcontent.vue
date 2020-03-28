@@ -1,27 +1,46 @@
 <template>
     <div class="zg-content zg-px-6">
-        <div class="zg-relative zg-bg-gray-400 zg-shadow"
+        <div class="zg-relative zg-flex"
             :class="{'zg-mt-6': index !== 0}"
             v-for="(section, index) in value"
             v-if="value.length !== 0" 
         >
-
-            <div class="zg-bg-section zg-flex zg-rounded zg-p-3 zg-items-center">
-                <input type="text" v-model="section.meta.title" class="zg-flex-grow zg-border-0 zg-leading-none zg-bg-section zg-outline-none zg-text-center zg-text-white zg-w-full">
-                <a href="#" @click.prevent="edit(section, index)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-cog"></span></a>
-                <a href="#" @click.prevent="remove(index)" class="hover:zg-no-underline"><span class="zg-text-white icon-trash"></span></a>
+            <div class="zg-mr-6 zg-bg-gray-400 zg-shadow" v-show="section.sidebar.meta.position == 'left'">
+                <div class="zg-bg-sidebar flex-grow zg-flex zg-rounded zg-p-3 zg-items-center">
+                    <input type="text" v-model="section.sidebar.meta.title" class="zg-flex-grow zg-border-0 zg-leading-none zg-bg-sidebar zg-outline-none zg-text-center zg-text-white zg-w-full">
+                    <a href="#" @click.prevent="editSidebar(section, index)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-cog"></span></a>
+                    <a href="#" @click.prevent="toggleSidebar(section, index, null)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-trash"></span></a>
+                </div>
             </div>
 
-            <v-section v-model="section.rows" :key="index"></v-section>
+            <div class="zg-flex-grow zg-bg-gray-400 zg-shadow">
 
-            <div class="zg-flex zg-justify-center zg-absolute zg-bottom-0 zg--mt-3 zg-w-full">
-                <a href="#" @click.prevent="addSection(index)" class="zg-btn zg-btn-sm zg-bg-section">
-                    <span class="icon-plus"></span>
-                </a>
+                <div class="zg-bg-section zg-flex zg-rounded zg-p-3 zg-items-center">
+                    <a href="#" @click.prevent="toggleSidebar(section, index, 'left')" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-columns"></span></a>
+                    <input type="text" v-model="section.meta.title" class="zg-flex-grow zg-border-0 zg-leading-none zg-bg-section zg-outline-none zg-text-center zg-text-white zg-w-full">
+                    <a href="#" @click.prevent="edit(section, index)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-cog"></span></a>
+                    <a href="#" @click.prevent="remove(index)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-trash"></span></a>
+                    <a href="#" @click.prevent="toggleSidebar(section, index, 'right')" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-columns"></span></a>
+                </div>
+
+                <v-section v-model="section.rows" :key="index"></v-section>
+
+                <div class="zg-flex zg-justify-center zg-absolute zg-bottom-0 zg--mt-3 zg-w-full zg-left-0 zg-top-full">
+                    <a href="#" @click.prevent="addSection(index)" class="zg-btn zg-btn-sm zg-bg-section">
+                        <span class="icon-plus"></span>
+                    </a>
+                </div>
+
             </div>
 
+            <div class="zg-mr-6 zg-bg-gray-400 zg-shadow" v-show="section.sidebar.meta.position == 'right'">
+                <div class="zg-bg-sidebar flex-grow zg-flex zg-rounded zg-p-3 zg-items-center">
+                    <input type="text" v-model="section.sidebar.meta.title" class="zg-flex-grow zg-border-0 zg-leading-none zg-bg-sidebar zg-outline-none zg-text-center zg-text-white zg-w-full">
+                    <a href="#" @click.prevent="editSidebar(section, index)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-cog"></span></a>
+                    <a href="#" @click.prevent="toggleSidebar(section, index, null)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-trash"></span></a>
+                </div>
+            </div>
         </div>
-
     </div>
 </template>
 
@@ -49,6 +68,20 @@ export default {
                 section.meta = { ...section.meta, ...data };
             });
         },
+        editSidebar(section, index) {
+            this.openForm('sidebar', 'Seitenleiste bearbeiten', section.sidebar.meta).then(data => {
+                section.sidebar.meta = data;
+            });
+        },
+        toggleSidebar(section, index, position) {
+            if (section.sidebar.meta.position === false) {
+                this.openForm('sidebar', 'Seitenleiste erstellen', { position: position, title: 'Seitenleiste' }).then(data => {
+                    section.sidebar.meta = data;
+                });
+            } else {
+                section.sidebar.meta.position = false;
+            }
+        },
         addSection(index) {
             this.openForm('section', 'Sektion einfügen', {
                 section: { title: 'Sektion' },
@@ -62,6 +95,10 @@ export default {
                 });
 
                 var newSection = { 
+                    sidebar: {
+                        meta: { position: false },
+                        modules: [],
+                    },
                     meta: formData.section,
                     rows: [ {
                         meta: formData.row,

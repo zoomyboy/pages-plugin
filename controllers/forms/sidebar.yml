@@ -1,0 +1,13 @@
+title: 
+    label: Titel
+
+scroll:
+    label: Mitscrollen
+    type: checkbox
+
+position:
+    type: dropdown
+    label: Position
+    options:
+        left: Links
+        right: Rechts
