@@ -72,7 +72,7 @@ export default {
             var content = this.value;
             content.splice(index, 1);
             this.$emit('input', content);
-        }
+        },
     }
 };
 </script>

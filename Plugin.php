@@ -11,6 +11,7 @@ use Cms\Classes\Theme;
 use Cms\Classes\Controller as CmsController;
 use System\Classes\PluginBase;
 use RainLab\Pages\FormWidgets\Zgutenberg;
+use RainLab\Pages\FormWidgets\Moduleselect;
 
 class Plugin extends PluginBase
 {
@@ -224,7 +225,8 @@ class Plugin extends PluginBase
 
     public function registerFormWidgets() {
         return [
-            Zgutenberg::class => 'zgutenberg'
+            Zgutenberg::class => 'zgutenberg',
+            Moduleselect::class => 'moduleselect',
         ];
     }
 

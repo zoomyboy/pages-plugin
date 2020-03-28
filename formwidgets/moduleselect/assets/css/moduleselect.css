@@ -1,0 +1,32 @@
+.modules-form {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem;
+}
+.modules-form > div {
+    width: 33.333333%;
+    padding: 0 1rem;
+}
+
+.modules-form > div > label > span {
+    width: 100%;
+    display: block;
+}
+
+.modules-form > div > label {
+    width: 100%;
+    display: block;
+    position: relative;
+}
+.modules-form > div > label > input {
+    position: absolute;
+    top: -9px;
+    left: -9px;
+    visibility: hidden;
+}
+.modules-form > div > label > input:checked + span {
+    color: hsl(0, 0%, 100%);
+    border: none;
+    background: hsl(201, 79%, 46%);
+    font-weight: 500;
+}

@@ -1,0 +1,23 @@
+<?php if ($this->previewMode): ?>
+
+    <div class="form-control">
+        <?= $value ?>
+    </div>
+
+<?php else: ?>
+
+    <div class="modules-form">
+        <?php foreach ($modules as $i => $module): ?>
+        <div>
+            <label for="<?php echo $this->getId('input').$i; ?>">
+                <input type="radio" id="<?php echo $this->getId('input').$i; ?>" name="<?= $name; ?>" value='<?php echo json_encode($module); ?>'>
+                <span class="btn btn-default btn-lg">
+                    <span class="icon-<?php echo $module->is->icon; ?>"></span>
+                    <span><?php echo $module->meta->title; ?></span>
+                </span>
+            </label>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+<?php endif ?>

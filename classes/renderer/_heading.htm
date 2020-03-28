@@ -1,7 +1,7 @@
 <?php if ($section->meta->type == 'fullwidth'): ?>
-<<?php echo $c->data->tag; ?> class="flex justify-center text-2xl font-arvo font-semibold text-primary-800"><?php echo $c->data->content; ?></<?php echo $c->data->tag; ?>>
+<<?php echo $module->meta->tag; ?> class="flex justify-center text-2xl font-arvo font-semibold text-primary-800"><?php echo $module->meta->content; ?></<?php echo $module->meta->tag; ?>>
 <?php else: ?>
-    <<?php echo $c->data->tag; ?> class="c">
-        <?php echo $c->data->content; ?>
-    </<?php echo $c->data->tag; ?>>
+    <<?php echo $module->meta->tag; ?> class="c">
+        <?php echo $module->meta->content; ?>
+    </<?php echo $module->meta->tag; ?>>
 <?php endif; ?>

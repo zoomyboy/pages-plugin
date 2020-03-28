@@ -1,15 +1,10 @@
 import Vue from 'vue';
 import App from './App';
 import Vuex from 'vuex';
-import { installer, blocks } from './blocks.js';
 import axios from 'axios';
 import store from './store.js';
-import Editable from './Editable.js';
 
 Vue.use(Vuex);
-Vue.use(installer);
-
-Vue.component('editable', Editable);
 
 +function ($) { "use strict";
     var Base = $.oc.foundation.base,
@@ -35,7 +30,6 @@ Vue.component('editable', Editable);
             el: this.$el.children('div').get(0),
             store: store({
                 form: formId,
-                blocks: blocks,
                 Vuex: Vuex
             }),
             components: { App }

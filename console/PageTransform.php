@@ -17,6 +17,23 @@ class PageTransform extends Command
      */
     protected $description = 'Tranforms a page';
 
+    public function mapModules($data, $callback) {
+        $data->sections = collect($data->sections)->map(function($section) use ($callback) {
+            $section->rows = collect($section->rows)->map(function($row) use ($callback) {
+                $row->columns = collect($row->columns)->map(function($column) use ($callback) {
+                    $column->modules = collect($column->modules)->map(function($module) use ($callback) {
+                        return call_user_func($callback, $module);
+                    })->toArray();
+                    return $column;
+                })->toArray();
+                return $row;
+            })->toArray();
+            return $section;
+        })->toArray();
+
+        return $data;
+    }
+
     /**
      * Execute the console command.
      * @return void
@@ -26,18 +43,18 @@ class PageTransform extends Command
         $page = Page::find($this->argument('filename'));
 
         $zgData = json_decode($page->viewBag['zg_data']);
-        dd($zgData);
+        if (!$this->option('trans')) {
+            echo $page->viewBag['zg_data'];
+            exit;
+        }
 
-        $zgData->sections = collect($zgData->sections)->map(function($section) {
-            $section->rows = collect($section->rows)->map(function($row) {
-                return (object) [
-                    'meta' => (object) [ 'title' => $row->data->title ],
-                    'columns' => $row->data->columns
-                ];
-            });
+        $zgData = $this->mapModules($zgData, function($module) {
+            unset($module->new);
+            $module->is->icon = $module->icon;
+            unset($module->icon);
 
-            return $section;
-        })->toArray();
+            return $module;
+        });
 
         $page->viewBag['zg_data'] = json_encode($zgData);
         $page->fill(['settings' => ['viewBag' => $page->viewBag]]);
@@ -61,6 +78,8 @@ class PageTransform extends Command
      */
     protected function getOptions()
     {
-        return [];
+        return [
+            ['trans']
+        ];
     }
 }

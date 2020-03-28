@@ -14,12 +14,17 @@ export default {
                         $('#subform-popup').find('.modal-title').html(heading);
 
                         $('#subform-popup').find('[data-confirm]').one('click', function() {
-                            $('#subform-popup').find('form').request('onSave', {
-                                url: '/backend/rainlab/pages/forms',
-                                success: function(data, status, xhr) {
-                                    resolve(data);
-                                }
+                            $('#subform-popup').on('hidden.bs.modal', () => {
+                                $('#subform-popup').find('form').request('onSave', {
+                                    url: '/backend/rainlab/pages/forms',
+                                    data: { subform: subform },
+                                    success: function(data, status, xhr) {
+                                        this.success(data, status, xhr);
+                                        resolve(data);
+                                    }
+                                });
                             });
+                            $('#subform-popup').modal('hide');
                         });
                     }
                 });

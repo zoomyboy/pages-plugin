@@ -11,7 +11,7 @@ module.exports = {
             colors: {
                 'section': 'hsla(211, 96%, 43%, 1)',
                 'row': 'hsl(352, 88%, 64%)',
-                'module': 'hsl(200, 0%, 100%)'
+                'module': 'hsl(218, 23%, 23%)'
             }
         },
         fontSize: {

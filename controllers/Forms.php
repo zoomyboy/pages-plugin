@@ -13,7 +13,16 @@ use Cms\Classes\ComponentManager;
 class Forms extends Controller
 {
     public function getFormConfig($form, $model) {
-        $fields = $form === 'component' ? $this->getComponentFields($model->component) : (array) $this->makeConfig($form.'.yml');
+        if (is_array($form) && $form['type'] == 'component') {
+            $fields = $this->getComponentFields($form['component']);
+            $fields = ['title' => [ 'label' => 'Titel' ] ] + $fields;
+        } else if (is_array($form) && $form['type'] == 'module') {
+            $fields = (array) $this->makeConfig($form['component'].'.yml');
+            $fields = ['title' => [ 'label' => 'Titel' ] ] + $fields;
+        } else {
+            $fields = (array) $this->makeConfig($form.'.yml');
+        }
+
 
         return [
             'model' => $model,
@@ -34,7 +43,7 @@ class Forms extends Controller
 
     public function onEdit() {
         $model = app(Model::class);
-        $model->forceFill(Input::get('data'));
+        $model->forceFill(Input::get('data', []));
 
         $formWidget = $this->makeWidget('Backend\Widgets\Form', $this->getFormConfig(Input::get('subform'), $model));
         $formWidget->bindToController();
@@ -45,7 +54,12 @@ class Forms extends Controller
     }
 
     public function onSave() {
-        return Response::json(Input::all());
+        $model = app(Model::class);
+
+        $formWidget = $this->makeWidget('Backend\Widgets\Form', $this->getFormConfig(Input::get('subform'), $model));
+        $formWidget->bindToController();
+
+        return Response::json($formWidget->getSaveData());
     }
 
     public function getComponentFields($component) {
@@ -53,8 +67,10 @@ class Forms extends Controller
         $component = ComponentManager::instance()->makeComponent($component);
 
         return collect($component->defineProperties())->map(function($prop, $key) use ($component) {
-            $method = 'get'.ucfirst($key).'Options';
-            $prop['options'] = $component->{$method}();
+            if (array_get($prop, 'type', null) == 'dropdown') {
+                $method = 'get'.ucfirst($key).'Options';
+                $prop['options'] = $component->{$method}();
+            }
 
             return $prop;
         })->toArray();

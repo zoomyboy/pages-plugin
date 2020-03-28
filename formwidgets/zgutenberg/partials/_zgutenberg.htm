@@ -10,8 +10,6 @@
     <div>
         <app name="<?= $name ?>" :handlers="{
             'init': '<?= $this->getEventHandler('onLoadValue') ?>',
-            'blocks': '<?= $this->getEventHandler('onGetComponentBlocks') ?>',
-            'block': '<?= $this->getEventHandler('onGetComponentBlock') ?>',
             'subform': '<?= $this->getEventHandler('onRenderSubform') ?>',
             'params': '<?= $this->getEventHandler('onLoadParams') ?>'
             }"

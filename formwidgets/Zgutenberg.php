@@ -23,6 +23,27 @@ class Zgutenberg extends FormWidgetBase
     protected $defaultAlias = 'rainlab_pages_zgutenberg';
     public $header = false;
 
+    public static function moduleselect() {
+        $components = collect(ComponentManager::instance()->listComponents())->filter(function($class) {
+            return in_array(Gutenbergable::class, class_implements($class));
+        })->map(function($component, $alias) {
+            $component = ComponentManager::instance()->makeComponent($component);
+
+            return (object) [
+                'is' => (object) [
+                    'type' => 'component',
+                    'component' => $alias,
+                    'icon' => $component->componentDetails()['icon'],
+                ],
+                'meta' => (object) [
+                    'title' => $component->componentDetails()['name']
+                ]
+            ];
+        });
+
+        return $components;
+    }
+
     /**
      * @inheritDoc
      */
@@ -73,6 +94,7 @@ class Zgutenberg extends FormWidgetBase
         return $value;
     }
 
+    // @deprecated
     public function onGetComponentBlocks() {
         $components = collect(ComponentManager::instance()->listComponents())->filter(function($class) {
             return in_array(Gutenbergable::class, class_implements($class));
@@ -101,6 +123,7 @@ class Zgutenberg extends FormWidgetBase
         return Response::json($components);
     }
 
+    // @deprecated
     public function onGetComponentBlock() {
         $block = Input::get('block');
         $component = collect(ComponentManager::instance()->listComponents())->get(Input::get('block'));
