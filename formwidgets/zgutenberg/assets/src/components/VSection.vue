@@ -8,6 +8,7 @@
 
             <div class="zg-bg-row zg-flex zg-rounded zg-p-3 zg-items-center">
                 <input type="text" v-model="row.meta.title" class="zg-flex-grow zg-border-0 zg-leading-none zg-bg-row zg-outline-none zg-text-center zg-text-white zg-w-full">
+                <a href="#" @click.prevent="editRow(row)" class="zg-mr-2 hover:zg-no-underline"><span class="zg-text-white icon-cog"></span></a>
                 <a href="#" @click.prevent="remove(index)" class="hover:zg-no-underline"><span class="zg-text-white icon-trash"></span></a>
             </div>
 
@@ -57,6 +58,11 @@ export default {
                 var content = this.value;
                 content.splice(index+1, 0, newRow);
                 this.$emit('input', content);
+            });
+        },
+        editRow(row) {
+            this.openForm('row_edit', 'Zeile bearbeiten', { row: row.meta }).then(formData => {
+                row.meta = formData.row;
             });
         },
         remove(index) {

@@ -1,0 +1,6 @@
+row[title]: 
+    label: Titel
+
+row[anchor]: 
+    label: Anker einfügen
+    type: checkbox
