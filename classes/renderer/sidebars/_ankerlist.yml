@@ -1,8 +1,8 @@
 meta:
     title:
-        default: Seitenmenü
+        default: Ankerliste
         label: Titel
 
 settings:
     icon:
-        default: columns
+        default: anchor
