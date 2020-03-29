@@ -6,6 +6,7 @@ use Twig;
 use Cms\Classes\Controller as CmsController;
 use Cms\Classes\ComponentManager;
 use RainLab\Pages\Presenters\SectionPresenter;
+use RainLab\Pages\Interfaces\Gutenbergable;
 
 class Renderer {
     use \System\Traits\ViewMaker;
@@ -13,10 +14,61 @@ class Renderer {
 
     private $markup;
 
-    public function getModulesConfigs() {
-        return collect(glob($this->guessViewPath('/modules').'/*.yml'))->mapWithKeys(function($module) {
+    private $moduleTypes = [ 'component', 'module', 'sidebar' ];
+
+    private function getLocalFileConfigsOf($type) {
+        $types = str_plural($type);
+
+        return collect(glob($this->guessViewPath("/{$types}").'/*.yml'))->mapWithKeys(function($module) use ($types, $type) {
             $moduleName = str_replace('_', '', basename($module, '.yml'));
-            return [ $moduleName => collect($this->makeConfig("modules/_{$moduleName}.yml")) ];
+            return [ $moduleName => collect($this->makeConfig("{$types}/_{$moduleName}.yml"))->merge(['type' => $type, 'alias' => $moduleName]) ];
+        });
+    }
+
+    private function getConfigsOfModules() {
+        return $this->getLocalFileConfigsOf('module');
+    }
+
+    private function getConfigsOfSidebars() {
+        return $this->getLocalFileConfigsOf('sidebar');
+    }
+
+    private function getConfigsOfComponents() {
+        return collect(ComponentManager::instance()->listComponents())->filter(function($class) {
+            return in_array(Gutenbergable::class, class_implements($class));
+        })->map(function($component, $alias) {
+            $component = ComponentManager::instance()->makeComponent($component);
+
+            $parameters = collect($component->defineProperties())->map(function($prop, $key) use ($component) {
+                if (array_get($prop, 'type', null) == 'dropdown') {
+                    $method = 'get'.ucfirst($key).'Options';
+                    $prop['options'] = $component->{$method}();
+                }
+
+                return $prop;
+            })->toArray();
+            $parameters['title'] = ['default' => $component->componentDetails()['name'], 'label' => 'Titel'];
+
+            return collect([
+                'settings' => [
+                    'icon' => ['default' => $component->componentDetails()['icon']]
+                ],
+                'type' => 'component',
+                'alias' => $alias,
+                'meta' => $parameters
+            ]);
+        });
+    }
+
+    public function getModulesConfigs() {
+        return collect($this->moduleTypes)->mapWithKeys(function($type) {
+            $types = str_plural($type);
+            $method = 'getConfigsOf'.ucfirst($types);
+            return [ $types => $this->{$method}() ];
+        })->flatten(1)->mapWithKeys(function($module) {
+            $alias = $module->get('alias');
+            $module->forget('alias');
+            return [ $alias => $module ];
         });
     }
 

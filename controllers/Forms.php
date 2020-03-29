@@ -14,13 +14,17 @@ use Rainlab\Pages\Classes\Renderer;
 class Forms extends Controller
 {
 
-    public function getModulesConfig() {
+    public function getModulesConfig($filter = null) {
         $renderer = app(Renderer::class);
-        
-        return $renderer->getModulesConfigs()->map(function($config, $moduleName) {
+
+        $modulesConfigs = $renderer->getModulesConfigs()->filter(function($module) use ($filter) {
+            return is_null($filter) || in_array($module->get('type'), $filter);
+        });
+
+        return $modulesConfigs->map(function($config, $moduleName) {
             return (object) [
                 'is' => (object) [
-                    'type' => 'module',
+                    'type' => $config->get('type'),
                     'component' => $moduleName,
                     'icon' => array_get($config, 'settings.icon.default')
                 ],
@@ -32,16 +36,14 @@ class Forms extends Controller
     }
 
     public function getFormConfig($form, $model) {
-        if (is_array($form) && $form['type'] == 'component') {
-            $fields = $this->getComponentFields($form['component']);
-            $fields = ['title' => [ 'label' => 'Titel' ] ] + $fields;
-        } else if (is_array($form) && $form['type'] == 'module') {
+        if (is_array($form)
+            && ($form['type'] == 'component' || $form['type'] == 'module' || $form['type'] == 'sidebar')
+        ) {
             $renderer = app(Renderer::class);
             $fields = $renderer->getModulesConfigs()->get($form['component'])->get('meta', []);
         } else {
             $fields = (array) $this->makeConfig($form.'.yml');
         }
-
 
         return [
             'model' => $model,
@@ -79,19 +81,5 @@ class Forms extends Controller
         $formWidget->bindToController();
 
         return Response::json($formWidget->getSaveData());
-    }
-
-    public function getComponentFields($component) {
-        $component = collect(ComponentManager::instance()->listComponents())->get($component);
-        $component = ComponentManager::instance()->makeComponent($component);
-
-        return collect($component->defineProperties())->map(function($prop, $key) use ($component) {
-            if (array_get($prop, 'type', null) == 'dropdown') {
-                $method = 'get'.ucfirst($key).'Options';
-                $prop['options'] = $component->{$method}();
-            }
-
-            return $prop;
-        })->toArray();
     }
 }

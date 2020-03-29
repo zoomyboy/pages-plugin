@@ -7,6 +7,8 @@ use Backend\Classes\FormWidgetBase;
  */
 class Moduleselect extends FormWidgetBase
 {
+    public $filter = null;
+
     /**
      * @inheritDoc
      */
@@ -17,6 +19,9 @@ class Moduleselect extends FormWidgetBase
      */
     public function init()
     {
+        $this->fillFromConfig([
+            'filter'
+        ]);
     }
 
     /**
@@ -36,7 +41,7 @@ class Moduleselect extends FormWidgetBase
         $this->vars['name'] = $this->formField->getName();
         $this->vars['value'] = $this->getLoadValue();
         $this->vars['model'] = $this->model;
-        $this->vars['modules'] = Zgutenberg::moduleselect();
+        $this->vars['modules'] = Zgutenberg::moduleselect($this->filter);
     }
 
     /**

@@ -1,6 +1,4 @@
 data:
     type: moduleselect
     label: Modul
-    filter: ["module", "component"]
-
-
+    filter: ["sidebar"]

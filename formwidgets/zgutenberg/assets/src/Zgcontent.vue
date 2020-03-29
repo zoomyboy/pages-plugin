@@ -11,6 +11,10 @@
                     <a href="#" @click.prevent="editSidebar(section, index)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-cog"></span></a>
                     <a href="#" @click.prevent="toggleSidebar(section, index, null)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-trash"></span></a>
                 </div>
+
+                <div class="zg-p-4">
+                    <v-column v-model="section.sidebar.modules" @create="createSidebarModule(index, $event)" @edit="editModule(index, $event)" @delete="deleteModule(index, $event)"></v-column>
+                </div>
             </div>
 
             <div class="zg-flex-grow zg-bg-gray-400 zg-shadow">
@@ -46,6 +50,7 @@
 
 <script>
 import VSection from './components/VSection';
+import VColumn from './components/VColumn';
 import subform from './subform.mixin.js';
 
 export default {
@@ -55,9 +60,25 @@ export default {
         value: {}
     },
 
-    components: { VSection },
+    components: { VSection, VColumn },
 
     methods: {
+        createSidebarModule(sectionIndex, moduleIndex) {
+            var modules = this.value[sectionIndex].modules;
+
+            this.openForm('module_sidebar', 'Modul einfügen', {}).then(formData => {
+                var formData = { ...formData.data };
+                this.openForm(formData.is, formData.meta.title, formData.meta).then(moduleData => {
+                    formData.meta = moduleData;
+
+                    modules.splice(moduleIndex+1, 0, formData);
+                }).catch(err => {
+                    console.log(err);
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+        },
         remove(index) {
             var content = this.value;
             content.splice(index, 1);
