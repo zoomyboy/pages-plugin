@@ -1,0 +1,8 @@
+meta:
+    title:
+        default: Seitenmenü
+        label: Titel
+
+settings:
+    icon:
+        default: columns

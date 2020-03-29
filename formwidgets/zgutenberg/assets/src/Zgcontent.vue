@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="zg-p-4">
-                    <v-column v-model="section.sidebar.modules" @create="createSidebarModule(index, $event)" @edit="editModule(index, $event)" @delete="deleteModule(index, $event)"></v-column>
+                    <v-column v-model="section.sidebar.modules" @create="createSidebarModule(index, $event)" @edit="editSidebarModule(index, $event)" @delete="deleteSidebarModule(index, $event)"></v-column>
                 </div>
             </div>
 
@@ -43,6 +43,10 @@
                     <a href="#" @click.prevent="editSidebar(section, index)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-cog"></span></a>
                     <a href="#" @click.prevent="toggleSidebar(section, index, null)" class="hover:zg-no-underline zg-mr-2"><span class="zg-text-white icon-trash"></span></a>
                 </div>
+
+                <div class="zg-p-4">
+                    <v-column v-model="section.sidebar.modules" @create="createSidebarModule(index, $event)" @edit="editModule(index, $event)" @delete="deleteModule(index, $event)"></v-column>
+                </div>
             </div>
         </div>
     </div>
@@ -64,7 +68,7 @@ export default {
 
     methods: {
         createSidebarModule(sectionIndex, moduleIndex) {
-            var modules = this.value[sectionIndex].modules;
+            var modules = this.value[sectionIndex].sidebar.modules;
 
             this.openForm('module_sidebar', 'Modul einfügen', {}).then(formData => {
                 var formData = { ...formData.data };
@@ -78,6 +82,18 @@ export default {
             }).catch(err => {
                 console.log(err);
             });
+        },
+        editSidebarModule(sectionIndex, moduleIndex) {
+            var module = this.value[sectionIndex].sidebar.modules[moduleIndex];
+
+            this.openForm(module.is, module.meta.title, module.meta).then(moduleData => {
+                module.meta = moduleData;
+            }).catch(err => {
+                console.log(err);
+            });
+        },
+        deleteSidebarModule(sectionIndex, moduleIndex) {
+            this.value[sectionIndex].sidebar.modules.splice(moduleIndex, 1);
         },
         remove(index) {
             var content = this.value;
