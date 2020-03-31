@@ -1,0 +1,8 @@
+meta:
+    title:
+        default: Seitentitel
+        label: Titel
+
+settings:
+    icon:
+        default: header
