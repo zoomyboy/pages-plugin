@@ -124,8 +124,6 @@ class Renderer {
     }
 
     public function presenter($block, $index = null) {
-        if (in_array($block->meta->type, ['section', 'fullwidth'])) {
-            return new SectionPresenter($block, $index, $index === count($this->markup->sections) -1);
-        }
+        return app(PresenterFactory::class)->resolve($block, $this->markup, $index);
     }
 }

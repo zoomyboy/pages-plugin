@@ -4,11 +4,11 @@
         <?php if ($section->sidebar->meta->position === 'left'): ?>
             <div class="pr-3 w-1/4 flex-none">
                 <div class="sticky" style="top: 30px;">
-                    <?php foreach($section->sidebar->modules as $module): ?>
+                    <?php foreach($this->presenter($section, $index)->sidebarModules() as $module): ?>
                     <div class="bg-white shadow-lg p-3">
-                        <div class="text-gray-700 font-arvo mb-3"><?php echo $module->meta->title; ?></div>
+                        <div class="text-gray-700 font-arvo mb-3"><?php echo $module->title(); ?></div>
                         <div>
-                            contents
+                            <?php echo $this->makePartial('modules/'.$module->getPartial(), ['module' => $module]); ?>
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -21,8 +21,10 @@
         <?php endif; ?>
 
             <?php foreach ($section->rows as $ri => $row): ?>
-                <?php $rowMarginTop = $ri != 0 && $section->meta->type == 'fullwidth' ? 'mt-20' : ''; ?>
-                <div class="<?php echo $rowMarginTop; ?>">
+                <?php $rowMarginTop = $ri != 0 && $section->meta->type == 'fullwidth' ? 'mt-10 pt-10' : ''; ?>
+                <?php $rowMarginTop = $ri != 0 && $section->meta->type == 'fullwidth' ? 'mt-10 pt-10' : ''; ?>
+                <?php $id = $section->meta->type !== 'fullwidth' || $ri !== 0 ? str_slug($row->meta->title) : null; ?>
+                <div class="<?php echo $rowMarginTop; ?>" <?php if($id): ?> id="<?= $id ?>" <?php endif; ?>>
                     <?php foreach ($row->columns as $ci => $column): ?>
                         <div class="w-<?php echo $column->width; ?>">
                             <?php foreach ($column->modules as $mi => $module): ?>

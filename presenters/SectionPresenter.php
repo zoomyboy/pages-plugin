@@ -2,16 +2,24 @@
 
 namespace RainLab\Pages\Presenters;
 
-class SectionPresenter {
+use RainLab\Pages\Renderer\PresenterFactory;
+
+class SectionPresenter implements \Countable {
+
+    use HasEnv;
 
     private $section;
     private $index;
-    private $last;
+    private $markup;
 
-    public function __construct($section, $index, $last) {
+    public function __construct($section, $index, $markup) {
         $this->section = $section;
         $this->index = $index;
-        $this->last = $last;
+        $this->markup = $markup;
+    }
+
+    public function count() {
+        return count($this->markup->sections);
     }
 
     public function openTag() {
@@ -38,13 +46,15 @@ class SectionPresenter {
             $style['background-color'] = $this->section->meta->color;
         }
 
+        $id = data_get($this->section, 'rows.0.meta.anchor', null) === "1" ? str_slug(data_get($this->section, 'rows.0.meta.title')) : null;
+
         if ($this->section->meta->transparent) {
-            $beforeContainer = '<div class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
+            $beforeContainer = '<div '.($id ? 'id="'.$id.'"' : '').' class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
         }
 
         $containerClass = $this->section->sidebar->meta->position !== false ? 'flex' : '';
 
-        return '<div '.$this->mergeStyle($style).' class="py-20 relative">'.$beforeContainer.'<div class="container relative '.$containerClass.'">';
+        return '<div '.($id ? 'id="'.$id.'"' : '').' '.$this->mergeStyle($style).' class="py-20 relative">'.$beforeContainer.'<div class="container relative '.$containerClass.'">';
     }
 
     public function sectionOpenTag() {
@@ -52,8 +62,8 @@ class SectionPresenter {
 
         $containerClass = $this->section->sidebar->meta->position !== false ? 'flex' : '';
 
-        if ($this->index !== 0) { $class->push('pt-20'); }
-        if (!$this->last) { $class->push('pb-20'); }
+        if (!$this->isFirst()) { $class->push('pt-20'); }
+        if (!$this->isLast()) { $class->push('pb-20'); }
         return '<div class="container '.$containerClass.' '.$class->implode(' ').'">';
     }
 
@@ -71,4 +81,9 @@ class SectionPresenter {
         })->implode('').'"';
     }
 
+    public function sidebarModules() {
+        return collect($this->section->sidebar->modules)->map(function($module, $index) {
+            return app(PresenterFactory::class)->resolve($module, $this->markup, $index)->setSection($this->section);
+        });
+    }
 }
