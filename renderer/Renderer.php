@@ -1,6 +1,6 @@
 <?php
 
-namespace RainLab\Pages\Classes;
+namespace RainLab\Pages\Renderer;
 
 use Twig;
 use Cms\Classes\Controller as CmsController;

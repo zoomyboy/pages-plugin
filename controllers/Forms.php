@@ -6,7 +6,7 @@ use Input;
 use BackendMenu;
 use Backend\Classes\Controller;
 use Cms\Classes\ComponentManager;
-use Rainlab\Pages\Classes\Renderer;
+use Rainlab\Pages\Renderer\Renderer;
 
 /**
  * Forms Back-end Controller

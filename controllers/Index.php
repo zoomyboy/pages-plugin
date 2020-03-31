@@ -19,7 +19,7 @@ use RainLab\Pages\Widgets\SnippetList;
 use RainLab\Pages\Classes\Snippet;
 use RainLab\Pages\Classes\Page as StaticPage;
 use RainLab\Pages\Classes\Router;
-use RainLab\Pages\Classes\Renderer;
+use RainLab\Pages\Renderer\Renderer;
 use RainLab\Pages\Classes\Content;
 use RainLab\Pages\Classes\MenuItem;
 use RainLab\Pages\Plugin as PagesPlugin;

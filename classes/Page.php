@@ -7,6 +7,7 @@ use Cache;
 use Route;
 use Config;
 use Validator;
+use RainLab\Pages\Renderer\Renderer;
 use RainLab\Pages\Classes\Router;
 use RainLab\Pages\Classes\Snippet;
 use RainLab\Pages\Classes\PageList;

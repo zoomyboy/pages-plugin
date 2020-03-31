@@ -11,7 +11,7 @@ use Dv\Base\Models\Membercategory as Category;
 use Cms\Classes\ComponentManager;
 use RainLab\Pages\Interfaces\Gutenbergable;
 use Cms\Classes\ComponentHelpers;
-use Rainlab\Pages\Classes\Renderer;
+use Rainlab\Pages\Renderer\Renderer;
 use Rainlab\Pages\Controllers\Forms;
 
 /**
