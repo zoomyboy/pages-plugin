@@ -38,19 +38,23 @@ class SectionPresenter {
             $style['background-color'] = $this->section->meta->color;
         }
 
-    if ($this->section->meta->transparent) {
-        $beforeContainer = '<div class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
-    }
+        if ($this->section->meta->transparent) {
+            $beforeContainer = '<div class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
+        }
 
-        return '<div '.$this->mergeStyle($style).' class="py-20 relative">'.$beforeContainer.'<div class="container relative">';
+        $containerClass = $this->section->sidebar->meta->position !== false ? 'flex' : '';
+
+        return '<div '.$this->mergeStyle($style).' class="py-20 relative">'.$beforeContainer.'<div class="container relative '.$containerClass.'">';
     }
 
     public function sectionOpenTag() {
         $class = collect([]);
 
+        $containerClass = $this->section->sidebar->meta->position !== false ? 'flex' : '';
+
         if ($this->index !== 0) { $class->push('pt-20'); }
         if (!$this->last) { $class->push('pb-20'); }
-        return '<div class="container '.$class->implode(' ').'">';
+        return '<div class="container '.$containerClass.' '.$class->implode(' ').'">';
     }
 
     public function sectionClosingTag() {

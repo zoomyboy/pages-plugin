@@ -1,16 +1,41 @@
 <?php foreach($markup->sections as $index => $section): ?>
     <?php echo $this->presenter($section, $index)->openTag(); ?>
-        <?php foreach ($section->rows as $ri => $row): ?>
-            <?php $rowMarginTop = $ri != 0 && $section->meta->type == 'fullwidth' ? 'mt-20' : ''; ?>
-            <div class="<?php echo $rowMarginTop; ?>">
-                <?php foreach ($row->columns as $ci => $column): ?>
-                    <div class="w-<?php echo $column->width; ?>">
-                        <?php foreach ($column->modules as $mi => $module): ?>
-                        <?php echo $this->makePartial($module->is->type, ['module' => $module, 'section' => $section, 'params' => $params, 'before' => array_get($column->modules, $mi-1, null)]); ?>
-                        <?php endforeach; ?>
+
+        <?php if ($section->sidebar->meta->position === 'left'): ?>
+            <div class="pr-3 w-1/4 flex-none">
+                <div class="sticky" style="top: 30px;">
+                    <?php foreach($section->sidebar->modules as $module): ?>
+                    <div class="bg-white shadow-lg p-3">
+                        <div class="text-gray-700 font-arvo mb-3"><?php echo $module->meta->title; ?></div>
+                        <div>
+                            contents
+                        </div>
                     </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if ($section->sidebar->meta->position !== false): ?>
+            <div class="flex-grow">
+        <?php endif; ?>
+
+            <?php foreach ($section->rows as $ri => $row): ?>
+                <?php $rowMarginTop = $ri != 0 && $section->meta->type == 'fullwidth' ? 'mt-20' : ''; ?>
+                <div class="<?php echo $rowMarginTop; ?>">
+                    <?php foreach ($row->columns as $ci => $column): ?>
+                        <div class="w-<?php echo $column->width; ?>">
+                            <?php foreach ($column->modules as $mi => $module): ?>
+                            <?php echo $this->makePartial($module->is->type, ['module' => $module, 'section' => $section, 'params' => $params, 'before' => array_get($column->modules, $mi-1, null)]); ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+
+        <?php if ($section->sidebar->meta->position !== false): ?>
+            </div>
+        <?php endif; ?>
+
     <?php echo $this->presenter($section, $index)->closingTag(); ?>
 <?php endforeach; ?>
