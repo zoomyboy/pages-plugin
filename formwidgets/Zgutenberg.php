@@ -69,7 +69,14 @@ class Zgutenberg extends FormWidgetBase
     }
 
     public function onLoadValue() {
-        return Response::json(json_decode($this->getLoadValue()));
+        $value = $this->getLoadValue() 
+            ? json_decode($this->getLoadValue())
+            : (object) [
+                'sections' => [],
+                'placeholders' => (object) [ 'header' => (object) [] ]
+        ];
+
+        return Response::json($value);
     }
 
     /**

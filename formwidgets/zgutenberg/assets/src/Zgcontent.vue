@@ -1,5 +1,5 @@
 <template>
-    <div class="zg-content zg-px-6">
+    <div class="zg-content zg-px-6 zg-pt-6">
         <div class="zg-relative zg-flex"
             :class="{'zg-mt-6': index !== 0}"
             v-for="(section, index) in value"
@@ -48,6 +48,12 @@
                     <v-column v-model="section.sidebar.modules" @create="createSidebarModule(index, $event)" @edit="editModule(index, $event)" @delete="deleteModule(index, $event)"></v-column>
                 </div>
             </div>
+        </div>
+
+        <div class="zg-flex zg-justify-center" v-if="value.length === 0">
+            <a href="#" @click.prevent="addSection()" class="zg-btn zg-btn-sm zg-bg-section">
+                <span class="icon-plus"></span>
+            </a>
         </div>
     </div>
 </template>
