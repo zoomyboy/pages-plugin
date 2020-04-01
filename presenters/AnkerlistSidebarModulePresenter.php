@@ -34,7 +34,7 @@ class AnkerlistSidebarModulePresenter {
 
         $columns = collect($this->markup->sections)->each(function($section) use ($ankers) {
             collect($section->rows)->each(function($row) use ($ankers) {
-                if ($row->meta->anchor) {
+                if (isset($row->meta->anchor) && $row->meta->anchor === '1') {
                     $ankers->push((object) [
                         'href' => str_slug($row->meta->title),
                         'title' => $row->meta->title
