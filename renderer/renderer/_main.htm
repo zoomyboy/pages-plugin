@@ -2,7 +2,7 @@
     <?php echo $this->presenter($section, $index)->openTag(); ?>
 
         <?php if ($section->sidebar->meta->position === 'left'): ?>
-            <div class="pr-3 w-1/4 flex-none">
+            <div class="pr-10 w-1/4 flex-none">
                 <div class="sticky" style="top: 30px;">
                     <?php foreach($this->presenter($section, $index)->sidebarModules() as $module): ?>
                     <div class="bg-white shadow-lg p-3">
