@@ -62,8 +62,7 @@ class SectionPresenter implements \Countable {
 
         $containerClass = $this->section->sidebar->meta->position !== false ? 'flex' : '';
 
-        if (!$this->isFirst()) { $class->push('pt-20'); }
-        if (!$this->isLast()) { $class->push('pb-20'); }
+        $class->push('py-20');
         return '<div class="container '.$containerClass.' '.$class->implode(' ').'">';
     }
 
