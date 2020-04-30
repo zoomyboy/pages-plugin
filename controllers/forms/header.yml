@@ -13,3 +13,12 @@ background:
     type: mediafinder
     mode: image
     label: Hintergrundbild
+logo_back:
+    type: checkbox
+    label: Logo-Hintergrund transparent
+logo_back_rounded:
+    type: checkbox
+    label: Logo-Hintergrund abrunden
+transparent:
+    type: checkbox
+    label: Header-Hintergrund sättigen
