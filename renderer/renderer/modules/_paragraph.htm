@@ -1,2 +1,8 @@
-<?php $marginTop = $before && $before->is->component == 'pagetitle' ? 'mt-3' : ''; ?>
-<p class="c text-<?php echo $module->meta->textAlign; ?> <?php echo $marginTop; ?> text-<?php echo $module->meta->textSize; ?>"><?php echo $module->meta->content; ?></p>
+<?php
+$classes = collect([]);
+$classes->push('c');
+$classes->push('text-'.$module->meta->textAlign);
+$classes->push('text-'.$module->meta->textSize);
+?>
+
+<p class="<?php echo $classes->implode(' '); ?>"><?php echo strip_tags(app('parse.markdown')->parse($module->meta->content), '<br><strong><em>'); ?></p>
