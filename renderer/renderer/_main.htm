@@ -1,7 +1,7 @@
-<?php foreach($markup->sections as $index => $section): ?>
-    <?php echo $this->presenter($section, $index)->openTag(); ?>
+<?php foreach($markup->sections as $section): ?>
+    <?php echo $section->openTag(); ?>
 
-        <?php if ($section->sidebar->meta->position === 'left'): ?>
+        <?php if ($section->sidebarPosition() === 'left'): ?>
             <div class="pr-10 w-1/4 flex-none">
                 <div class="sticky top-10">
                     <?php foreach($this->presenter($section, $index)->sidebarModules() as $module): ?>
@@ -16,14 +16,14 @@
             </div>
         <?php endif; ?>
 
-        <?php if ($section->sidebar->meta->position !== false): ?>
+        <?php if ($section->hasSidebar()): ?>
             <div class="flex-grow">
         <?php endif; ?>
 
-            <?php foreach ($section->rows as $ri => $row): ?>
-                <?php $rowMarginTop = $ri != 0 && $section->meta->type == 'fullwidth' ? 'mt-10 pt-10' : ''; ?>
-                <?php $rowMarginTop = $ri != 0 && $section->meta->type == 'fullwidth' ? 'mt-10 pt-10' : ''; ?>
-                <?php $id = $section->meta->type !== 'fullwidth' || $ri !== 0 ? str_slug($row->meta->title) : null; ?>
+            <?php foreach ($section->rows() as $ri => $row): ?>
+                <?php $rowMarginTop = $ri != 0 && $section->meta()->type == 'fullwidth' ? 'mt-10 pt-10' : ''; ?>
+                <?php $rowMarginTop = $ri != 0 && $section->meta()->type == 'fullwidth' ? 'mt-10 pt-10' : ''; ?>
+                <?php $id = $section->isFullwidth() || $ri !== 0 ? str_slug($row->meta->title) : null; ?>
                 <div class="<?php echo $rowMarginTop; ?>" <?php if($id): ?> id="<?= $id ?>" <?php endif; ?>>
                     <?php foreach ($row->columns as $ci => $column): ?>
                         <div class="w-<?php echo $column->width; ?>">
@@ -35,9 +35,9 @@
                 </div>
             <?php endforeach; ?>
 
-        <?php if ($section->sidebar->meta->position !== false): ?>
+        <?php if ($section->hasSidebar()): ?>
             </div>
         <?php endif; ?>
 
-    <?php echo $this->presenter($section, $index)->closingTag(); ?>
+    <?php echo $section->closingTag(); ?>
 <?php endforeach; ?>

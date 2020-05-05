@@ -33,6 +33,11 @@ class ParagraphTest extends PluginTestCase
     }
 
     /** @test */
+    public function it_parses_the_align_of_a_text() {
+        $this->assertContains('<p class="c text-right text-base">aa</p>', $this->render('aa', ['textAlign' => 'right']));
+    }
+
+    /** @test */
     public function it_parses_bold_and_italic_text() {
         $this->assertContains('aa<strong>c</strong>', $this->render('aa__c__'));
         $this->assertContains('aa<em>c</em>', $this->render('aa_c_'));

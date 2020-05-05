@@ -32,6 +32,14 @@ class SectionPresenter implements \Countable {
         return $this->{$method}();
     }
 
+    public function sidebarPosition() {
+        return $this->section->sidebar->meta->position;
+    }
+
+    public function hasSidebar(): bool {
+        return $this->section->sidebar->meta->position !== false;
+    }
+
     public function fullwidthOpenTag() {
         $style = [];
         $beforeContainer = '';
@@ -84,5 +92,17 @@ class SectionPresenter implements \Countable {
         return collect($this->section->sidebar->modules)->map(function($module, $index) {
             return app(PresenterFactory::class)->resolve($module, $this->markup, $index)->setSection($this->section);
         });
+    }
+
+    public function rows() {
+        return $this->section->rows;
+    }
+
+    public function meta() {
+        return $this->section->meta;
+    }
+
+    public function isFullwidth() {
+        return false;
     }
 }

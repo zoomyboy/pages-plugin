@@ -73,7 +73,9 @@ class Renderer {
     }
 
     public function render($markup, $params) {
-        $this->markup = $markup;
+        $markup->sections = collect($markup->sections)->map(function($section, $index) {
+            return $this->presenter($section, $index);
+        });
 
         return $this->makePartial('main', [
             'markup' => $markup,
