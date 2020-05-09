@@ -25,3 +25,13 @@ transparent:
     type: checkbox
     label: Transparent
     comment: Macht das Hintergrundbild tranzparenter
+
+paddingY:
+    type: checkbox
+    default: true
+    label: Abstand oben und unten
+
+container:
+    type: checkbox
+    default: true
+    label: Container

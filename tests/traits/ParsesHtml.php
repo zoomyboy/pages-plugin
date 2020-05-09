@@ -15,8 +15,15 @@ trait ParsesHtml {
     public function assertSectionTag($tag, $attrs, $markup, $sectionIndex = 0) {
         $json = json_decode((new Html($markup))->toJson());
         $sectionTag = $json[$sectionIndex];
-        $this->assertEquals($tag, $sectionTag->node, 'Failed asserting that Section ist of type "<'.$tag.'>". Found tag "<'.$sectionTag->node.'>"');
-        $this->assertEquals($sectionTag->attributes, (object) $attrs);
+        $this->assertEquals($tag, $sectionTag->node, 'Failed asserting that Section is of type "<'.$tag.'>". Found tag "<'.$sectionTag->node.'>"');
+        $this->assertEquals((object) $attrs, $sectionTag->attributes);
+    }
+
+    public function assertSubsectionTag($tag, $attrs, $markup, $sectionIndex = 0) {
+        $json = json_decode((new Html($markup))->toJson());
+        $sectionTag = $json[$sectionIndex]->children[0];
+        $this->assertEquals($tag, $sectionTag->node, 'Failed asserting that Subtag of Section is of type "<'.$tag.'>". Found tag "<'.$sectionTag->node.'>"');
+        $this->assertEquals((object) $attrs, $sectionTag->attributes);
     }
 
     protected function eachNodeContents($node, $html) {

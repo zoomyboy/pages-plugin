@@ -6,7 +6,7 @@ trait GeneratesModule {
 
     public function normalParagraph($contents, $meta = [], $section = []) {
         $meta = array_merge(['title' => 'Absatz', 'content' => $contents, 'textAlign' => 'left', 'textSize' => 'base'], $meta);
-        $section = array_merge([ 'title' => 'Sektion', 'background' => '', 'color' => NULL, 'type' => 'section', 'transparent' => '0' ], $section);
+        $section = array_merge([ 'title' => 'Sektion', 'background' => '', 'color' => NULL, 'type' => 'section', 'transparent' => '0', 'container' => true, 'paddingY' => true ], $section);
 
         return (object) ['sections' => [
             (object) [

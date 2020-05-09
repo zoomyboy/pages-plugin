@@ -38,3 +38,13 @@ section[transparent]:
     type: checkbox
     label: Transparent
     comment: Macht das Hintergrundbild tranzparenter
+
+section[paddingY]:
+    type: checkbox
+    default: true
+    label: Abstand oben und unten
+
+section[container]:
+    type: checkbox
+    default: true
+    label: Container

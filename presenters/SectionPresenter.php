@@ -2,6 +2,7 @@
 
 namespace RainLab\Pages\Presenters;
 
+use Illuminate\Support\Collection;
 use RainLab\Pages\Renderer\PresenterFactory;
 
 class SectionPresenter implements \Countable {
@@ -60,18 +61,39 @@ class SectionPresenter implements \Countable {
             $beforeContainer = '<div '.($id ? 'id="'.$id.'"' : '').' class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
         }
 
-        $containerClass = $this->section->sidebar->meta->position !== false ? 'flex' : '';
 
-        return '<div '.($id ? 'id="'.$id.'"' : '').' '.$this->mergeStyle($style).' class="py-20 relative">'.$beforeContainer.'<div class="container relative '.$containerClass.'">';
+        $subsectionClass = collect([]);
+        $subsectionClass->push('relative');
+
+        if ($this->hasSidebar()) {
+            $subsectionClass->push('flex');
+        }
+
+        $sectionClass = collect(['relative']);
+        if ($this->meta()->paddingY) {
+            $sectionClass->push('py-20');
+        }
+
+        if ($this->meta()->container) {
+            $subsectionClass->push('container');
+        }
+
+        return '<div '.($id ? 'id="'.$id.'"' : '').' '.$this->mergeStyle($style).' '.$this->mergeClass($sectionClass).'>'.$beforeContainer.'<div '.$this->mergeClass($subsectionClass).'">';
     }
 
     public function sectionOpenTag() {
         $class = collect([]);
+        $class->push('container');
 
-        $containerClass = $this->section->sidebar->meta->position !== false ? 'flex' : '';
+        if ($this->hasSidebar()) {
+            $class->push('flex');
+        }
 
-        $class->push('py-20');
-        return '<div class="container '.$containerClass.' '.$class->implode(' ').'">';
+        if($this->meta()->paddingY) {
+            $class->push('py-20');
+        }
+
+        return '<div class="'.$class->implode(' ').'">';
     }
 
     public function sectionClosingTag() {
@@ -82,7 +104,19 @@ class SectionPresenter implements \Countable {
         return '</div></div>';
     }
 
+    public function mergeClass(Collection $classes) {
+        if (count($classes) == 0) {
+            return '';
+        }
+
+        return 'class="'.$classes->implode(' ').'"';
+    }
+
     public function mergeStyle($style) {
+        if (count($style) == 0) {
+            return '';
+        }
+
         return 'style="'.collect($style)->map(function($value, $key) {
             return "{$key}: {$value};";
         })->implode('').'"';
