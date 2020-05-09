@@ -2,36 +2,13 @@
 
 namespace Rainlab\Pages\Tests\Traits;
 
+use RainLab\Pages\Tests\Lib\StructureLoader;
+
 trait GeneratesModule {
 
-    public function normalParagraph($contents, $meta = [], $section = []) {
-        $meta = array_merge(['title' => 'Absatz', 'content' => $contents, 'textAlign' => 'left', 'textSize' => 'base'], $meta);
-        $section = array_merge([ 'title' => 'Sektion', 'background' => '', 'color' => NULL, 'type' => 'section', 'transparent' => '0', 'container' => true, 'paddingY' => true ], $section);
-
-        return (object) ['sections' => [
-            (object) [
-                'sidebar' => (object) ['meta' => (object) ['position' => false], 'modules' => []],
-                'meta' => (object) $section,
-                'rows' => [
-                    (object) [
-                        'meta' => (object) ['title' => 'Zeile'],
-                        'columns' => [
-                            (object) ['width' => 'full', 'modules' => [
-                                (object) [
-                                    'is' => (object) ['type' => 'module', 'component' => 'paragraph', 'icon' => 'paragraph'],
-                                    'meta' => (object) $meta,
-                                ],
-                            ]],
-                        ],
-                    ],
-                ],
-            ],
-        ], 'placeholders' => (object) [
-            'header' => []
-        ]];
+    public function assertHtml($content, $path, StructureLoader $loader) {
+        $json = $loader->toJson();
+        $this->assertEquals($content, data_get($loader->toJson(), $path));
     }
 
-    public function section($contents, $meta = []) {
-        return $this->normalParagraph('aaa', [], $meta);
-    }
 }
