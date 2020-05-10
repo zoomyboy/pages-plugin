@@ -5,6 +5,11 @@ row[anchor]:
     label: Anker einfügen
     type: checkbox
 
+row[type]:
+    default: row
+    type: partial
+    path: $/rainlab/pages/controllers/forms/_hidden.htm
+
 layout:
     type: dropdown
     label: Layout

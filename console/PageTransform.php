@@ -26,6 +26,18 @@ class PageTransform extends Command
         return $data;
     }
 
+    public function mapRowMeta($data, $callback) {
+        $data->sections = collect($data->sections)->map(function($section) use ($callback) {
+            $section->rows = collect($section->rows)->map(function($row) use ($callback) {
+                $row->meta = call_user_func($callback, $row->meta);
+                return $row;
+            })->toArray();
+            return $section;
+        })->toArray();
+
+        return $data;
+    }
+
     public function mapModules($data, $callback) {
         $data->sections = collect($data->sections)->map(function($section) use ($callback) {
             $section->rows = collect($section->rows)->map(function($row) use ($callback) {
@@ -59,9 +71,18 @@ class PageTransform extends Command
 
         // ---------- Start mapping -------------
         $zgData = $this->mapSectionMeta($zgData, function($section) {
-            $section->type = $section->type == 'section' ? 'sectionNormal' : 'sectionFullwidth';
-
+            if ($section->type == 'section') {
+                $section->type = 'sectionNormal';
+            }
+            if ($section->type == 'fullwidth') {
+                $section->type = 'sectionFullwidth';
+            }
             return $section;
+        });
+
+        $zgData = $this->mapRowMeta($zgData, function($row) {
+            $row->type = 'row';
+            return $row;
         });
         // ----------- End mapping --------------
 
