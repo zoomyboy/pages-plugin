@@ -27,9 +27,20 @@ class SidebarTest extends PluginTestCase
         $this->assertHtml('pl-10 w-1/4 flex-none', '0.children.1.attributes.class', $this->render('aaabbb', 'right'));
     }
 
-    protected function render($text, $position, $attrs = []) {
-        return Structure::section($attrs)
-            ->sidebar($position)
+    /** @test */
+    public function it_parses_a_module_in_the_sidebar()
+    {
+        $this->assertHtml('container flex py-20', '0.attributes.class', $this->render('aaabbb', 'left', function($structure) {
+            $structure->ankerlist();
+        }));
+    }
+
+
+    protected function render($text, $position, $modules = null) {
+        $modules = $modules ?? function($structure) {};
+
+        return Structure::section([])
+            ->sidebar($position, $modules)
             ->paragraph($text);
     }
 }

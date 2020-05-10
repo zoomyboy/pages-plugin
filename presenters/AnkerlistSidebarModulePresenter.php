@@ -32,8 +32,8 @@ class AnkerlistSidebarModulePresenter {
     public function links() {
         $ankers = collect([]);
 
-        $columns = collect($this->markup->sections)->each(function($section) use ($ankers) {
-            collect($section->rows)->each(function($row) use ($ankers) {
+        $columns = app('renderer.markup')->sections->each(function($section) use ($ankers) {
+            collect($section->rows())->each(function($row) use ($ankers) {
                 if (isset($row->meta->anchor) && $row->meta->anchor === '1') {
                     $ankers->push((object) [
                         'href' => str_slug($row->meta->title),

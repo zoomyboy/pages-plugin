@@ -73,6 +73,10 @@ class Renderer {
     }
 
     public function render($markup, $params) {
+        app()->bind('renderer.markup', function() use ($markup) {
+            return $markup;
+        });
+
         $markup->sections = collect($markup->sections)->map(function($section, $index) {
             return $this->presenter($section, $index);
         });

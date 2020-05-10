@@ -38,10 +38,31 @@ class StructureLoader {
         return $this;
     }
 
-    public function sidebar($position) {
+    public function sidebar($position, $modules) {
         $this->currentSection->sidebar->meta->position = $position;
 
+        $sidebarModuleLoader = Structure::section([]);
+        call_user_func($modules, $sidebarModuleLoader);
+
+        if(count($sidebarModuleLoader->currentSection->rows[0]->columns)) {
+            $this->currentSection->sidebar->modules = $sidebarModuleLoader->currentSection->rows[0]->columns[0]->modules;
+        }
+
         return $this;
+    }
+
+    public function ankerlist($meta = []) {
+        $meta = array_merge(['title' => 'Direkt zu'], $meta);
+
+        $this->currentSection->rows[0]->columns[] = (object) [
+            'width' => 'full',
+            'modules' => [
+                (object) [
+                    'is' => (object) ['type' => 'sidebar', 'component' => 'ankerlist', 'icon' => 'anchor'],
+                    'meta' => (object) $meta,
+                ],
+            ]
+        ];
     }
 
     public function paragraph($content, $meta = []) {
