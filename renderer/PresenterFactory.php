@@ -4,16 +4,16 @@ namespace RainLab\Pages\Renderer;
 
 class PresenterFactory {
 
-    public function resolve($abstract, $markup, $index = null) {
+    public function resolve($abstract, $index = null) {
         $type = data_get($abstract, 'meta.type', null);
 
         if ($type && $cls = $this->guessClassNameByType($type)) {
-            return new $cls($abstract, $index, $markup);
+            return new $cls($abstract, $index);
         }
 
         if (data_get($abstract, 'is.type', null) === 'sidebar') {
             $className = $this->resolveSidebarModule($abstract);
-            return new $className($abstract, $index, $markup);
+            return new $className($abstract, $index);
         }
     }
 

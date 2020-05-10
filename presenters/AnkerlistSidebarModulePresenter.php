@@ -9,10 +9,9 @@ class AnkerlistSidebarModulePresenter {
     public $markup;
     public $module;
 
-    public function __construct($module, $index, $markup) {
+    public function __construct($module, $index) {
         $this->module = $module;
         $this->index = $index;
-        $this->markup = $markup;
     }
 
     public function setSection($section) {

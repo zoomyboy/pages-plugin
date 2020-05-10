@@ -11,12 +11,10 @@ abstract class SectionPresenter {
 
     protected $section;
     protected $index;
-    protected $markup;
 
-    public function __construct($section, $index, $markup) {
+    public function __construct($section, $index) {
         $this->section = $section;
         $this->index = $index;
-        $this->markup = $markup;
     }
 
     public function isSidebarPosition($position): bool {
@@ -29,7 +27,7 @@ abstract class SectionPresenter {
 
     public function sidebarModules() {
         return collect($this->section->sidebar->modules)->map(function($module, $index) {
-            return app(PresenterFactory::class)->resolve($module, $this->markup, $index)->setSection($this->section);
+            return app(PresenterFactory::class)->resolve($module, null, $index)->setSection($this->section);
         });
     }
 
