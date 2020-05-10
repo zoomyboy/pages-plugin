@@ -29,7 +29,7 @@ class StructureLoader {
             'meta' => $this->sectionMeta($meta),
             'rows' => [
                 (object) [
-                    'meta' => (object) ['title' => 'Zeile'],
+                    'meta' => (object) ['title' => 'Zeile', 'anchor' => '0'],
                     'columns' => []
                 ]
             ]
@@ -37,6 +37,13 @@ class StructureLoader {
 
         return $this;
     }
+
+    public function withRow($meta = []) {
+        $this->currentSection->rows[0]->meta = (object) array_merge((array) $this->currentSection->rows[0]->meta, $meta);
+
+        return $this;
+    }
+        
 
     public function sidebar($position, $modules) {
         $this->currentSection->sidebar->meta->position = $position;

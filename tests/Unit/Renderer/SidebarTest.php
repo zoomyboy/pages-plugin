@@ -18,6 +18,7 @@ class SidebarTest extends PluginTestCase
     {
         $this->assertHtml('container flex py-20', '0.attributes.class', $this->render('aaabbb', 'left'));
         $this->assertHtml('pr-10 w-1/4 flex-none', '0.children.0.attributes.class', $this->render('aaabbb', 'left'));
+        $this->assertHtml('sticky top-10', '0.children.0.children.0.attributes.class', $this->render('aaabbb', 'left'));
     }
 
     /** @test */
@@ -28,11 +29,9 @@ class SidebarTest extends PluginTestCase
     }
 
     /** @test */
-    public function it_parses_a_module_in_the_sidebar()
+    public function it_has_a_shadow_and_a_background()
     {
-        $this->assertHtml('container flex py-20', '0.attributes.class', $this->render('aaabbb', 'left', function($structure) {
-            $structure->ankerlist();
-        }));
+        $this->assertHtml('bg-white shadow-lg p-3', '0.children.0.children.0.children.0.attributes.class', $this->renderWithModule());
     }
 
 
@@ -42,5 +41,11 @@ class SidebarTest extends PluginTestCase
         return Structure::section([])
             ->sidebar($position, $modules)
             ->paragraph($text);
+    }
+
+    protected function renderWithModule() {
+        return $this->render('aaabbb', 'left', function($structure) {
+            $structure->ankerlist();
+        });
     }
 }

@@ -93,7 +93,9 @@ class SectionPresenter implements \Countable {
             $class->push('py-20');
         }
 
-        return '<div class="'.$class->implode(' ').'">';
+        $id = $this->rows()[0]->meta->anchor == '1' ? str_slug($this->rows()[0]->meta->title) : null;
+
+        return '<div class="'.$class->implode(' ').'" '.$this->mergeAttr('id', $id).'>';
     }
 
     public function sectionClosingTag() {
@@ -105,11 +107,7 @@ class SectionPresenter implements \Countable {
     }
 
     public function mergeClass(Collection $classes) {
-        if (count($classes) == 0) {
-            return '';
-        }
-
-        return 'class="'.$classes->implode(' ').'"';
+        return $this->mergeAttr('class', $classes);
     }
 
     public function mergeStyle($style) {
@@ -120,6 +118,18 @@ class SectionPresenter implements \Countable {
         return 'style="'.collect($style)->map(function($value, $key) {
             return "{$key}: {$value};";
         })->implode('').'"';
+    }
+
+    public function mergeAttr($name, $values) {
+        if (! $values instanceof Collection) {
+            $values = collect([$values]);
+        }
+
+        if (count($values) == 0) {
+            return '';
+        }
+
+        return $name.'="'.$values->implode(' ').'"';
     }
 
     public function sidebarModules() {
