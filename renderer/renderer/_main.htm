@@ -21,8 +21,8 @@
         <?php endif; ?>
 
             <?php foreach ($section->rows() as $ri => $row): ?>
-                <?php $rowMarginTop = $ri != 0 && $section->meta()->type == 'fullwidth' ? 'mt-10 pt-10' : ''; ?>
-                <?php $rowMarginTop = $ri != 0 && $section->meta()->type == 'fullwidth' ? 'mt-10 pt-10' : ''; ?>
+                <?php $rowMarginTop = $ri != 0 && $section->isFullwidth() ? 'mt-10 pt-10' : ''; ?>
+                <?php $rowMarginTop = $ri != 0 && $section->isFullwidth() ? 'mt-10 pt-10' : ''; ?>
                 <?php $id = $section->isFullwidth() || $ri !== 0 ? str_slug($row->meta->title) : null; ?>
                 <div class="<?php echo $rowMarginTop; ?>" <?php if($id): ?> id="<?= $id ?>" <?php endif; ?>>
                     <?php foreach ($row->columns as $ci => $column): ?>
