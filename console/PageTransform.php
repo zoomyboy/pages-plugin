@@ -50,23 +50,28 @@ class PageTransform extends Command
     public function handle()
     {
         $page = Page::find($this->argument('filename'));
-
         $zgData = json_decode($page->viewBag['zg_data']);
+
         if (!$this->option('trans')) {
             echo $page->viewBag['zg_data'];
             exit;
         }
 
-        $zgData->sections = collect($zgData->sections)->map(function ($section) {
-            unset($section->meta->sidebar);
-
-            $section->sidebar = (object) [
-                'meta' => (object) ['position' => false],
-                'modules' => [],
+        // ---------- Start mapping -------------
+        $zgData = $this->mapSectionMeta($zgData, function($section) {
+            $section = (object) [
+                'container' => '0',
+                'title' => 'Sektion',
+                'type' => 'fullwidth',
+                'color' => null,
+                'background' => null,
+                'transparent' => '0',
+                'paddingY' => '0'
             ];
 
             return $section;
-        })->toArray();
+        });
+        // ----------- End mapping --------------
 
         $page->viewBag['zg_data'] = json_encode($zgData);
         $page->fill(['settings' => ['viewBag' => $page->viewBag]]);

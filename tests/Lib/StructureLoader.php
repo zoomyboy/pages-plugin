@@ -8,6 +8,11 @@ use RainLab\Pages\Renderer\Renderer;
 class StructureLoader {
 
     public $currentSection;
+
+    public static $moduleMeta = [
+        'heading' => ['content' => 'hello', 'tag' => 'h2', 'title' => 'Überschrift'],
+        'paragraph' => ['textAlign' => 'left', 'textSize' => 'base', 'content' => 'hello'],
+    ];
     
     public static function __callStatic($method, $params) {
         $self = new static();
@@ -72,20 +77,29 @@ class StructureLoader {
         ];
     }
 
-    public function paragraph($content, $meta = []) {
-        $meta = array_merge(['title' => 'Absatz', 'content' => $content, 'textAlign' => 'left', 'textSize' => 'base'], $meta);
-
-        $this->currentSection->rows[0]->columns[] = (object) [
-            'width' => 'full',
-            'modules' => [
-                (object) [
-                    'is' => (object) ['type' => 'module', 'component' => 'paragraph', 'icon' => 'paragraph'],
-                    'meta' => (object) $meta,
-                ],
-            ]
-        ];
-
+    public function appendModule($module) {
+        if (empty($this->currentSection->rows[0]->columns)) {
+            $this->currentSection->rows[0]->columns[] = (object) [ 'width' => 'full', 'modules' => [ $module ]];
+        } else {
+            $this->currentSection->rows[0]->columns[0]->modules[] = $module;
+        }
+        
         return $this;
+    }
+
+    public function module($component, $meta = []) {
+        return $this->appendModule((object) [
+            'is' => (object) ['type' => 'module', 'component' => $component, 'icon' => 'paragraph'],
+            'meta' => (object) array_merge(static::$moduleMeta[$component], $meta),
+        ]);
+    }
+
+    public function component($className, $params = []) {
+        $component = snake_case(class_basename($className));
+        return $this->appendModule((object) [
+            'is' => (object) ['type' => 'component', 'component' => $component, 'icon' => 'paragraph'],
+            'meta' => (object) array_merge(['title' => 'component'], $params)
+        ]);
     }
 
     public function output() {

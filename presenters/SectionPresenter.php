@@ -147,6 +147,6 @@ class SectionPresenter implements \Countable {
     }
 
     public function isFullwidth() {
-        return false;
+        return $this->meta()->type == 'fullwidth';
     }
 }

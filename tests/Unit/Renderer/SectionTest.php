@@ -3,11 +3,11 @@
 namespace RainLab\Pages\Tests\Unit\Renderer;
 
 use HtmlSerializer\Html;
-use PluginTestCase;
+use TestCase;
 use RainLab\Pages\Tests\Lib\Structure;
 use Rainlab\Pages\Tests\Traits\GeneratesModule;
 
-class SectionTest extends PluginTestCase
+class SectionTest extends TestCase
 {
 
     use GeneratesModule;
@@ -41,6 +41,6 @@ class SectionTest extends PluginTestCase
 
     protected function render($text, $attrs = []) {
         return Structure::section($attrs)
-            ->paragraph($text);
+            ->module('paragraph', ['content' => $text]);
     }
 }

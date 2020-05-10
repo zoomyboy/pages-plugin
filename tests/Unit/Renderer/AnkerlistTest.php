@@ -3,12 +3,12 @@
 namespace Rainlab\Pages\Tests\Unit\Renderer;
 
 use HtmlSerializer\Html;
-use PluginTestCase;
+use TestCase;
 use RainLab\Pages\Renderer\Renderer;
 use RainLab\Pages\Tests\Lib\Structure;
 use Rainlab\Pages\Tests\Traits\GeneratesModule;
 
-class AnkerlistText extends PluginTestCase
+class AnkerlistText extends TestCase
 {
 
     use GeneratesModule;
@@ -45,7 +45,7 @@ class AnkerlistText extends PluginTestCase
             ->sidebar('left', function($structure) {
                 $structure->ankerlist();
             })
-            ->paragraph('');
+            ->module('paragraph');
     }
 
     protected function renderOne($linkName = 'example') {
@@ -54,6 +54,6 @@ class AnkerlistText extends PluginTestCase
             ->sidebar('left', function($structure) {
                 $structure->ankerlist();
             })
-            ->paragraph('');
+            ->module('paragraph');
     }
 }

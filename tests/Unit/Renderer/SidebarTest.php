@@ -3,12 +3,12 @@
 namespace Rainlab\Pages\Tests\Unit\Renderer;
 
 use HtmlSerializer\Html;
-use PluginTestCase;
 use RainLab\Pages\Renderer\Renderer;
 use RainLab\Pages\Tests\Lib\Structure;
 use Rainlab\Pages\Tests\Traits\GeneratesModule;
+use TestCase;
 
-class SidebarTest extends PluginTestCase
+class SidebarTest extends TestCase
 {
 
     use GeneratesModule;
@@ -40,7 +40,7 @@ class SidebarTest extends PluginTestCase
 
         return Structure::section([])
             ->sidebar($position, $modules)
-            ->paragraph($text);
+            ->module('paragraph', ['content' => $text]);
     }
 
     protected function renderWithModule() {

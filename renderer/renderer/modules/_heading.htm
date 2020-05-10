@@ -1,7 +1,5 @@
-<?php if ($section->meta->type == 'fullwidth'): ?>
+<?php if ($section->isFullwidth()): ?>
 <<?php echo $module->meta->tag; ?> class="flex justify-center text-2xl font-arvo font-semibold text-primary-800"><?php echo $module->meta->content; ?></<?php echo $module->meta->tag; ?>>
 <?php else: ?>
-    <<?php echo $module->meta->tag; ?> class="c">
-        <?php echo $module->meta->content; ?>
-    </<?php echo $module->meta->tag; ?>>
+    <<?php echo $module->meta->tag; ?> class="c"><?php echo $module->meta->content; ?></<?php echo $module->meta->tag; ?>>
 <?php endif; ?>

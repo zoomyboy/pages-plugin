@@ -2,12 +2,12 @@
 
 namespace Rainlab\Pages\Tests\Unit\Renderer;
 
-use PluginTestCase;
+use TestCase;
 use RainLab\Pages\Renderer\Renderer;
 use RainLab\Pages\Tests\Lib\Structure;
 use Rainlab\Pages\Tests\Traits\GeneratesModule;
 
-class ParagraphTest extends PluginTestCase
+class ParagraphTest extends TestCase
 {
 
     use GeneratesModule;
@@ -56,6 +56,6 @@ class ParagraphTest extends PluginTestCase
 
     protected function render($text, $attrs = []) {
         return Structure::section([])
-            ->paragraph($text, $attrs);
+            ->module('paragraph', array_merge(['content' => $text], $attrs));
     }
 }
