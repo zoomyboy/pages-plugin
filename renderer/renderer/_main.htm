@@ -4,7 +4,7 @@
         <?php if ($section->isSidebarPosition('left')): ?>
             <div class="pr-10 w-1/4 flex-none">
                 <div class="sticky top-10">
-                    <?php foreach($section->sidebarModules() as $index => $module): ?>
+                    <?php foreach($section->sidebarModules() as $module): ?>
                     <div class="bg-white shadow-lg p-3">
                         <div class="text-gray-700 font-arvo mb-3"><?php echo $module->title(); ?></div>
                         <div>
@@ -42,7 +42,7 @@
         <?php if ($section->isSidebarPosition('right')): ?>
             <div class="pl-10 w-1/4 flex-none">
                 <div class="sticky top-10">
-                    <?php foreach($section->sidebarModules() as $index => $module): ?>
+                    <?php foreach($section->sidebarModules() as $module): ?>
                     <div class="bg-white shadow-lg p-3">
                         <div class="text-gray-700 font-arvo mb-3"><?php echo $module->title(); ?></div>
                         <div>

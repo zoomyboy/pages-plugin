@@ -27,7 +27,7 @@ abstract class SectionPresenter {
 
     public function sidebarModules() {
         return collect($this->section->sidebar->modules)->map(function($module, $index) {
-            return app(PresenterFactory::class)->resolve($module, null, $index)->setSection($this->section);
+            return app(PresenterFactory::class)->resolve($module, $index)->setSection($this->section);
         });
     }
 
