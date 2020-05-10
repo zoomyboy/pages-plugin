@@ -34,6 +34,13 @@ class AnkerlistText extends TestCase
     }
 
     /** @test */
+    public function it_parses_the_links_in_the_ankerlist_on_a_fullwidth_section()
+    {
+        $this->assertHtml('#example', '0.children.0.children.0.children.0.children.0.children.1.children.0.children.0.attributes.href', $this->renderOneFullwidth());
+        $this->assertHtml('example', '0.attributes.id', $this->renderOneFullwidth());
+    }
+
+    /** @test */
     public function it_parses_a_link_with_space_in_it()
     {
         $this->assertHtml('#example-t', '0.children.0.children.0.children.0.children.1.children.0.children.0.attributes.href', $this->renderOne('example t'));
@@ -50,6 +57,15 @@ class AnkerlistText extends TestCase
 
     protected function renderOne($linkName = 'example') {
         return Structure::section([])
+            ->withRow(['anchor' => '1', 'title' => $linkName])
+            ->sidebar('left', function($structure) {
+                $structure->ankerlist();
+            })
+            ->module('paragraph');
+    }
+
+    protected function renderOneFullwidth($linkName = 'example') {
+        return Structure::section(['type' => 'fullwidth'])
             ->withRow(['anchor' => '1', 'title' => $linkName])
             ->sidebar('left', function($structure) {
                 $structure->ankerlist();
