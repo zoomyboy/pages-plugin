@@ -34,7 +34,7 @@ class StructureLoader {
             'meta' => $this->sectionMeta($meta),
             'rows' => [
                 (object) [
-                    'meta' => (object) ['title' => 'Zeile', 'anchor' => '0'],
+                    'meta' => (object) ['title' => 'Zeile', 'anchor' => '0', 'type' => 'row'],
                     'columns' => []
                 ]
             ]

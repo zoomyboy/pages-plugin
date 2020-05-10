@@ -32,7 +32,9 @@ abstract class SectionPresenter {
     }
 
     public function rows() {
-        return $this->section->rows;
+        return collect($this->section->rows)->map(function($row, $index) {
+            return app(PresenterFactory::class)->resolve($row, $index);
+        });
     }
 
     public function meta() {

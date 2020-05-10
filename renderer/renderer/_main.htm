@@ -1,4 +1,5 @@
 <?php foreach($markup->sections as $section): ?>
+    <?php app()->bind('renderer.section', function() use ($section) { return $section; }); ?>
     <?php echo $section->openTag(); ?>
 
         <?php if ($section->isSidebarPosition('left')): ?>
@@ -20,19 +21,16 @@
             <div class="flex-grow">
         <?php endif; ?>
 
-            <?php foreach ($section->rows() as $ri => $row): ?>
-                <?php $rowMarginTop = $ri != 0 && $section->isFullwidth() ? 'mt-10 pt-10' : ''; ?>
-                <?php $rowMarginTop = $ri != 0 && $section->isFullwidth() ? 'mt-10 pt-10' : ''; ?>
-                <?php $id = $section->isFullwidth() || $ri !== 0 ? str_slug($row->meta->title) : null; ?>
-                <div class="<?php echo $rowMarginTop; ?>" <?php if($id): ?> id="<?= $id ?>" <?php endif; ?>>
-                    <?php foreach ($row->columns as $ci => $column): ?>
+            <?php foreach ($section->rows() as $row): ?>
+                <?= $row->openTag() ?>
+                    <?php foreach ($row->columns() as $ci => $column): ?>
                         <div class="w-<?php echo $column->width; ?>">
                             <?php foreach ($column->modules as $mi => $module): ?>
                             <?php echo $this->makePartial($module->is->type, ['module' => $module, 'section' => $section, 'params' => $params, 'before' => array_get($column->modules, $mi-1, null)]); ?>
                             <?php endforeach; ?>
                         </div>
                     <?php endforeach; ?>
-                </div>
+                <?= $row->closingTag() ?>
             <?php endforeach; ?>
 
         <?php if ($section->hasSidebar()): ?>

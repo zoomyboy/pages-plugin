@@ -33,10 +33,10 @@ class AnkerlistSidebarModulePresenter {
 
         $columns = app('renderer.markup')->sections->each(function($section) use ($ankers) {
             collect($section->rows())->each(function($row) use ($ankers) {
-                if (isset($row->meta->anchor) && $row->meta->anchor === '1') {
+                if ($row->hasAnchor()) {
                     $ankers->push((object) [
-                        'href' => str_slug($row->meta->title),
-                        'title' => $row->meta->title
+                        'href' => str_slug($row->title()),
+                        'title' => $row->title()
                     ]);
                 }
             });
