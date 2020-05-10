@@ -16,9 +16,7 @@ class SectionNormalPresenter extends SectionPresenter {
             $class->push('py-20');
         }
 
-        $id = $this->rows()[0]->meta->anchor == '1' ? str_slug($this->rows()[0]->meta->title) : null;
-
-        return '<div class="'.$class->implode(' ').'" '.$this->mergeAttr('id', $id).'>';
+        return "<div {$this->mergeAttr('class', $class)} {$this->mergeAttr('id', $this->idTag())}>";
     }
 
     public function closingTag() {

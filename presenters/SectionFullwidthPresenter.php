@@ -18,12 +18,9 @@ class SectionFullwidthPresenter extends SectionPresenter {
             $style['background-color'] = $this->section->meta->color;
         }
 
-        $id = data_get($this->section, 'rows.0.meta.anchor', null) === "1" ? str_slug(data_get($this->section, 'rows.0.meta.title')) : null;
-
         if ($this->section->meta->transparent) {
-            $beforeContainer = '<div '.($id ? 'id="'.$id.'"' : '').' class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
+            $beforeContainer = '<div class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
         }
-
 
         $subsectionClass = collect([]);
         $subsectionClass->push('relative');
@@ -41,7 +38,10 @@ class SectionFullwidthPresenter extends SectionPresenter {
             $subsectionClass->push('container');
         }
 
-        return '<div '.$this->mergeAttr('id', $id).' '.$this->mergeStyle($style).' '.$this->mergeClass($sectionClass).'>'.$beforeContainer.'<div '.$this->mergeClass($subsectionClass).'">';
+        return "<div {$this->mergeAttr('id', $this->idTag())} {$this->mergeStyle($style)} {$this->mergeClass($sectionClass)}>
+            {$beforeContainer}
+            <div {$this->mergeClass($subsectionClass)}>
+        ";
     }
 
     public function closingTag() {

@@ -39,4 +39,13 @@ abstract class SectionPresenter {
         return $this->section->meta;
     }
 
+    /**
+     * This will assign the ID as the first row - if that row has an anker setting
+     */
+    public function idTag(): ?string {
+        return data_get($this->section, 'rows.0.meta.anchor', null) === "1"
+            ? str_slug(data_get($this->section, 'rows.0.meta.title'))
+            : null;
+    }
+
 }
