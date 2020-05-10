@@ -1,7 +1,7 @@
 <?php foreach($markup->sections as $section): ?>
     <?php echo $section->openTag(); ?>
 
-        <?php if ($section->sidebarPosition() === 'left'): ?>
+        <?php if ($section->isSidebarPosition('left')): ?>
             <div class="pr-10 w-1/4 flex-none">
                 <div class="sticky top-10">
                     <?php foreach($section->sidebarModules() as $index => $module): ?>
@@ -39,7 +39,7 @@
             </div>
         <?php endif; ?>
 
-        <?php if ($section->sidebarPosition() === 'right'): ?>
+        <?php if ($section->isSidebarPosition('right')): ?>
             <div class="pl-10 w-1/4 flex-none">
                 <div class="sticky top-10">
                     <?php foreach($section->sidebarModules() as $index => $module): ?>

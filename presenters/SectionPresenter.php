@@ -4,7 +4,7 @@ namespace RainLab\Pages\Presenters;
 
 use RainLab\Pages\Renderer\PresenterFactory;
 
-abstract class SectionPresenter implements \Countable {
+abstract class SectionPresenter {
 
     use HasEnv;
     use MergesAttributes;
@@ -19,12 +19,8 @@ abstract class SectionPresenter implements \Countable {
         $this->markup = $markup;
     }
 
-    public function count() {
-        return count($this->markup->sections);
-    }
-
-    public function sidebarPosition() {
-        return $this->section->sidebar->meta->position;
+    public function isSidebarPosition($position): bool {
+        return $this->section->sidebar->meta->position == $position;
     }
 
     public function hasSidebar(): bool {
