@@ -42,7 +42,7 @@ class ComponentTest extends TestCase
     /** @test */
     public function it_parses_an_example_component_after_a_heading_in_a_fullwidth_section()
     {
-        $loader = Structure::section(['type' => 'fullwidth'])
+        $loader = Structure::section(['type' => 'sectionFullwidth'])
             ->module('heading')
             ->component(NoProperties::class);
 

@@ -59,15 +59,7 @@ class PageTransform extends Command
 
         // ---------- Start mapping -------------
         $zgData = $this->mapSectionMeta($zgData, function($section) {
-            $section = (object) [
-                'container' => '0',
-                'title' => 'Sektion',
-                'type' => 'fullwidth',
-                'color' => null,
-                'background' => null,
-                'transparent' => '0',
-                'paddingY' => '0'
-            ];
+            $section->type = $section->type == 'section' ? 'sectionNormal' : 'sectionFullwidth';
 
             return $section;
         });

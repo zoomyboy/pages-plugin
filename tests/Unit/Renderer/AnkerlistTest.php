@@ -65,7 +65,7 @@ class AnkerlistText extends TestCase
     }
 
     protected function renderOneFullwidth($linkName = 'example') {
-        return Structure::section(['type' => 'fullwidth'])
+        return Structure::section(['type' => 'sectionFullwidth'])
             ->withRow(['anchor' => '1', 'title' => $linkName])
             ->sidebar('left', function($structure) {
                 $structure->ankerlist();

@@ -44,7 +44,7 @@ class HeadingTest extends TestCase
     /** @test */
     public function it_parses_a_paragraph_after_a_heading_in_a_fullwidth_section_and_the_paragraph_has_a_margin_top()
     {
-        $loader = Structure::section(['type' => 'fullwidth'])
+        $loader = Structure::section(['type' => 'sectionFullwidth'])
             ->module('heading')
             ->module('paragraph');
 

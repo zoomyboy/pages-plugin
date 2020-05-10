@@ -27,15 +27,15 @@ class SectionTest extends TestCase
     /** @test */
     public function it_doesnt_include_padding_y_when_setting_is_false_on_fullwidth_sections()
     {
-        $this->assertHtml('relative', '0.attributes.class', $this->render('aaabbb', ['paddingY' => false, 'type' => 'fullwidth']));
-        $this->assertHtml('relative container', '0.children.0.attributes.class', $this->render('aaabbb', ['paddingY' => false, 'type' => 'fullwidth']));
+        $this->assertHtml('relative', '0.attributes.class', $this->render('aaabbb', ['paddingY' => false, 'type' => 'sectionFullwidth']));
+        $this->assertHtml('relative container', '0.children.0.attributes.class', $this->render('aaabbb', ['paddingY' => false, 'type' => 'sectionFullwidth']));
     }
 
     /** @test */
     public function it_doesnt_include_containeer_when_container_is_false_on_fullwidth_sections()
     {
-        $this->assertHtml('relative', '0.attributes.class', $this->render('aaabbb', ['paddingY' => false, 'type' => 'fullwidth', 'container' => false]));
-        $this->assertHtml('relative', '0.children.0.attributes.class', $this->render('aaabbb', ['paddingY' => false, 'type' => 'fullwidth', 'container' => false]));
+        $this->assertHtml('relative', '0.attributes.class', $this->render('aaabbb', ['paddingY' => false, 'type' => 'sectionFullwidth', 'container' => false]));
+        $this->assertHtml('relative', '0.children.0.attributes.class', $this->render('aaabbb', ['paddingY' => false, 'type' => 'sectionFullwidth', 'container' => false]));
     }
 
 

@@ -25,7 +25,7 @@ class StructureLoader {
     }
 
     public function sectionMeta($section = []) {
-        return (object) array_merge([ 'title' => 'Sektion', 'background' => '', 'color' => NULL, 'type' => 'section', 'transparent' => '0', 'container' => true, 'paddingY' => true ], $section);
+        return (object) array_merge([ 'title' => 'Sektion', 'background' => '', 'color' => NULL, 'type' => 'sectionNormal', 'transparent' => '0', 'container' => true, 'paddingY' => true ], $section);
     }
 
     public function section($meta) {

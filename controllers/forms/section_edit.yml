@@ -18,8 +18,8 @@ type:
     type: dropdown
     label: Typ
     options:
-        section: Normale sektion
-        fullwidth: Volle Breite  
+        sectionNormal: Normale sektion
+        sectionFullwidth: Volle Breite  
 
 transparent:
     type: checkbox
