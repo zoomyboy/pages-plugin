@@ -71,6 +71,14 @@ class PageTransform extends Command
 
         // ---------- Start mapping -------------
         $zgData = $this->mapSectionMeta($zgData, function($section) {
+            if (data_get($section, 'paddingY', null) === null) {
+                $section->paddingY = '1';
+            }
+
+            if (data_get($section, 'container', null) === null) {
+                $section->container = '1';
+            }
+
             if ($section->type == 'section') {
                 $section->type = 'sectionNormal';
             }
