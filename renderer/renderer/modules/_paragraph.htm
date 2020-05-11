@@ -5,4 +5,4 @@ $classes->push('text-'.$module->meta->textAlign);
 $classes->push('text-'.$module->meta->textSize);
 ?>
 
-<p class="<?php echo $classes->implode(' '); ?>"><?php echo strip_tags(app('parse.markdown')->parse($module->meta->content), '<br><strong><em>'); ?></p>
+<div class="<?php echo $classes->implode(' '); ?>"><?php echo strip_tags(app('parse.markdown')->parse($module->meta->content), '<br><strong><em><p><ul><li>'); ?></div>

@@ -15,16 +15,23 @@ class ParagraphTest extends TestCase
     /** @test */
     public function it_parses_a_normal_html_text()
     {
-        $this->assertHtml('aaabbb', '0.children.0.children.0.children.0.children.0.children.0.text', $this->render('aaabbb'));
+        $this->assertHtml('div', '0.children.0.children.0.children.0.children.0.node', $this->render('aaabbb'));
+        $this->assertHtml(['node' => 'p', 'children' => [
+            ['node' => 'text', 'text' => 'aaabbb']
+        ]], '0.children.0.children.0.children.0.children.0.children.0', $this->render('aaabbb'));
     }
 
     /** @test */
     public function it_parses_a_markdown_line_break_as_html_br()
     {
-        $this->assertHtml('aaa bbb', '0.children.0.children.0.children.0.children.0.children.0.text', $this->render('aaa bbb'));
-        $this->assertHtml("aaa", '0.children.0.children.0.children.0.children.0.children.0.text', $this->render("aaa  \nbbb"));
-        $this->assertHtml("br", '0.children.0.children.0.children.0.children.0.children.1.node', $this->render("aaa  \nbbb"));
-        $this->assertHtml("\nbbb", '0.children.0.children.0.children.0.children.0.children.2.text', $this->render("aaa  \nbbb"));
+        $this->assertHtml(['node' => 'p', 'children' => [
+            ['node' => 'text', 'text' => 'aaa bbb']
+        ]], '0.children.0.children.0.children.0.children.0.children.0', $this->render('aaa bbb'));
+        $this->assertHtml(['node' => 'p', 'children' => [
+            ['node' => 'text', 'text' => 'aaa'],
+            ['node' => 'br'],
+            ['node' => 'text', 'text' => "\nbbb"],
+        ]], '0.children.0.children.0.children.0.children.0.children.0', $this->render("aaa  \nbbb"));
     }
 
     /** @test */
@@ -39,19 +46,27 @@ class ParagraphTest extends TestCase
 
     /** @test */
     public function it_parses_bold_and_italic_text() {
-        $this->assertHtml([
+        $this->assertHtml(['node' => 'p', 'children' => [
             [ 'node' => 'text', 'text' => 'aa' ],
             [ 'node' => 'strong', 'children' => [
                 ['node' => 'text', 'text' => 'c']
             ]]
-        ], '0.children.0.children.0.children.0.children.0.children', $this->render("aa__c__"));
+        ]], '0.children.0.children.0.children.0.children.0.children.0', $this->render("aa__c__"));
 
-        $this->assertHtml([
+        $this->assertHtml(['node' => 'p', 'children' => [
             [ 'node' => 'text', 'text' => 'aa' ],
             [ 'node' => 'em', 'children' => [
                 ['node' => 'text', 'text' => 'c']
             ]]
-        ], '0.children.0.children.0.children.0.children.0.children', $this->render("aa_c_"));
+        ]], '0.children.0.children.0.children.0.children.0.children.0', $this->render("aa_c_"));
+    }
+
+    /** @test */
+    public function it_parses_uls() {
+        $this->assertHtml([
+            ['node' => 'p', 'children' => [ [ 'node' => 'text', 'text' => 'aa' ] ]],
+            ['node' => 'ul', 'children' => [ [ 'node' => 'li', 'children' => [['node' => 'text', 'text' => 'b']]], [ 'node' => 'li', 'children' => [['node' => 'text', 'text' => 'c' ]]] ]]
+        ], '0.children.0.children.0.children.0.children.0.children', $this->render("aa\n\n* b\n* c"));
     }
 
     protected function render($text, $attrs = []) {

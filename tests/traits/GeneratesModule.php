@@ -8,7 +8,8 @@ trait GeneratesModule {
 
     public function assertHtml($content, $path, StructureLoader $loader) {
         $json = $loader->toJson();
-        $this->assertEquals($content, data_get($loader->toJson(), $path));
+        $data = data_get($loader->toJson(), $path);
+        $this->assertEquals($content, $data);
     }
 
 }
