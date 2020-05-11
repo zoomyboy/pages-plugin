@@ -13,7 +13,7 @@ export default {
                         $('#subform-popup').find('.modal-body').html(data.content);
                         $('#subform-popup').find('.modal-title').html(heading);
 
-                        $('#subform-popup').find('[data-confirm]').one('click', function() {
+                        $('#subform-popup').find('[data-confirm]').off('click').one('click', function() {
                             $('#subform-popup').on('hidden.bs.modal', () => {
                                 $('#subform-popup').find('form').request('onSave', {
                                     url: '/backend/rainlab/pages/forms',
