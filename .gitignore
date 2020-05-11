@@ -2,8 +2,10 @@
 .idea
 /vendor
 formwidgets/zgutenberg/assets/node_modules
-formwidgets/zgutenberg/assets/css/backend.build.css
+formwidgets/zgutenberg/assets/mix-manifest.json
 formwidgets/zgutenberg/assets/js/zgutenberg.build.js
+formwidgets/zgutenberg/assets/js/*.map
+formwidgets/zgutenberg/assets/css/zgutenberg.build.css
 *.swp
 *.swm
 *.swo
