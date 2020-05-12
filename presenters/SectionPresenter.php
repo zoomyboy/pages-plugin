@@ -37,8 +37,9 @@ abstract class SectionPresenter {
         });
     }
 
-    public function meta() {
-        return $this->section->meta;
+    public function meta($key = null) {
+        if (is_null($key)) { return $this->section->meta; }
+        return data_get($this->section->meta, $key);
     }
 
     /**

@@ -8,18 +8,18 @@ class SectionFullwidthPresenter extends SectionPresenter {
         $style = [];
         $beforeContainer = '';
         
-        if ($this->section->meta->background) {
-            $style['background-image'] = 'url(/storage/app/media'.$this->section->meta->background.')';
+        if ($this->meta('background')) {
+            $style['background-image'] = "url(/storage/app/media{$this->meta('background')})";
             $style['background-size'] = 'cover';
             $style['background-position'] = 'bottom center';
             $style['background-attachment'] = 'fixed';
         }
-        if ($this->section->meta->color) {
-            $style['background-color'] = $this->section->meta->color;
+        if ($this->meta('color')) {
+            $style['background-color'] = $this->meta('color');
         }
 
-        if ($this->section->meta->transparent) {
-            $beforeContainer = '<div class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,0.5)"></div>';
+        if ($this->meta('transparent')) {
+            $beforeContainer = '<div class="absolute top-0 left-0 h-full w-full" style="background-color: rgba(255,255,255,'.$this->meta('transparent_amount').')"></div>';
         }
 
         $subsectionClass = collect([]);
