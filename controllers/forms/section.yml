@@ -14,6 +14,15 @@ layout:
 row[title]:
     label: Zeilentitel
 
+row[anchor]: 
+    label: Anker einfügen
+    type: checkbox
+
+row[type]:
+    default: row
+    type: partial
+    path: $/rainlab/pages/controllers/forms/_hidden.htm
+
 section[background]:
     type: mediafinder
     label: Hintergrundbold
